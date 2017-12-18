@@ -85,6 +85,10 @@ public class Curso implements Serializable {
     private List<InscripcionFpa> inscripcionFpaList;
 
     public Curso() {
+        this.especialidad = new Especialidad() ;
+        this.frecuenciaDiaria = new FrecuenciaDiaria();
+        this.instructor = new Instructor();
+        this.localidad = new Localidad();
     }
 
     public Curso(Integer numeroNacional) {

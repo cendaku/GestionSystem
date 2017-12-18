@@ -61,6 +61,9 @@ public class SituacionLaboral implements Serializable {
     private Salario salario;
 
     public SituacionLaboral() {
+        this.horasTrabajo = new HorasTrabajo();
+        this.id=0;
+        this.salario = new Salario();
     }
 
     public SituacionLaboral(Integer id) {

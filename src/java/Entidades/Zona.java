@@ -45,6 +45,7 @@ public class Zona implements Serializable {
     private List<Alumno> alumnoList;
 
     public Zona() {
+        this.id=0;
     }
 
     public Zona(Integer id) {

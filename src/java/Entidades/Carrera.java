@@ -54,6 +54,7 @@ public class Carrera implements Serializable {
     private List<CarrerasCpi> carrerasCpiList;
 
     public Carrera() {
+        this.id=0;
     }
 
     public Carrera(Integer id) {

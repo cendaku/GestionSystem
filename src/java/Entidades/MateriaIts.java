@@ -62,6 +62,9 @@ public class MateriaIts implements Serializable {
     private List<ContratoInstructorits> contratoInstructoritsList;
 
     public MateriaIts() {
+        this.cargahoraria = new CargaHorariaits();
+        this.id=0;
+        this.semestreHabilitado = new SemestreHabilitado();
     }
 
     public MateriaIts(Integer id) {

@@ -45,6 +45,8 @@ public class CarrerasCpi implements Serializable {
     private PdCpi pdCpi;
 
     public CarrerasCpi() {
+        this.carrera1 = new Carrera();
+        this.carrerasCpiPK = new  CarrerasCpiPK();
     }
 
     public CarrerasCpi(CarrerasCpiPK carrerasCpiPK) {

@@ -62,6 +62,8 @@ public class Certificado implements Serializable {
     private InscripcionFpa inscripcionFpa;
 
     public Certificado() {
+        this.id=0;
+        this.inscripcionFpa = new InscripcionFpa();
     }
 
     public Certificado(Integer id) {

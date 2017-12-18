@@ -49,6 +49,7 @@ public class Discapacidad implements Serializable {
     private List<Alumno> alumnoList;
 
     public Discapacidad() {
+        this.id=0;
     }
 
     public Discapacidad(Integer id) {

@@ -73,6 +73,7 @@ public class Horario implements Serializable {
     private List<HorarioInstructorits> horarioInstructoritsList;
 
     public Horario() {
+        this.id=0;
     }
 
     public Horario(Integer id) {

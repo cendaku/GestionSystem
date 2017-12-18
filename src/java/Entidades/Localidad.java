@@ -52,6 +52,7 @@ public class Localidad implements Serializable {
     private Municipio municipioId;
 
     public Localidad() {
+        this.id=0;
     }
 
     public Localidad(Integer id) {

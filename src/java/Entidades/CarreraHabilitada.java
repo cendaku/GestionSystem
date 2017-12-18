@@ -55,6 +55,8 @@ public class CarreraHabilitada implements Serializable {
     private List<SemestreHabilitado> semestreHabilitadoList;
 
     public CarreraHabilitada() {
+        this.carrera1 = new Carrera();
+        this.grupo1 = new Grupo();
     }
 
     public CarreraHabilitada(CarreraHabilitadaPK carreraHabilitadaPK) {

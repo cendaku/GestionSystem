@@ -88,6 +88,12 @@ public class Instructor implements Serializable {
     private List<ContratoInstructorits> contratoInstructoritsList;
 
     public Instructor() {
+        this.ci=0;
+        this.estadoAcademico = new EstadoAcademico();
+        this.estadoCivil = new EstadoCivil();
+        this.municipio = new Municipio();
+        this.sexo = new Sexo();
+        this.usuario = new Usuario();
     }
 
     public Instructor(Integer ci) {

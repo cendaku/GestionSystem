@@ -56,6 +56,9 @@ public class ContratoInstructorits implements Serializable {
     private List<HorarioInstructorits> horarioInstructoritsList;
 
     public ContratoInstructorits() {
+        this.contratoInstructoritsPK = new ContratoInstructoritsPK();
+        this.instructor1 = new Instructor();
+        this.materiaIts1 = new MateriaIts();
     }
 
     public ContratoInstructorits(ContratoInstructoritsPK contratoInstructoritsPK) {

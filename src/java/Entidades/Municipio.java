@@ -47,6 +47,7 @@ public class Municipio implements Serializable {
     private List<Localidad> localidadList;
 
     public Municipio() {
+        this.id=0;
     }
 
     public Municipio(Integer id) {

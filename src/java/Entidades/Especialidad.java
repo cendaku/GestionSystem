@@ -45,6 +45,7 @@ public class Especialidad implements Serializable {
     private List<Curso> cursoList;
 
     public Especialidad() {
+        this.id=0;
     }
 
     public Especialidad(Integer id) {

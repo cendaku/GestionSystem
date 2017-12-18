@@ -40,6 +40,7 @@ public class Estado implements Serializable {
     private String descripcion;
 
     public Estado() {
+        this.id=0;
     }
 
     public Estado(Integer id) {

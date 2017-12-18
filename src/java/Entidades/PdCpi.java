@@ -106,6 +106,7 @@ public class PdCpi implements Serializable {
     private List<CarrerasCpi> carrerasCpiList;
 
     public PdCpi() {
+        this.pdCpiPK = new PdCpiPK();
     }
 
     public PdCpi(PdCpiPK pdCpiPK) {

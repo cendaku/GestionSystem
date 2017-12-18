@@ -49,6 +49,7 @@ public class TipoMotivo implements Serializable {
     private List<Documento> documentoList;
 
     public TipoMotivo() {
+        this.id=0;
     }
 
     public TipoMotivo(Integer id) {

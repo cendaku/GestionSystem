@@ -78,6 +78,10 @@ public class Documento implements Serializable {
     private TipoDocumento tipoDocumento;
 
     public Documento() {
+        this.id=0;
+        this.solicitantes = new Solicitante();
+        this.tipoDocumento = new TipoDocumento();
+        this.usuarioCi = new Usuario();
     }
 
     public Documento(Integer id) {

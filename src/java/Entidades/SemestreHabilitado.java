@@ -57,6 +57,9 @@ public class SemestreHabilitado implements Serializable {
     private Semestre semestre1;
 
     public SemestreHabilitado() {
+        this.carreraHabilitada = new CarreraHabilitada();
+        this.semestre1 = new Semestre();
+        this.semestreHabilitadoPK = new SemestreHabilitadoPK();
     }
 
     public SemestreHabilitado(SemestreHabilitadoPK semestreHabilitadoPK) {

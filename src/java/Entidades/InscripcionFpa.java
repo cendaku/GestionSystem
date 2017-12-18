@@ -57,6 +57,9 @@ public class InscripcionFpa implements Serializable {
     private List<Certificado> certificadoList;
 
     public InscripcionFpa() {
+        this.alumno1 = new Alumno();
+        this.curso1 = new Curso();
+        this.inscripcionFpaPK = new InscripcionFpaPK();
     }
 
     public InscripcionFpa(InscripcionFpaPK inscripcionFpaPK) {

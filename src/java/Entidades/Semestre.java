@@ -49,6 +49,7 @@ public class Semestre implements Serializable {
     private List<SemestreHabilitado> semestreHabilitadoList;
 
     public Semestre() {
+        this.id=0;
     }
 
     public Semestre(Integer id) {

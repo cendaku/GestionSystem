@@ -45,6 +45,7 @@ public class HorasTrabajo implements Serializable {
     private List<SituacionLaboral> situacionLaboralList;
 
     public HorasTrabajo() {
+        this.id=0;
     }
 
     public HorasTrabajo(Integer id) {

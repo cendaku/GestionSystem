@@ -73,6 +73,9 @@ public class Notasits implements Serializable {
     private InscripcionIts inscripcionIts;
 
     public Notasits() {
+        this.contratoInstructorits = new ContratoInstructorits();
+        this.inscripcionIts = new InscripcionIts();
+        this.notasitsPK = new NotasitsPK();
     }
 
     public Notasits(NotasitsPK notasitsPK) {

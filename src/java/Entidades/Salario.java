@@ -45,6 +45,7 @@ public class Salario implements Serializable {
     private List<SituacionLaboral> situacionLaboralList;
 
     public Salario() {
+        this.id=0;
     }
 
     public Salario(Integer id) {

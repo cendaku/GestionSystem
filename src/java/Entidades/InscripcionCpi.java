@@ -59,6 +59,10 @@ public class InscripcionCpi implements Serializable {
     private List<PuntajeCpi> puntajeCpiList;
 
     public InscripcionCpi() {
+        this.alternativa1 = new Carrera();
+        this.alternativa2 = new Carrera();
+        this.alumno1 = new Alumno();
+        this.pdCpi = new PdCpi();
     }
 
     public InscripcionCpi(InscripcionCpiPK inscripcionCpiPK) {

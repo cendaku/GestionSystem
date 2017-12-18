@@ -47,6 +47,7 @@ public class Sexo implements Serializable {
     private List<Instructor> instructorList;
 
     public Sexo() {
+        this.id=0;
     }
 
     public Sexo(Integer id) {

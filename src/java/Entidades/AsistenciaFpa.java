@@ -47,6 +47,8 @@ public class AsistenciaFpa implements Serializable {
     private InscripcionFpa inscripcionFpa;
 
     public AsistenciaFpa() {
+        this.inscripcionFpa = new InscripcionFpa();
+        this.asistenciaFpaPK = new AsistenciaFpaPK();
     }
 
     public AsistenciaFpa(AsistenciaFpaPK asistenciaFpaPK) {

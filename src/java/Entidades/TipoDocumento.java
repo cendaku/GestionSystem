@@ -45,6 +45,7 @@ public class TipoDocumento implements Serializable {
     private List<Documento> documentoList;
 
     public TipoDocumento() {
+        this.id=0;
     }
 
     public TipoDocumento(Integer id) {

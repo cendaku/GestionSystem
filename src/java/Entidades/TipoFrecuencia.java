@@ -45,6 +45,7 @@ public class TipoFrecuencia implements Serializable {
     private List<Curso> cursoList;
 
     public TipoFrecuencia() {
+        this.id=0;
     }
 
     public TipoFrecuencia(Integer id) {

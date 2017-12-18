@@ -53,6 +53,7 @@ public class Solicitante implements Serializable {
     private List<Documento> documentoList;
 
     public Solicitante() {
+        this.id=0;
     }
 
     public Solicitante(Integer id) {

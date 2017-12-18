@@ -138,6 +138,15 @@ public class Alumno implements Serializable {
     private List<InscripcionFpa> inscripcionFpaList;
 
     public Alumno() {
+        this.ci=0;
+        this.estadoAcademico = new EstadoAcademico();
+        this.estadoCivil = new EstadoCivil();
+        this.localidad = new Localidad();
+        this.nacionalidad = new Nacionalidad();
+        this.sexo = new Sexo();
+        this.situacionLaboral = new SituacionLaboral();
+        this.usuario = new Usuario();
+        this.zona = new Zona();
     }
 
     public Alumno(Integer ci) {

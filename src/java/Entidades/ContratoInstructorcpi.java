@@ -58,6 +58,8 @@ public class ContratoInstructorcpi implements Serializable {
     private List<PuntajeCpi> puntajeCpiList;
 
     public ContratoInstructorcpi() {
+        this.instructor1 = new Instructor();
+        this.materiaCpi = new MateriaCpi();
     }
 
     public ContratoInstructorcpi(ContratoInstructorcpiPK contratoInstructorcpiPK) {

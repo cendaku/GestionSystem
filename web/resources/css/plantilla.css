@@ -1,0 +1,272 @@
+body{
+    margin: 0;
+    font-family: sans-serif;
+    background: url(../images/fondo/bg.png) 50% 50% repeat;
+}
+
+.img{
+    background-repeat: no-repeat;
+    width: 100%;
+    /*height: 145px;*/
+    background-color: darkcyan;
+    margin-bottom: -5px;
+}
+
+/*Menu-----------------------------------------------------------------INICIO*/
+
+header{
+    width: 100%;
+    background: green;
+    box-shadow: 5px 5px 10px #000;
+}
+
+#btn-menu{
+    display: none;
+}
+
+#submenu-toggle, #submenu-toggle1, #submenu1-toggle, #submenu2-toggle, #submenu3-toggle {
+    display: none;
+}
+
+.mp{
+    display: none;
+    width: 30px;
+    height: 30px;
+    padding: 0px;
+    border-right: 1px solid #fff;
+}
+
+header label:hover {
+    cursor: pointer;
+    background: rgba(0,0,0,0.3);
+}
+
+.menu ul{
+    margin: 0;
+    list-style: none;
+    padding: 0;
+    display: flex;
+}
+
+.menu li{
+    text-align: center;
+    flex-grow: 1;
+}
+
+.menu li:hover > ul {
+    z-index: 20 !important;
+    display: block;
+}
+.menu li ul li {
+    position: relative;
+}
+.menu li ul li ul{
+    right:  -140px;
+    top: 0px;
+}
+.menu li ul{
+    background: /*url(../images/fondo/bbg.gif)*/ green;
+    position: absolute;
+    display: none;
+    min-width: 140px;
+    border-top-right-radius: 30px;
+    border-bottom-left-radius: 30px;
+}
+
+.m2:hover, .mb1:hover{
+    /*text-shadow: none;*/
+    background: rgba(0,0,0,0.3);
+    /*color: green;*/
+    border-top-right-radius: 30px;
+    border-bottom-left-radius: 30px;
+}
+
+.m1{
+    border-right: 1px solid #fff;
+}
+
+.m1:hover{
+    background: rgba(0,0,0,0.3);
+}
+
+.m3:hover{
+    background: rgba(0,0,0,0.3);
+}
+
+.menu li a, label.m1, label.m2, label.m3{ 
+    text-shadow: 2px 2px 0 #000;
+    font-size: 87%;
+    display: block;
+    padding: 15px 20%;
+    color: #fff;
+    text-decoration: none;
+}
+
+@media (max-width:1029px){
+    .menu li a, label.m1, label.m2, label.m3{
+        padding: 9px;
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+}
+
+@media (max-width:850px){
+    .menu li a, label.m1, label.m2, label.m3{
+        font-size: 70%;
+        padding: 9px;
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+}
+/***********************Vista mobil************************/
+@media (max-width:768px){
+    .mp{
+        display: block;
+    }
+    .menu{
+        z-index: 20 !important;
+        position: absolute;
+        background: green;
+        width: 70%;
+        margin-left: -70%;
+        transition: all 0.5s;
+    }
+
+    .menu ul{
+        flex-direction: column;
+    }
+    .menu li a, label.m1, label.m2, label.m3{
+        font-size: 100%;
+    }
+    .menu li{
+        border-top: 1px solid #fff;
+    }
+    .menu li ul{
+        position: static;
+        width: 100%;
+        border-top-right-radius: 0px;
+        border-bottom-left-radius: 0px;
+    }
+
+    .m2{
+        background: #007e31;
+    }
+
+    .mb1{
+        background: #007552;
+    }
+    .m2:hover, .mb1:hover{
+        border-top-right-radius: 0px;
+        border-bottom-left-radius: 0px;
+    }
+    #btn-menu:checked ~ .menu{
+        margin: 0;
+    }
+
+    #subm {
+        display: none;
+    }
+
+    #submenu-toggle:checked + #subm, #submenu-toggle1:checked + #subm, #submenu1-toggle:checked + #subm, #submenu2-toggle:checked + #subm, #submenu3-toggle:checked + #subm {
+        display: block;
+    }
+
+}
+
+/*Menu--------------------------------------------------------------------Fin*/
+
+
+.editarimg{
+    margin-top: -5%;
+    margin-bottom: 20px;
+    width: 40%;
+    border-radius: 10px;
+    box-shadow: 5px 5px 10px #000;
+
+}
+
+
+
+#top{
+    width: 1075px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+#content{
+    padding-top: 20px;
+    padding-bottom: 1px;
+    background: url(../images/fondo/bgctgri.jpg);
+    width: 1075px;
+    box-shadow: 5px 5px 10px #000;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+#bottom{
+    background: url(../images/Republica-del-Paraguay.png) no-repeat;
+    width: 1065px;
+    color: white;
+    text-align: center;
+    background-color: #004489;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    box-shadow: 5px 5px 10px #000;
+    text-shadow: 2px 2px 0 #000;
+    font-family: cursive;
+    margin-right: auto;
+    margin-left: auto;
+    padding-right: 10px;
+    padding-bottom: 5px;
+}
+
+@media (max-width:1075px){
+
+    #top{
+        width: auto;
+    }
+
+    #content{
+        width: auto;
+    }
+
+    #bottom{
+        width: auto;
+    }
+
+    .Ed{
+        font-size: 9px;
+    }
+    br{
+        display: none;
+    }
+
+}
+
+main {
+    font-size: 14px;
+    -webkit-column-count:3;
+    -moz-column-count:3;
+    column-count:3;
+
+    -moz-column-gap: 10em;
+    -webkit-column-gap: 10em;
+    column-gap: 10em;
+
+    -moz-column-width: 240px;	        
+    -webkit-column-width: 240px;
+    column-width: 240px;
+}
+
+*  {
+    margin: 0;
+    padding: 0;
+}
+
+.staff:hover{
+    cursor: pointer;
+}
+
+.uc{
+    margin-top: 8%;
+}

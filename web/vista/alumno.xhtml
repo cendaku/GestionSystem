@@ -1,0 +1,194 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <f:view contentType="text/html">
+        <h:head>
+            <f:facet name="first">
+                <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+                <title>Alumno</title>
+                <h:outputStylesheet name="css/plantilla.css"/>
+                <h:outputStylesheet name="css/vistaamplia.css"/>
+            </f:facet>
+        </h:head>
+
+        <body>
+
+            <ui:composition template="./Plantilla.xhtml">
+
+                <ui:define name="content">
+
+                    <p:growl id="msgs" showDetail="true" />
+
+                    <h:form rendered="#{loginBean.ulog.rol.id==1}">
+                        <p:commandButton update=":formCreate,:formDateTable" oncomplete="PF('dialogAlumnoCreate').show()" icon="ui-icon-disk" title="Crear cuenta de Alumno" value="Crear"/>
+                    </h:form>
+
+                    <h:form class="textsize" id="formDateTable" >
+
+                        <p:dataTable id="basicDT" var="alumno" value="#{alumnoBean.alumnos}">
+                            <f:facet name="header">
+                                Listado de Alumno
+                            </f:facet>
+                            <p:column style="width:30px;text-align: center; font-size: 90%" headerText="Foto">
+                                <p:graphicImage value="/img/#{alumno.ruta}" width="30px" height="30" />
+                            </p:column>
+                            <p:column style="width:100%;text-align: center; font-size: 90%" headerText="Alumno">
+                                <h:outputText value="#{alumno.apellido} #{alumno.nombre}" />
+                            </p:column>
+                            <p:column style="width:100%;text-align: center; font-size: 90%" headerText="Celular">
+                                <h:outputText value="#{alumno.celular}" />
+                            </p:column>
+                            <p:column class="vmo" style="width:100%;text-align: center; font-size: 90%" headerText="Dirección">
+                                <h:outputText value="#{alumno.direccion}" />
+                            </p:column>
+                            <p:column class="vmo" style="width:100%;text-align: center; font-size: 90%" headerText="Email">
+                                <h:outputText value="#{alumno.email}" />
+                            </p:column>
+                            <p:column class="vmo" style="width:100%;text-align: center; font-size: 90%" headerText="Telefono">
+                                <h:outputText value="#{alumno.telefono}" />
+                            </p:column>
+                            <p:column class="vmo" style="width:100%;text-align: center; font-size: 90%" headerText="Fecha Nac.">
+                                <h:outputText value="#{alumno.fechaNacimiento}" >
+                                    <f:convertDateTime pattern="dd/MMM/y" />
+                                </h:outputText>
+                            </p:column>
+                            <p:column class="vmo" style="width:100%;text-align: center; font-size: 90%" headerText="Nom. Contacto">
+                                <h:outputText value="#{alumno.nombreContacto}" />
+                            </p:column>
+                            <p:column class="vmo" style="width:100%;text-align: center; font-size: 90%" headerText="Contacto Tele.">
+                                <h:outputText value="#{alumno.telefonoContacto}" />
+                            </p:column>
+                            <p:column class="vmo" style="width:100%;text-align: center; font-size: 90%" headerText="Sexo">
+                                <h:outputText value="#{alumno.sexo}" />
+                            </p:column>
+                            <p:column style="width:100%;text-align: center" headerText="Nacionalidad">
+                                <h:outputText value="#{alumno.nacionalidad}" />
+                            </p:column>
+                            <p:column class="vmo" style="width:100%;text-align: center; font-size: 90%" headerText="Zona">
+                                <h:outputText value="#{alumno.zona}" />
+                            </p:column>
+                            <p:column class="vmo" style="width:100%;text-align: center; font-size: 90%" headerText="Situación Laboral">
+                                <h:outputText value="#{alumno.situacionLaboral}" />
+                            </p:column>
+                            <p:column class="vmo" style="width:100%;text-align: center; font-size: 90%" headerText="Estado Civil">
+                                <h:outputText value="#{alumno.estadoCivil}" />
+                            </p:column>
+                            <p:column class="vmo" style="width:100%;text-align: center; font-size: 90%" headerText="Localidad">
+                                <h:outputText value="#{alumno.localidad}" />
+                            </p:column>
+                            <p:column class="vmo" style="width:100%;text-align: center; font-size: 90%" headerText="Municipio">
+                                <h:outputText value="#{alumno.municipio}" />
+                            </p:column>
+                            <p:column style="width:100%;text-align: center; font-size: 90%" headerText="Usuario">
+                                <h:outputText value="#{alumno.usuario}" />
+                            </p:column>
+                            <p:column class="vmo" style="width:100%;text-align: center; font-size: 90%" headerText="Estado Academico">
+                                <h:outputText value="#{alumno.estadoAcademico}" />
+                            </p:column>
+                            <p:column style="width:88px;text-align: center" rendered="#{loginBean.ulog.rol.id==1}">
+                                <p:commandButton update=":formUpdate:alumnoDetalle" oncomplete="PF('dialogAlumnoUpdate').show()" icon="ui-icon-pencil" title="Actualizar">
+                                    <f:setPropertyActionListener value="#{alumno}" target="#{alumnoBean.selectedAlumno}" />
+                                </p:commandButton>
+                                <p:commandButton update=":formDelete" oncomplete="PF('dialogAlumnoDelete').show()" icon="ui-icon-trash" title="Borrar">
+                                    <f:setPropertyActionListener value="#{alumno}" target="#{alumnoBean.selectedAlumno}" />
+                                </p:commandButton>
+                            </p:column>
+                        </p:dataTable>
+                    </h:form>
+
+                    <h:form id="formCreate" enctype="multipart/form-data">
+
+                        <p:dialog id="dlgAlumnoCreate" header="Crear Alumno" widgetVar="dialogAlumnoCreate" showEffect="explode" hideEffect="explode" resizable="explode">
+                            <p:outputPanel id="alumnoDetalle" style="text-align: left;">
+                                <h:panelGrid  columns="2" style="padding: 2px;" >
+
+                                    <h:outputText value="Nombre:" />
+                                    <p:inputText value="#{alumnoBean.selectedAlumno.nombre}" />
+
+                                    <h:outputText value="Apellido:" />
+                                    <p:inputText value="#{alumnoBean.selectedAlumno.apellido}" />
+
+                                    <h:outputText value="Fecha Nac.:" />
+                                    <p:calendar value="#{alumnoBean.selectedAlumno.fechaNacimiento}" />
+
+                                    <h:outputText value="Ciudad:" />
+                                    <p:inputText value="#{alumnoBean.selectedAlumno.direccion}" />
+
+                                    <h:outputText value="Dirección:" />
+                                    <p:inputText value="#{alumnoBean.selectedAlumno.direccion}" />
+
+                                    <h:outputText value="Telefono:" />
+                                    <p:inputText value="#{alumnoBean.selectedAlumno.telefono}" />
+
+                                    <p:fileUpload value="#{alumnoBean.archivo}" mode="simple" sizeLimit="1000000" allowTypes="/(\.|\/)(gif|jpe?g)|png)$/" />
+                                    <h:inputHidden value="#{alumnoBean.selectedAlumno.ruta}" />
+
+                                    <f:facet name="footer">
+                                        <p:commandButton update=":formDateTable,:msgs" oncomplete="PF('dialogAlumnoCreate').hide()" actionListener="#{alumnoBean.CrearAlumno(actionEvent)}" icon="ui-icon-disk" title="Guardar cuenta de Alumno" value="Guardar" ajax="false" />
+                                        <p:commandButton oncomplete="PF('dialogAlumnoCreate').hide()" icon="ui-icon-cancel" title="Cancelar crear cuenta de Alumno" value="Cancelar"/>
+                                    </f:facet>
+                                </h:panelGrid>
+                            </p:outputPanel>
+                        </p:dialog>
+                    </h:form>
+
+                    <h:form id="formUpdate" enctype="multipart/form-data" >
+
+                        <p:dialog id="dlgAlumnoUpdate" header="Modificar Alumno" widgetVar="dialogAlumnoUpdate" showEffect="fade" hideEffect="fade" resizable="false">
+                            <p:outputPanel id="alumnoDetalle" style="text-align: left;">
+                                <h:panelGrid  columns="2" style="padding: 2px;" >
+
+                                    <h:outputText value="Nombre:" />
+                                    <p:inputText value="#{alumnoBean.selectedAlumno.nombre}" />
+
+                                    <h:outputText value="Apellido:" />
+                                    <p:inputText value="#{alumnoBean.selectedAlumno.apellido}" />
+
+                                    <h:outputText value="Fecha Nac.:" />
+                                    <p:calendar value="#{alumnoBean.selectedAlumno.fechaNacimiento}" />
+
+                                    <h:outputText value="Ciudad:" />
+                                    <p:inputText value="#{alumnoBean.selectedAlumno.direccion}" />
+
+                                    <h:outputText value="Dirección:" />
+                                    <p:inputText value="#{alumnoBean.selectedAlumno.direccion}" />
+
+                                    <h:outputText value="Telefono:" />
+                                    <p:inputText value="#{alumnoBean.selectedAlumno.telefono}" />
+
+                                    <p:graphicImage value="/img/#{alumnoBean.selectedAlumno.ruta}" width="50px" height="50px" />
+                                    <p:fileUpload value="#{alumnoBean.archivo}" mode="simple" sizeLimit="1000000" allowTypes="/(\.|\/)(gif|jpe?g)|png)$/" />
+                                    <h:inputHidden value="#{alumnoBean.selectedAlumno.ruta}" />
+
+                                    <h:inputHidden value="#{alumnoBean.selectedAlumno.ci}" />
+
+                                    <f:facet name="footer">
+                                        <p:commandButton update=":formDateTable,:msgs" oncomplete="PF('dialogAlumnoUpdate').hide()" actionListener="#{alumnoBean.ModificarAlumno(actionEvent)}" icon="ui-icon-disk" title="Guardar cuenta de Alumno" value="Modificar" ajax="false" />
+                                        <p:commandButton oncomplete="PF('dialogAlumnoUpdate').hide()" icon="ui-icon-cancel" title="Cancelar modificación de cuenta de Alumno" value="Cancelar"/>
+                                    </f:facet>
+                                </h:panelGrid>
+                            </p:outputPanel>
+                        </p:dialog>
+                    </h:form>
+
+
+                    <p:confirmDialog showEffect="fade" hideEffect="explode" appendTo="@(body)" closeOnEscape="true" message="Esta seguro de eliminar el reigistro?" header="Eliminar Registro" severity="alert" widgetVar="dialogAlumnoDelete">
+                        <h:form id="formDelete"> 
+                            <h:inputHidden value="#{alumnoBean.selectedAlumno.ci}" />
+                            <p:commandButton value="Aceptar" update=":formDateTable,:msgs" actionListener="#{alumnoBean.EliminarAlumno(actionEvent)}" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" oncomplete="PF('dialogAlumnoDelete').hide()" />
+                            <p:commandButton value="Cancelar" styleClass="ui-confirmdialog-no" icon="ui-icon-close" onclick="PF('dialogAlumnoDelete').hide()" />
+                        </h:form>
+                    </p:confirmDialog>
+
+                </ui:define>
+
+            </ui:composition>
+
+        </body>
+    </f:view>
+</html>

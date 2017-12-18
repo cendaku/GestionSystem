@@ -1,0 +1,35 @@
+
+
+#top{
+    width: 1300px;
+}
+
+#content{
+    width: 1300px;
+}
+
+#bottom{
+    width: 1290px;
+}
+
+@media (max-width:1300px){
+
+    #top{
+        width: auto;
+    }
+
+    #content{
+        width: auto;
+    }
+
+    #bottom{
+        width: auto;
+    }
+}
+
+.textsize{
+    z-index: 20 !important;
+    display: block;
+    font-size: 50%;
+}
+

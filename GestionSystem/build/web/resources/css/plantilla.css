@@ -1,0 +1,228 @@
+body{
+    /*padding-left: 135px; 
+     padding-right: 150px;*/
+    margin: 0;
+    font-family: sans-serif;
+    background: url(../images/fondo/bg.png) 50% 50% repeat;
+}
+
+.img{
+    background-repeat: no-repeat;
+    width: 100%;
+    /*height: 145px;*/
+    background-color: darkcyan;
+    margin-bottom: -5px;
+}
+
+/*Menu-----------------------------------------------------------------INICIO*/
+
+header{
+    width: 100%;
+    background: red;
+    box-shadow: 5px 5px 10px #000;
+}
+
+#btn-menu{
+    display: none;
+}
+
+#submenu-toggle, #submenu-toggle1, #submenu1-toggle, #submenu2-toggle, #submenu3-toggle {
+    display: none;
+}
+
+.mp{
+    display: none;
+    width: 30px;
+    height: 30px;
+    padding: 0px;
+    border-right: 1px solid #fff;
+
+}
+
+header label:hover {
+    cursor: pointer;
+    background: rgba(0,0,0,0.3);
+}
+
+.menu ul{
+    margin: 0;
+    list-style: none;
+    padding: 0;
+    display: flex;
+}
+
+.menu li{
+    text-align: center;
+    flex-grow: 1;
+}
+
+.menu li:hover > ul {
+    z-index: 20 !important;
+    display: block;
+}
+.menu li ul li {
+    position: relative;
+}
+.menu li ul li ul{
+    right:  -140px;
+    top: 0px;
+}
+.menu li ul{
+    background: /*url(../images/fondo/bbg.gif)*/ #0027ff;
+    position: absolute;
+    display: none;
+    min-width: 140px;
+    border-top-right-radius: 30px;
+    border-bottom-left-radius: 30px;
+}
+
+.m2:hover, .mb1:hover{
+    text-shadow: none;
+    background: rgba(0,250,250,0.3);
+    color: red;
+    border-top-right-radius: 30px;
+    border-bottom-left-radius: 30px;
+}
+
+.m1{
+    border-right: 1px solid #fff;
+}
+
+.m1:hover{
+    background: rgba(0,0,0,0.3);
+}
+
+.m3:hover{
+    background: rgba(0,0,0,0.3);
+}
+
+.menu li a, label.m1, label.m2, label.m3{ 
+    text-shadow: 2px 2px 0 #000;
+    display: block;
+    padding: 15px 20%;
+    color: #fff;
+    text-decoration: none;
+}
+
+@media (max-width:1317px){
+    .menu li a, label{
+        font-size: 80%;
+        padding: 13px;
+    }
+}
+
+@media (max-width:1140px){
+    .menu li a, label{
+        font-size: 70%;
+        padding: 9px;
+    }
+}
+
+@media (max-width:850px){
+    .menu li a, label{
+        font-size: 50%;
+        padding: 9px;
+    }
+}
+/***********************Vista mobil************************/
+@media (max-width:768px){
+    .mp{
+        display: block;
+    }
+    .menu{
+        z-index: 20 !important;
+        position: absolute;
+        background: red;
+        width: 70%;
+        margin-left: -70%;
+        transition: all 0.5s;
+    }
+
+    .menu ul{
+        flex-direction: column;
+    }
+    .menu li a, label{
+        font-size: 100%;
+    }
+    .menu li{
+        border-top: 1px solid #fff;
+    }
+    .menu li ul{
+        position: static;
+        width: 100%;
+        border-top-right-radius: 0px;
+        border-bottom-left-radius: 0px;
+    }
+    .mb1{
+        background: #3399ff;
+    }
+    .m2:hover, .mb1:hover{
+        border-top-right-radius: 0px;
+        border-bottom-left-radius: 0px;
+    }
+    #btn-menu:checked ~ .menu{
+        margin: 0;
+    }
+
+    #subm {
+        display: none;
+    }
+
+    #submenu-toggle:checked + #subm, #submenu-toggle1:checked + #subm, #submenu1-toggle:checked + #subm, #submenu2-toggle:checked + #subm, #submenu3-toggle:checked + #subm {
+        display: block;
+    }
+
+}
+
+/*Menu--------------------------------------------------------------------Fin*/
+
+
+.editarimg{
+    margin-top: -5%;
+    margin-bottom: 20px;
+    width: 40%;
+    border-radius: 10px;
+    box-shadow: 5px 5px 10px #000;
+
+}
+
+#content{
+    padding-top: 20px;
+    padding-bottom: 1px;
+    background: url(../images/fondo/bgctgri.jpg);
+    margin-left: 135px; 
+    margin-right: 150px;
+    box-shadow: 5px 5px 10px #000;
+}
+
+#bottom{
+    margin-left: 135px; 
+    margin-right: 150px;
+    color: white;
+    text-align: center;
+    background-color: blue;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    box-shadow: 5px 5px 10px #000;
+}
+
+#top{
+    padding-left: 135px; 
+    padding-right: 150px;
+}
+
+@media (max-width:768px){
+
+    #top{
+        padding:0;
+    }
+
+    #bottom{
+        margin: 0;
+    }
+
+    #content{
+        margin: 0;
+    }
+
+}

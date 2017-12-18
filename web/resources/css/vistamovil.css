@@ -1,0 +1,12 @@
+@media (max-width:768px){
+    /*Ocultar la segunda columna
+    table tr td:nth-child(2), table tr th:nth-child(2){
+      border:1px dashed darkgreen;
+      display:none;
+    }*/
+    
+    .vmo{
+        display: none;
+    }
+}
+

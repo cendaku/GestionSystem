@@ -1,0 +1,143 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:jsf="http://xmlns.jcp.org/jsf">
+    <h:head>
+        <title>Gestion System</title>
+        <h:outputStylesheet name="css/plantilla.css"/>
+        <h:outputStylesheet name="css/vistamovil.css"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    </h:head>
+    <h:body>
+        <div id="top">
+            <ui:insert name="top">
+                <div>
+                    <h:link outcome="index.xhtml" >
+                        <p:graphicImage name="/images/titulos/portada.png" class='img'/>
+                    </h:link>
+                </div>
+                <!-- MENÚ PRINCIPAL  -->
+                <header>
+                    <input type="checkbox" id="btn-menu"/>
+                    <label class="mp" for="btn-menu"><p:graphicImage name="/images/icons/menu.png" alt=""/>
+                    </label>
+                    <nav class="menu">
+                        <ul>
+                            <li><label for="submenu-toggle" class="m1">Administrar &#x25BE;</label>
+                                <input type="checkbox" id="submenu-toggle"/>
+                                <ul id="subm">
+                                    <li><h:link class="m2" outcome="usuario.xhtml" value="Usuario"/></li>
+                                    <li><h:link outcome="rol.xhtml" class="m2" value="Rol"/></li>
+                                    <li><label for="submenu-toggle1" class="m2">Cursos &#x25BE;</label>
+                                        <input type="checkbox" id="submenu-toggle1"/>
+                                        <ul id="subm">
+                                            <li><a href="" class="mb1">Nota 1</a></li>
+                                            <li><a href="" class="mb1">Nota 2</a></li>
+                                        </ul></li>
+                                    <li><a href="profesor.xhtml" class="m2">Profesor</a></li>
+                                    <li><h:link outcome="grupo.xhtml" class="m2" value="Grupos"/></li>
+                                </ul></li>
+
+                            <li><label for="submenu1-toggle" class="m1">Institucional &#x25BE;</label>
+                                <input type="checkbox" id="submenu1-toggle"/>
+                                <ul id="subm">
+                                    <li><a href="" class="m2">SNPP</a></li>
+                                    <li><a href="" class="m2">ITS/PTS</a></li>
+                                </ul></li>
+
+                            <li><h:link outcome="alumno.xhtml" class="m1" value="Alumno"/></li>
+                            <li jsf:rendered="#{loginBean.ulog.rol.id==1 or loginBean.ulog.rol.id==2}"><a href="encargado.xhtml" class="m1">Encargado</a></li>
+
+                            <li><label for="submenu2-toggle" class="m1">Contacto &#x25BE;</label>
+                                <input type="checkbox" id="submenu2-toggle"/>
+                                <ul id="subm">
+                                    <li><a href="http://www.youtube.com/" class="m2">YouTube</a></li>
+                                </ul></li>
+
+                            <li jsf:rendered="#{loginBean.ulog.rol.id==x}"><label class="m3" value="javascript:void(0)" onclick="PF('dlg').show();" title="Inicia Sesión">Inicia Sesión</label></li>
+
+                            <li jsf:rendered="#{loginBean.ulog.rol.id>0}"><label for="submenu3-toggle" class="m3">#{loginBean.ulog.nombre} #{loginBean.ulog.apellido} &#x25BE;</label>
+                                <input type="checkbox" id="submenu3-toggle"/>
+                                <ul id="subm">
+                                    <h:form><p:commandLink class="m2" actionListener="#{loginBean.cerrarSesion()}" value="Salir" action="/vista/index?faces-redirect=true" title="Cerrar Sesión"/></h:form>
+                                </ul></li>
+                        </ul>
+                    </nav>
+                </header>
+                <!-- CIERRE MENÚ PRINCIPAL  -->
+            </ui:insert>
+        </div>
+
+        <div id="content" >
+            <ui:insert name="content">Content</ui:insert>
+        </div>
+
+
+        <div id="bottom" >
+            <ui:insert name="bottom"><br></br>
+                <main>
+                    <p>
+                        <br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br>
+                        <h3>Proyecto © 2017 Programación</h3>
+                        <br></br><br></br><br></br><br></br>
+                    </p>
+
+                    <div class="Ed" align="justify" style="font-family: sans-serif;content: inherit">
+
+                        <center><h:form class="uc">            
+                                <p:outputLabel class="staff" onclick="document.getElementById('oculto').style.visibility = 'visible'" title="Conjunto de personas que forman un cuerpo o equipo de estudio, información o asesoramiento en una empresa u organización.">
+                                    <p:graphicImage name="/images/STAFF.png"/>
+                                </p:outputLabel>
+                            </h:form></center>
+                        <div id="oculto" style="visibility:hidden">
+                            <li>Carolina Beatriz Batte Garcete</li>
+                            <li>Jesus Ariel Caceres Coronil</li>
+                            <li>Daniel David Centurión Medina</li>
+                            <li>Diego Rafael Coronel Otazu</li>
+                            <li>Magdalena Morales Duarte</li>
+                            <li>Alvaro Salvador Torres Hidalgo</li>
+                            <br></br>
+                        </div>
+                    </div>
+                </main>
+            </ui:insert>
+        </div>
+
+        <center><h:form class="uc">
+                <p:growl id="growl" sticky="true" showDetail="true" life="3000" />
+                <p:dialog showEffect="fade" hideEffect="explode" header="Iniciar Sesión" widgetVar="dlg" resizable="false">
+                    <h:panelGrid columns="3" cellpadding="5">
+                        <p:watermark for="username" value="Ingrese su N° de Cedula"/>
+                        <h:outputLabel for="username" value="C.I.:" />
+                        <p:inputText id="username" value="#{loginBean.usuario.ci}"  required="true" label="Usuario" />
+
+                        <p:watermark for="password" value="Ingrese su contraseña" />
+                        <h:outputLabel for="password" value="Contraseña:" />
+                        <p:password id="password" value="#{loginBean.usuario.password}" required="true" label="Contraseña" />
+
+                        <f:facet name="footer">
+                            <p:commandButton icon="ui-icon-key" value="Entrar" update="growl" action="#{loginBean.iniciarSesion()}"
+                                             oncomplete="handleLoginRequest(xhr, status, args)"/>
+                        </f:facet>
+                    </h:panelGrid>
+                </p:dialog> 
+            </h:form></center>
+
+        <script type="text/javascript">
+            function handleLoginRequest(xhr, status, args) {
+                if (args.validationFailed || !args.loggedIn) {
+                    PF('dlg').jq.effect("shake", {times: 5}, 100);
+                } else {
+                    PF('dlg').hide();
+                    $('#loginLink').fadeOut();
+                }
+            }
+        </script>
+
+    </h:body>
+</html>
+

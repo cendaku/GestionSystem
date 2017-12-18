@@ -1,0 +1,118 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+   <f:view contentType="text/html">
+        <h:head>
+            <f:facet name="first">
+                <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+                <title>Grupo</title>
+            </f:facet>
+        </h:head>
+
+        <body>
+
+            <ui:composition template="./Plantilla.xhtml">
+
+                <ui:define name="content">
+                    <p:growl id="msgs" showDetail="true" />
+
+                    <h:form>
+                        <p:commandButton update=":formCreate,:formDateTable" oncomplete="PF('dialogGrupoCreate').show()" icon="ui-icon-disk" title="Crear cuenta de Grupo" value="Crear"/>
+                    </h:form>
+
+                    <h:form id="formDateTable" >
+                        <p:dataTable id="basicDT" var="grupo" value="#{grupoBean.grupos}">
+                            <f:facet name="header">
+                                Listado de Grupos
+                            </f:facet>
+
+                            <p:column style="width:auto;text-align: center" headerText="Resolución">
+                                <h:outputText value="#{grupo.resolucion}" />
+                            </p:column>
+                            <p:column style="width:auto;text-align: center" headerText="Año Inicial">
+                                <h:outputText value="#{grupo.anhoInicial}" />
+                            </p:column>
+                            
+                            <p:column style="width:auto;text-align: center" headerText="Año Final">
+                                <h:outputText value="#{grupo.anhoFinal}" />
+                            </p:column>
+
+                            <p:column style="width:88px;text-align: center">
+                                <p:commandButton update=":formUpdate:grupoDetalle" oncomplete="PF('dialogGrupoUpdate').show()" icon="ui-icon-pencil" title="Actualizar">
+                                    <f:setPropertyActionListener value="#{grupo}" target="#{grupoBean.selectedGrupo}" />
+                                </p:commandButton>
+                                <p:commandButton update=":formDelete" oncomplete="PF('dialogGrupoDelete').show()" icon="ui-icon-trash" title="Borrar">
+                                    <f:setPropertyActionListener value="#{grupo}" target="#{grupoBean.selectedGrupo}" />
+                                </p:commandButton>
+                            </p:column>
+                        </p:dataTable>
+                    </h:form>
+
+                    <h:form id="formCreate">
+                        <p:dialog id="dlgGrupoCreate" header="Crear Grupo" widgetVar="dialogGrupoCreate" showEffect="fade" hideEffect="fade" resizable="false">
+                            <p:outputPanel id="grupoDetalle" style="text-align: left;">
+                                <h:panelGrid  columns="2" style="padding: 2px;" >
+
+                                    <h:outputText value="Resolución:" />
+                                    <p:inputText value="#{grupoBean.selectedGrupo.resolucion}" />
+
+                                    <h:outputText value="Año Inicial:" />
+                                    <p:inputText value="#{grupoBean.selectedGrupo.anhoInicial}" />
+                                    
+                                    <h:outputText value="Año Final:" />
+                                    <p:inputText value="#{grupoBean.selectedGrupo.anhoFinal}" />
+
+                                    <f:facet name="footer">
+                                        <p:commandButton update=":formDateTable,:msgs" oncomplete="PF('dialogGrupoCreate').hide()" actionListener="#{grupoBean.crearGrupo(actionEvent)}" icon="ui-icon-disk" title="Guardar cuenta de Grupo" value="Guardar"/>
+                                        <p:commandButton oncomplete="PF('dialogGrupoCreate').hide()" icon="ui-icon-cancel" title="Cancelar crear cuenta de Grupo" value="Cancelar"/>
+                                    </f:facet>
+                                </h:panelGrid>
+                            </p:outputPanel>
+                        </p:dialog>
+                    </h:form>
+
+                    <h:form id="formUpdate">
+                        <p:dialog id="dlgGrupoUpdate" header="Modificar Grupo" widgetVar="dialogGrupoUpdate" showEffect="fade" hideEffect="fade" resizable="false">
+
+                            <p:outputPanel id="grupoDetalle" style="text-align: left;">
+                                <h:panelGrid  columns="2" style="padding: 2px;" >
+                                    <h:outputText value="Resolución:" />
+                                    <p:inputText value="#{grupoBean.selectedGrupo.resolucion}" />
+
+                                    <h:outputText value="Año Inicial:" />
+                                    <p:inputText value="#{grupoBean.selectedGrupo.anhoInicial}" />
+                                    
+                                    <h:outputText value="Año Final:" />
+                                    <p:inputText value="#{grupoBean.selectedGrupo.anhoFinal}" />
+                                    
+                                    <h:inputHidden value="#{grupoBean.selectedGrupo.id}" />
+                                    <f:facet name="footer">
+                                        <p:commandButton update=":formDateTable,:msgs" oncomplete="PF('dialogGrupoUpdate').hide()" actionListener="#{grupoBean.modificarGrupo(actionEvent)}" icon="ui-icon-disk" title="Guardar cuenta de Grupo" value="Modificar"/>
+                                        <p:commandButton oncomplete="PF('dialogGrupoUpdate').hide()" icon="ui-icon-cancel" title="Cancelar modificación de cuenta de Grupo" value="Cancelar"/>
+                                    </f:facet>
+                                </h:panelGrid>
+                            </p:outputPanel>
+                        </p:dialog>
+                    </h:form>
+
+                    <p:confirmDialog showEffect="fade" hideEffect="explode" appendTo="@(body)" closeOnEscape="true" message="Esta seguro de eliminar el reigistro?" header="Eliminar Registro" severity="alert" widgetVar="dialogGrupoDelete">
+                        <h:form id="formDelete"> 
+                            <h:inputHidden value="#{grupoBean.selectedGrupo.id}" />
+                            <p:commandButton value="Aceptar" update=":formDateTable,:msgs" actionListener="#{grupoBean.eliminarGrupo(actionEvent)}" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" oncomplete="PF('dialogGrupoDelete').hide()" />
+                            <p:commandButton value="Cancelar" styleClass="ui-confirmdialog-no" icon="ui-icon-close" onclick="PF('dialogGrupoDelete').hide()" />
+                        </h:form>
+                    </p:confirmDialog>
+
+
+                </ui:define>
+
+            </ui:composition>
+
+        </body>
+    </f:view>
+</html>

@@ -116,17 +116,23 @@
                                     <h:outputText value="Celular:" />
                                     <p:inputText value="#{alumnoBean.selectedAlumno.celular}" />
 
-                                    <h:outputText value="Fecha Nac.:" />
-                                    <p:calendar value="#{alumnoBean.selectedAlumno.fechaNacimiento}" />
-
-                                    <h:outputText value="Ciudad:" />
-                                    <p:inputText value="#{alumnoBean.selectedAlumno.direccion}" />
-
                                     <h:outputText value="Dirección:" />
                                     <p:inputText value="#{alumnoBean.selectedAlumno.direccion}" />
 
+                                    <h:outputText value="Email:" />
+                                    <p:inputText value="#{alumnoBean.selectedAlumno.email}" />
+
                                     <h:outputText value="Telefono:" />
                                     <p:inputText value="#{alumnoBean.selectedAlumno.telefono}" />
+
+                                    <h:outputText value="Fecha Nac.:" />
+                                    <p:calendar value="#{alumnoBean.selectedAlumno.fechaNacimiento}" />
+
+                                    <h:outputText value="Nombre de Contacto:" />
+                                    <p:calendar value="#{alumnoBean.selectedAlumno.nombreContacto}" />
+
+                                    <h:outputText value="Contacto Telefono:" />
+                                    <p:calendar value="#{alumnoBean.selectedAlumno.nombreContacto}" />
 
                                     <p:fileUpload value="#{alumnoBean.archivo}" mode="simple" sizeLimit="1000000" allowTypes="/(\.|\/)(gif|jpe?g)|png)$/" />
                                     <h:inputHidden value="#{alumnoBean.selectedAlumno.ruta}" />

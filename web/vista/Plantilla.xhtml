@@ -22,7 +22,7 @@
                 </div>
                 <div class="mm">
                     <h:form>
-                        <p:commandButton class="bm" icon="ui-icon-person" rendered="#{loginBean.ulog.rol.id>0}" value="#{loginBean.ulog.nombre} #{loginBean.ulog.apellido}" />
+                        <p:commandButton class="bm" icon="ui-icon-person" rendered="#{loginBean.ulog.rol.id>0}" value="#{loginBean.ulog.nombre} #{loginBean.ulog.apellido}" title="Usuario" />
                         <p:commandButton class="bm" icon="ui-icon-person" rendered="#{loginBean.ulog.rol.id==x}" style="cursor: pointer" onclick="PF('dlg').show();" title="Inicia Sesión" value="Inicia Sesión"/>&nbsp;
                         <p:commandButton class="bm" icon="ui-icon-power" rendered="#{loginBean.ulog.rol.id>0}" actionListener="#{loginBean.cerrarSesion()}" value="Cerrar Sesión" action="/vista/index?faces-redirect=true" title="Cerrar Sesión"/>
                     </h:form>

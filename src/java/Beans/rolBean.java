@@ -18,7 +18,6 @@ import javax.faces.event.ActionEvent;
 @Named(value = "rolBean")
 @RequestScoped
 public class rolBean {
-
     private List<Rol> rols;
     private Rol selectedRol;
     private Integer Rolid;

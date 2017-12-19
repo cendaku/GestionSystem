@@ -139,6 +139,24 @@
                                         <f:selectItem itemLabel="- Seleccione -" itemValue="" />
                                         <f:selectItems value="#{sexoBean.listasexoes}" itemValue="#{sexo.id}" itemLabel="#{sexo.descripcion}" var="sexo" />
                                     </p:selectOneMenu>
+                                    
+                                    <h:outputText value="Nacionalidad:" />
+                                    <p:selectOneMenu value="#{alumnoBean.selectedAlumno.nacionalidad.id}" style="width:auto">
+                                        <f:selectItem itemLabel="- Seleccione -" itemValue="" />
+                                        <f:selectItems value="#{nacionalidadBean.listanacionalidades}" itemValue="#{nacionalidad.id}" itemLabel="#{nacionalidad.descripcion}" var="nacionalidad" />
+                                    </p:selectOneMenu>
+                                    
+                                    <h:outputText value="Zona" />
+                                    <p:selectOneMenu value="#{alumnoBean.selectedAlumno.zona.id}" style="width:auto">
+                                        <f:selectItem itemLabel="- Seleccione -" itemValue="" />
+                                        <f:selectItems value="#{zonaBean.listazonaes}" itemValue="#{zona.id}" itemLabel="#{zona.descripcion}" var="zona" />
+                                    </p:selectOneMenu>
+                                    
+                                    <h:outputText value="Situacion Laboral" />
+                                    <p:selectOneMenu value="#{alumnoBean.selectedAlumno.situacionLaboral.id}" style="width:auto">
+                                        <f:selectItem itemLabel="- Seleccione -" itemValue="" />
+                                        <f:selectItems value="#{situacionLaboralBean.listazonaes}" itemValue="#{situacionLaboral.id}" itemLabel="#{situacionLaboral.tipoTrabajo}" var="situacionLaboral" />
+                                    </p:selectOneMenu>
 
                                     <p:fileUpload value="#{alumnoBean.archivo}" mode="simple" sizeLimit="1000000" allowTypes="/(\.|\/)(gif|jpe?g)|png)$/" />
                                     <h:inputHidden value="#{alumnoBean.selectedAlumno.ruta}" />

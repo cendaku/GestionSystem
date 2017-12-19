@@ -15,10 +15,17 @@
     <h:body>
         <div id="top">
             <ui:insert name="top">
-                <div>
+                <div style="text-align: right;">
                     <h:link outcome="index.xhtml" >
                         <p:graphicImage name="/images/titulos/portada.png" class='img'/>
                     </h:link>
+                </div>
+                <div class="mm">
+                    <h:form>
+                        <p:commandButton class="bm" icon="ui-icon-person" rendered="#{loginBean.ulog.rol.id>0}" value="#{loginBean.ulog.nombre} #{loginBean.ulog.apellido}" />
+                        <p:commandButton class="bm" icon="ui-icon-person" rendered="#{loginBean.ulog.rol.id==x}" style="cursor: pointer" onclick="PF('dlg').show();" title="Inicia Sesión" value="Inicia Sesión"/>&nbsp;
+                        <p:commandButton class="bm" icon="ui-icon-power" rendered="#{loginBean.ulog.rol.id>0}" actionListener="#{loginBean.cerrarSesion()}" value="Cerrar Sesión" action="/vista/index?faces-redirect=true" title="Cerrar Sesión"/>
+                    </h:form>
                 </div>
                 <!-- MENÚ PRINCIPAL  -->
                 <header>
@@ -58,11 +65,10 @@
                                     <li><a href="http://www.youtube.com/" class="m2">YouTube</a></li>
                                 </ul></li>
 
-                            <li jsf:rendered="#{loginBean.ulog.rol.id==x}"><label class="m3" value="javascript:void(0)" onclick="PF('dlg').show();" title="Inicia Sesión">Inicia Sesión</label></li>
+                            <li jsf:rendered="#{loginBean.ulog.rol.id==x}" class="mmo"><label class="m3" value="javascript:void(0)" onclick="PF('dlg').show();" title="Inicia Sesión">Inicia Sesión</label></li>
 
-                            <li jsf:rendered="#{loginBean.ulog.rol.id>0}"><label for="submenu3-toggle" class="m3">#{loginBean.ulog.nombre} #{loginBean.ulog.apellido} &#x25BE;</label>
-                                <input type="checkbox" id="submenu3-toggle"/>
-                                <ul id="subm">
+                            <li jsf:rendered="#{loginBean.ulog.rol.id>0}" class="mmo"><label class="m3">#{loginBean.ulog.nombre} #{loginBean.ulog.apellido} &#x25BE;</label>
+                                <ul>
                                     <h:form><p:commandLink class="m2" actionListener="#{loginBean.cerrarSesion()}" value="Salir" action="/vista/index?faces-redirect=true" title="Cerrar Sesión"/></h:form>
                                 </ul></li>
                         </ul>

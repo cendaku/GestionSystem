@@ -24,6 +24,10 @@ header{
     display: none;
 }
 
+.mm{
+    display: none;
+}
+
 #submenu-toggle, #submenu-toggle1, #submenu1-toggle, #submenu2-toggle, #submenu3-toggle {
     display: none;
 }
@@ -135,7 +139,7 @@ header label:hover {
     .menu ul{
         flex-direction: column;
     }
-    .menu li a, label.m1, label.m2, label.m3{
+    .menu li a, label.m1, label.m2{
         font-size: 100%;
     }
     .menu li{
@@ -162,12 +166,30 @@ header label:hover {
     #btn-menu:checked ~ .menu{
         margin: 0;
     }
-
-    #subm {
+    
+    .mm{
+        display: block;
+        background: url(../images/fondo/fons1.jpg);
+        text-align: right; 
+    }
+    
+    .bm{
+        text-shadow: 2px 2px 0 #000;
+        background: rgba(1, 51, 31, 0.5);
+        color: #fff;
+        font-weight: bold;
+        font-size: 90%
+    }
+    
+    .mmo{
         display: none;
     }
 
-    #submenu-toggle:checked + #subm, #submenu-toggle1:checked + #subm, #submenu1-toggle:checked + #subm, #submenu2-toggle:checked + #subm, #submenu3-toggle:checked + #subm {
+    #subm{
+        display: none;
+    }
+
+    #submenu-toggle:checked + #subm, #submenu-toggle1:checked + #subm, #submenu1-toggle:checked + #subm, #submenu2-toggle:checked + #subm {
         display: block;
     }
 

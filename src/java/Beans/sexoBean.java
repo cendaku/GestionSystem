@@ -15,9 +15,6 @@ import javax.inject.Named;
 @Named(value = "sexoBean")
 @RequestScoped
 public class sexoBean {
-    private List<Sexo> sexos;
-    private Sexo selectedSexo;
-    private Integer id;
     
     @EJB
     private SexoFacade sexoFacade;

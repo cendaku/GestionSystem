@@ -25,7 +25,7 @@
                     <p:growl id="msgs" showDetail="true" />
 
                     <h:form rendered="#{loginBean.ulog.rol.id==1}">
-                        <p:commandButton update=":formCreate,:formDateTable" oncomplete="PF('dialogAlumnoCreate').show()" icon="ui-icon-disk" title="Crear cuenta de Alumno" value="Crear"/>
+                        <p:commandButton update=":formCreate,:formDateTable" oncomplete="PF('dialogAlumnoCreate').show()" icon="ui-icon-disk" title="Crear cuenta de Alumno" value="Cargar Alumno"/>
                     </h:form>
 
                     <h:form class="textsize" id="formDateTable" >
@@ -103,7 +103,7 @@
 
                     <h:form id="formCreate" enctype="multipart/form-data">
 
-                        <p:dialog id="dlgAlumnoCreate" header="Crear Alumno" widgetVar="dialogAlumnoCreate" showEffect="explode" closeOnEscape="true" hideEffect="explode" resizable="explode">
+                        <p:dialog id="dlgAlumnoCreate" header="Crear Alumno" widgetVar="dialogAlumnoCreate" closeOnEscape="true" hideEffect="explode" resizable="explode">
                             <p:outputPanel id="alumnoDetalle" style="text-align: left;">
                                 <h:panelGrid  columns="2" style="padding: 2px;" >
 

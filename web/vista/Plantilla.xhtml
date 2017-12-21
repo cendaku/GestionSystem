@@ -20,13 +20,15 @@
                         <p:graphicImage name="/images/titulos/portada.png" class='img'/>
                     </h:link>
                 </div>
-                <h:form class="mm">
-                    <p:commandButton class="bm" rendered="#{loginBean.ulog.rol.id>0}" update=":formMostrar" oncomplete="PF('dialogUsuarioMostrar').show()" icon="ui-icon-person" value="#{loginBean.ulog.nombre} #{loginBean.ulog.apellido}" title="Usuario">
-                        <f:setPropertyActionListener value="#{loginBean}" target="#{loginBean.ulog}" />
-                    </p:commandButton>
-                    <p:commandButton class="bm" icon="ui-icon-person" rendered="#{loginBean.ulog.rol.id==x}" style="cursor: pointer" onclick="PF('dlg').show();" title="Inicia Sesión" value="Inicia Sesión"/>&nbsp;
-                    <p:commandButton class="bm" icon="ui-icon-power" rendered="#{loginBean.ulog.rol.id>0}" actionListener="#{loginBean.cerrarSesion()}" value="Cerrar Sesión" action="/vista/index?faces-redirect=true" title="Cerrar Sesión"/>
-                </h:form>
+                <div class="mm">
+                    <h:form>
+                        <p:commandButton class="bm" rendered="#{loginBean.ulog.rol.id>0}" update=":formMostrar" oncomplete="PF('dialogUsuarioMostrar').show()" icon="ui-icon-person" value="#{loginBean.ulog.nombre} #{loginBean.ulog.apellido}" title="Usuario">
+                            <f:setPropertyActionListener value="#{loginBean}" target="#{loginBean.ulog}" />
+                        </p:commandButton>
+                        <p:commandButton class="bm" icon="ui-icon-person" rendered="#{loginBean.ulog.rol.id==x}" style="cursor: pointer" onclick="PF('dlg').show();" title="Inicia Sesión" value="Inicia Sesión"/>&nbsp;
+                        <p:commandButton class="bm" icon="ui-icon-power" rendered="#{loginBean.ulog.rol.id>0}" actionListener="#{loginBean.cerrarSesion()}" value="Cerrar Sesión" action="/vista/index?faces-redirect=true" title="Cerrar Sesión"/>
+                    </h:form>
+                </div>
                 <!-- MENÚ PRINCIPAL  -->
                 <header>
                     <input type="checkbox" id="btn-menu"/>

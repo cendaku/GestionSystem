@@ -90,7 +90,7 @@
                             <p:column class="vmo" style="width:100%;text-align: center; font-size: 90%" headerText="Estado Academico">
                                 <h:outputText value="#{alumno.estadoAcademico}" />
                             </p:column>
-                            <p:column style="width:88px;text-align: center" rendered="#{loginBean.ulog.rol.id==1}">
+                            <p:column class="vmo" style="width:88px;text-align: center" rendered="#{loginBean.ulog.rol.id==1}">
                                 <p:commandButton update=":formUpdate:alumnoDetalle" oncomplete="PF('dialogAlumnoUpdate').show()" icon="ui-icon-pencil" title="Actualizar">
                                     <f:setPropertyActionListener value="#{alumno}" target="#{alumnoBean.selectedAlumno}" />
                                 </p:commandButton>

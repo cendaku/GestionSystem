@@ -15,7 +15,7 @@
     <h:body>
         <div id="top">
             <ui:insert name="top">
-                <div style="text-align: right;">
+                <div class="vmo">
                     <h:link outcome="index.xhtml" >
                         <p:graphicImage name="/images/titulos/portada.png" class='img'/>
                     </h:link>
@@ -30,15 +30,23 @@
                 <!-- MENÚ PRINCIPAL  -->
                 <header>
                     <input type="checkbox" id="btn-menu"/>
-                    <label class="mp" for="btn-menu"><p:graphicImage name="/images/icons/menu.png" alt=""/>
+                    <label class="mp" for="btn-menu">
+                        <div style="float: left">
+                            <h:link outcome="index.xhtml">
+                                <p:graphicImage class="maxin" name="/images/titulos/portada.png"/>
+                            </h:link>
+                        </div>
+                        <div class="mip" style="float: right">
+                            <p:graphicImage style="width: 60px;border-left: 1px solid #fff;" name="/images/icons/menu.png" alt=""/>
+                        </div>
                     </label>
                     <nav class="menu">
                         <ul>
                             <li><label for="submenu-toggle" class="m1">Administrar &#x25BE;</label>
                                 <input type="checkbox" id="submenu-toggle"/>
                                 <ul id="subm">
-                                    <li><h:link class="m2" outcome="usuario.xhtml" value="Usuario"/></li>
-                                    <li><h:link outcome="rol.xhtml" class="m2" value="Rol"/></li>
+                                    <li jsf:rendered="#{loginBean.ulog.rol.id==1}"><h:link class="m2" outcome="usuario.xhtml" value="Usuario"/></li>
+                                    <li jsf:rendered="#{loginBean.ulog.rol.id==1}"><h:link outcome="rol.xhtml" class="m2" value="Rol"/></li>
                                     <li><label for="submenu-toggle1" class="m2">Cursos &#x25BE;</label>
                                         <input type="checkbox" id="submenu-toggle1"/>
                                         <ul id="subm">
@@ -138,7 +146,7 @@
                 <p:outputPanel id="usuarioDetalle" style="text-align: left;">
                     <h:panelGrid  columns="2" style="padding: 2px;" >
 
-                        <h:outputText value="CI:" style="color: blue" />
+                        <h:outputText value="N° Cedula:" style="color: blue" />
                         <p:outputLabel value="#{loginBean.ulog.ci}" />
 
                         <h:outputText value="Nombre:"  style="color: blue"/>
@@ -146,9 +154,6 @@
 
                         <h:outputText value="Apellido:"  style="color: blue"/>
                         <p:outputLabel value="#{loginBean.ulog.apellido}" />
-
-                        <h:outputText value="Activo:"  style="color: blue"/>
-                        <p:outputLabel value="#{loginBean.ulog.activo}" />
 
                         <h:outputText value="Rol:"  style="color: blue"/>
                         <p:outputLabel value="#{loginBean.ulog.rol.descripcion}" />

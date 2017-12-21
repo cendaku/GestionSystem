@@ -22,7 +22,7 @@
             <ui:define name="content">
                 <p:growl id="msgs" showDetail="true" />
 
-                <h:form rendered="#{loginBean.ulog.rol.id==1 or loginBean.ulog.rol.id==2}">
+                <h:form class="vmo" rendered="#{loginBean.ulog.rol.id==1 or loginBean.ulog.rol.id==2}">
                     <p:commandButton update=":formCreate,:formDateTable" oncomplete="PF('dialogUsuarioCreate').show()" icon="ui-icon-disk" title="Crear cuenta de Usuario" value="Crear"/>
                 </h:form>
                 
@@ -48,7 +48,7 @@
                             <h:outputText value="#{usuario.rol.descripcion}" />
                         </p:column>
 
-                        <p:column style="width:88px;text-align: center" rendered="#{loginBean.ulog.rol.id==1 or loginBean.ulog.rol.id==2}">
+                        <p:column class="vmo" style="width:88px;text-align: center" rendered="#{loginBean.ulog.rol.id==1 or loginBean.ulog.rol.id==2}">
                             <p:commandButton update=":formUpdate:usuarioDetalle" oncomplete="PF('dialogUsuarioUpdate').show()" icon="ui-icon-pencil" title="Editar">
                                 <f:setPropertyActionListener value="#{usuario}" target="#{usuarioBean.selectedUsuario}" />
                             </p:commandButton>

@@ -20,11 +20,13 @@
                         <p:graphicImage name="/images/titulos/portada.png" class='img'/>
                     </h:link>
                 </div>
-                    <h:form class="mm">
-                        <p:commandButton class="bm" icon="ui-icon-person" rendered="#{loginBean.ulog.rol.id>0}" value="#{loginBean.ulog.nombre} #{loginBean.ulog.apellido}" title="Usuario" />
-                        <p:commandButton class="bm" icon="ui-icon-person" rendered="#{loginBean.ulog.rol.id==x}" style="cursor: pointer" onclick="PF('dlg').show();" title="Inicia Sesión" value="Inicia Sesión"/>&nbsp;
-                        <p:commandButton class="bm" icon="ui-icon-power" rendered="#{loginBean.ulog.rol.id>0}" actionListener="#{loginBean.cerrarSesion()}" value="Cerrar Sesión" action="/vista/index?faces-redirect=true" title="Cerrar Sesión"/>
-                    </h:form>
+                <h:form class="mm">
+                    <p:commandButton class="bm" rendered="#{loginBean.ulog.rol.id>0}" update=":formMostrar" oncomplete="PF('dialogUsuarioMostrar').show()" icon="ui-icon-person" value="#{loginBean.ulog.nombre} #{loginBean.ulog.apellido}" title="Usuario">
+                        <f:setPropertyActionListener value="#{loginBean}" target="#{loginBean.ulog}" />
+                    </p:commandButton>
+                    <p:commandButton class="bm" icon="ui-icon-person" rendered="#{loginBean.ulog.rol.id==x}" style="cursor: pointer" onclick="PF('dlg').show();" title="Inicia Sesión" value="Inicia Sesión"/>&nbsp;
+                    <p:commandButton class="bm" icon="ui-icon-power" rendered="#{loginBean.ulog.rol.id>0}" actionListener="#{loginBean.cerrarSesion()}" value="Cerrar Sesión" action="/vista/index?faces-redirect=true" title="Cerrar Sesión"/>
+                </h:form>
                 <!-- MENÚ PRINCIPAL  -->
                 <header>
                     <input type="checkbox" id="btn-menu"/>
@@ -130,6 +132,31 @@
                     </h:panelGrid>
                 </p:dialog> 
             </h:form></center>
+
+        <h:form id="formMostrar">
+            <p:dialog id="dlgUsuarioMostrar" header="Vista Usuario" widgetVar="dialogUsuarioMostrar" showEffect="fade" hideEffect="explode" resizable="false" closeOnEscape="true">
+                <p:outputPanel id="usuarioDetalle" style="text-align: left;">
+                    <h:panelGrid  columns="2" style="padding: 2px;" >
+
+                        <h:outputText value="CI:" style="color: blue" />
+                        <p:outputLabel value="#{loginBean.ulog.ci}" />
+
+                        <h:outputText value="Nombre:"  style="color: blue"/>
+                        <p:outputLabel value="#{loginBean.ulog.nombre}" />
+
+                        <h:outputText value="Apellido:"  style="color: blue"/>
+                        <p:outputLabel value="#{loginBean.ulog.apellido}" />
+
+                        <h:outputText value="Activo:"  style="color: blue"/>
+                        <p:outputLabel value="#{loginBean.ulog.activo}" />
+
+                        <h:outputText value="Rol:"  style="color: blue"/>
+                        <p:outputLabel value="#{loginBean.ulog.rol.descripcion}" />
+
+                    </h:panelGrid>
+                </p:outputPanel>
+            </p:dialog>
+        </h:form>
 
         <script type="text/javascript">
             function handleLoginRequest(xhr, status, args) {

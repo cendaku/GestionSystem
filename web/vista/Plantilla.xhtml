@@ -11,9 +11,10 @@
         <h:outputStylesheet name="css/plantilla.css"/>
         <h:outputStylesheet name="css/vistamovil.css"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <script src="../resources/js/menufd.js"></script>
     </h:head>
     <h:body>
-        <div id="top">
+        <div id="top" style="box-shadow: 5px 5px 10px #000;">
             <ui:insert name="top">
                 <div class="vmo">
                     <h:link outcome="index.xhtml" >
@@ -66,6 +67,7 @@
                                     <li><a href="" class="m2">ITS/PTS</a></li>
                                 </ul></li>
 
+                            <li><h:link outcome="Leyendas.xhtml" class="m1" value="Texto"/></li>
                             <li><h:link outcome="alumno.xhtml" class="m1" value="Alumno"/></li>
                             <li jsf:rendered="#{loginBean.ulog.rol.id==1 or loginBean.ulog.rol.id==2}"><a href="encargado.xhtml" class="m1">Encargado</a></li>
 

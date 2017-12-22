@@ -17,7 +17,21 @@ body{
 header{
     width: 100%;
     background: green;
-    box-shadow: 5px 5px 10px #000;
+    /*position: fixed;*/
+    z-index: 100;
+}
+
+.menu-fixed {
+    position:fixed;
+    z-index:1000;
+    top:0;
+    max-width:100%;
+    font-size: 95%;
+    left:0;
+    /*Podemos hacer que el menu abarque el 100% al hacer scroll*/
+    width:100%;
+    box-shadow:0px 4px 3px rgba(0,0,0,.5);
+    background: green;
 }
 
 #btn-menu{
@@ -40,10 +54,10 @@ header{
 }
 
 .maxin{
-     max-width: 250px;
-     min-width: 80%;
-     height: 60px;
-     position: absolute; 
+    max-width: 250px;
+    min-width: 80%;
+    height: 60px;
+    position: absolute; 
 }
 
 header label.mp div.mip:hover {
@@ -175,13 +189,13 @@ header label.mp div.mip:hover {
     #btn-menu:checked ~ .menu{
         margin: 0;
     }
-    
+
     .mm{
         display: block;
         background: url(../images/fondo/fons1.jpg);
         text-align: right; 
     }
-    
+
     .bm{
         text-shadow: 2px 2px 0 #000;
         background: rgba(1, 51, 31, 0.5);
@@ -189,7 +203,7 @@ header label.mp div.mip:hover {
         font-weight: bold;
         font-size: 90%
     }
-    
+
     .mmo{
         display: none;
     }

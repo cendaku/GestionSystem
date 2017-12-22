@@ -39,7 +39,7 @@
                             <p:column style="width:auto;text-align: center" headerText="Institución">
                                 <h:outputText value="#{rol.institucion}" />
                             </p:column>
-                            <p:column style="width:88px;text-align: center" rendered="#{loginBean.ulog.rol.id==1 or loginBean.ulog.rol.id==2}">
+                            <p:column class="vmo" style="width:88px;text-align: center" rendered="#{loginBean.ulog.rol.id==1 or loginBean.ulog.rol.id==2}">
                                 <p:commandButton update=":formUpdate:rolDetalle" oncomplete="PF('dialogRolUpdate').show()" icon="ui-icon-pencil" title="Editar">
                                     <f:setPropertyActionListener value="#{rol}" target="#{rolBean.selectedRol}" />
                                 </p:commandButton>

@@ -1,4 +1,6 @@
-
+#content{
+    /*overflow-x: scroll;*/
+}
 
 #top{
     width: 1300px;

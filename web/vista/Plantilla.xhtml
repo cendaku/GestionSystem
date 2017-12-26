@@ -23,7 +23,7 @@
                 </div>
                 <div class="mm">
                     <h:form>
-                        <p:commandButton class="bm" rendered="#{loginBean.ulog.rol.id>0}" update=":formMostrar" oncomplete="PF('dialogUsuarioMostrar').show()" icon="ui-icon-person" value="#{loginBean.ulog.nombre} #{loginBean.ulog.apellido}" title="Usuario">
+                        <p:commandButton class="bm" rendered="#{loginBean.ulog.rol.id>0}" update=":formVer" oncomplete="PF('dialogUsuarioMostrar').show()" icon="ui-icon-person" value="#{loginBean.ulog.nombre} #{loginBean.ulog.apellido}" title="Usuario">
                             <f:setPropertyActionListener value="#{loginBean}" target="#{loginBean.ulog}" />
                         </p:commandButton>
                         <p:commandButton class="bm" icon="ui-icon-person" rendered="#{loginBean.ulog.rol.id==x}" style="cursor: pointer" onclick="PF('dlg').show();" title="Inicia Sesión" value="Inicia Sesión"/>&nbsp;
@@ -145,7 +145,7 @@
                 </p:dialog> 
             </h:form></center>
 
-        <h:form id="formMostrar">
+        <h:form id="formVer">
             <p:dialog id="dlgUsuarioMostrar" header="Usuario" widgetVar="dialogUsuarioMostrar" showEffect="fade" hideEffect="explode" resizable="false" closeOnEscape="true">
                 <p:outputPanel id="usuarioDetalle" style="text-align: left;">
                     <h:panelGrid  columns="2" style="padding: 2px;" >

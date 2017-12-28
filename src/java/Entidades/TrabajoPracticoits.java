@@ -69,9 +69,6 @@ public class TrabajoPracticoits implements Serializable {
     private InscripcionIts inscripcionIts;
 
     public TrabajoPracticoits() {
-        this.contratoInstructorits = new ContratoInstructorits();
-        this.inscripcionIts = new InscripcionIts();
-        this.trabajoPracticoitsPK = new TrabajoPracticoitsPK();
     }
 
     public TrabajoPracticoits(TrabajoPracticoitsPK trabajoPracticoitsPK) {

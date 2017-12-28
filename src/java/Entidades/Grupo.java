@@ -55,7 +55,6 @@ public class Grupo implements Serializable {
     private List<CarreraHabilitada> carreraHabilitadaList;
 
     public Grupo() {
-        this.id = 0;
     }
 
     public Grupo(Integer id) {

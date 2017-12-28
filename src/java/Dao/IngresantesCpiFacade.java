@@ -5,7 +5,7 @@
  */
 package Dao;
 
-import Entidades.CarrerasCpi;
+import Entidades.IngresantesCpi;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -15,7 +15,7 @@ import javax.persistence.PersistenceContext;
  * @author administrador
  */
 @Stateless
-public class CarrerasCpiFacade extends AbstractFacade<CarrerasCpi> {
+public class IngresantesCpiFacade extends AbstractFacade<IngresantesCpi> {
 
     @PersistenceContext(unitName = "GestionSystemPU")
     private EntityManager em;
@@ -25,8 +25,8 @@ public class CarrerasCpiFacade extends AbstractFacade<CarrerasCpi> {
         return em;
     }
 
-    public CarrerasCpiFacade() {
-        super(CarrerasCpi.class);
+    public IngresantesCpiFacade() {
+        super(IngresantesCpi.class);
     }
     
 }

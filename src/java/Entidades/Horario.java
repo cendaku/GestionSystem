@@ -20,6 +20,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
@@ -52,12 +53,6 @@ public class Horario implements Serializable {
     @Size(max = 45)
     @Column(name = "horario_final")
     private String horarioFinal;
-    @JoinTable(name = "horario_cpi", joinColumns = {
-        @JoinColumn(name = "horario", referencedColumnName = "id")}, inverseJoinColumns = {
-        @JoinColumn(name = "cpi_anho", referencedColumnName = "anho")
-        , @JoinColumn(name = "cpi_num", referencedColumnName = "numero_nacional")})
-    @ManyToMany
-    private List<PdCpi> pdCpiList;
     @JoinTable(name = "horario_its", joinColumns = {
         @JoinColumn(name = "horario", referencedColumnName = "id")}, inverseJoinColumns = {
         @JoinColumn(name = "sem_habi_num", referencedColumnName = "numero_nacional")
@@ -69,11 +64,12 @@ public class Horario implements Serializable {
     private List<SemestreHabilitado> semestreHabilitadoList;
     @ManyToMany(mappedBy = "horarioList")
     private List<ContratoInstructorcpi> contratoInstructorcpiList;
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "horario1")
+    private HorarioCpi horarioCpi;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "horario1")
     private List<HorarioInstructorits> horarioInstructoritsList;
 
     public Horario() {
-        this.id=0;
     }
 
     public Horario(Integer id) {
@@ -112,14 +108,6 @@ public class Horario implements Serializable {
         this.horarioFinal = horarioFinal;
     }
 
-    public List<PdCpi> getPdCpiList() {
-        return pdCpiList;
-    }
-
-    public void setPdCpiList(List<PdCpi> pdCpiList) {
-        this.pdCpiList = pdCpiList;
-    }
-
     public List<SemestreHabilitado> getSemestreHabilitadoList() {
         return semestreHabilitadoList;
     }
@@ -134,6 +122,14 @@ public class Horario implements Serializable {
 
     public void setContratoInstructorcpiList(List<ContratoInstructorcpi> contratoInstructorcpiList) {
         this.contratoInstructorcpiList = contratoInstructorcpiList;
+    }
+
+    public HorarioCpi getHorarioCpi() {
+        return horarioCpi;
+    }
+
+    public void setHorarioCpi(HorarioCpi horarioCpi) {
+        this.horarioCpi = horarioCpi;
     }
 
     public List<HorarioInstructorits> getHorarioInstructoritsList() {

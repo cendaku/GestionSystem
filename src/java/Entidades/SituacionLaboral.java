@@ -6,9 +6,7 @@
 package Entidades;
 
 import java.io.Serializable;
-import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -16,7 +14,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -29,8 +26,8 @@ import javax.validation.constraints.NotNull;
 @NamedQueries({
     @NamedQuery(name = "SituacionLaboral.findAll", query = "SELECT s FROM SituacionLaboral s")
     , @NamedQuery(name = "SituacionLaboral.findById", query = "SELECT s FROM SituacionLaboral s WHERE s.id = :id")
-    , @NamedQuery(name = "SituacionLaboral.findByEstado", query = "SELECT s FROM SituacionLaboral s WHERE s.estado = :estado")
     , @NamedQuery(name = "SituacionLaboral.findByDeseo", query = "SELECT s FROM SituacionLaboral s WHERE s.deseo = :deseo")
+    , @NamedQuery(name = "SituacionLaboral.findByEstado", query = "SELECT s FROM SituacionLaboral s WHERE s.estado = :estado")
     , @NamedQuery(name = "SituacionLaboral.findByExperiencia", query = "SELECT s FROM SituacionLaboral s WHERE s.experiencia = :experiencia")
     , @NamedQuery(name = "SituacionLaboral.findByTipoTrabajo", query = "SELECT s FROM SituacionLaboral s WHERE s.tipoTrabajo = :tipoTrabajo")})
 public class SituacionLaboral implements Serializable {
@@ -41,38 +38,26 @@ public class SituacionLaboral implements Serializable {
     @NotNull
     @Column(name = "id")
     private Integer id;
-    @Column(name = "estado")
-    private Boolean estado;
     @Column(name = "deseo")
     private Boolean deseo;
-    @Basic(optional = false)
-    @NotNull
+    @Column(name = "estado")
+    private Boolean estado;
     @Column(name = "experiencia")
-    private boolean experiencia;
+    private Boolean experiencia;
     @Column(name = "tipo_trabajo")
     private Boolean tipoTrabajo;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "situacionLaboral")
-    private List<Alumno> alumnoList;
     @JoinColumn(name = "horas_trabajo", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private HorasTrabajo horasTrabajo;
     @JoinColumn(name = "salario", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private Salario salario;
 
     public SituacionLaboral() {
-        this.horasTrabajo = new HorasTrabajo();
-        this.id=0;
-        this.salario = new Salario();
     }
 
     public SituacionLaboral(Integer id) {
         this.id = id;
-    }
-
-    public SituacionLaboral(Integer id, boolean experiencia) {
-        this.id = id;
-        this.experiencia = experiencia;
     }
 
     public Integer getId() {
@@ -83,14 +68,6 @@ public class SituacionLaboral implements Serializable {
         this.id = id;
     }
 
-    public Boolean getEstado() {
-        return estado;
-    }
-
-    public void setEstado(Boolean estado) {
-        this.estado = estado;
-    }
-
     public Boolean getDeseo() {
         return deseo;
     }
@@ -99,11 +76,19 @@ public class SituacionLaboral implements Serializable {
         this.deseo = deseo;
     }
 
-    public boolean getExperiencia() {
+    public Boolean getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Boolean estado) {
+        this.estado = estado;
+    }
+
+    public Boolean getExperiencia() {
         return experiencia;
     }
 
-    public void setExperiencia(boolean experiencia) {
+    public void setExperiencia(Boolean experiencia) {
         this.experiencia = experiencia;
     }
 
@@ -113,14 +98,6 @@ public class SituacionLaboral implements Serializable {
 
     public void setTipoTrabajo(Boolean tipoTrabajo) {
         this.tipoTrabajo = tipoTrabajo;
-    }
-
-    public List<Alumno> getAlumnoList() {
-        return alumnoList;
-    }
-
-    public void setAlumnoList(List<Alumno> alumnoList) {
-        this.alumnoList = alumnoList;
     }
 
     public HorasTrabajo getHorasTrabajo() {

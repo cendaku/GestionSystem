@@ -56,9 +56,6 @@ public class InscripcionIts implements Serializable {
     private List<Notasits> notasitsList;
 
     public InscripcionIts() {
-        this.alumno1 = new Alumno();
-        this.inscripcionItsPK = new InscripcionItsPK();
-        this.semestreHabilitado = new SemestreHabilitado();
     }
 
     public InscripcionIts(InscripcionItsPK inscripcionItsPK) {

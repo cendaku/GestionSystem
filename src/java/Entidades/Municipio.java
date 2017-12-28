@@ -43,11 +43,10 @@ public class Municipio implements Serializable {
     private String descripcion;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "municipio")
     private List<Instructor> instructorList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "municipioId")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "municipio")
     private List<Localidad> localidadList;
 
     public Municipio() {
-        this.id=0;
     }
 
     public Municipio(Integer id) {

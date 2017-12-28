@@ -6,18 +6,16 @@
 package Entidades;
 
 import java.io.Serializable;
-import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
@@ -42,14 +40,10 @@ public class TipoMotivo implements Serializable {
     @Size(max = 50)
     @Column(name = "descripcion")
     private String descripcion;
-    @JoinTable(name = "detalle_motivo", joinColumns = {
-        @JoinColumn(name = "tipo_motivo", referencedColumnName = "id")}, inverseJoinColumns = {
-        @JoinColumn(name = "documento", referencedColumnName = "id")})
-    @ManyToMany
-    private List<Documento> documentoList;
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "tipoMotivo1")
+    private DetalleMotivo detalleMotivo;
 
     public TipoMotivo() {
-        this.id=0;
     }
 
     public TipoMotivo(Integer id) {
@@ -72,12 +66,12 @@ public class TipoMotivo implements Serializable {
         this.descripcion = descripcion;
     }
 
-    public List<Documento> getDocumentoList() {
-        return documentoList;
+    public DetalleMotivo getDetalleMotivo() {
+        return detalleMotivo;
     }
 
-    public void setDocumentoList(List<Documento> documentoList) {
-        this.documentoList = documentoList;
+    public void setDetalleMotivo(DetalleMotivo detalleMotivo) {
+        this.detalleMotivo = detalleMotivo;
     }
 
     @Override

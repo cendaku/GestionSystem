@@ -39,7 +39,7 @@ public class AsistenciaFpa implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "presencia")
-    private int presencia;
+    private boolean presencia;
     @JoinColumns({
         @JoinColumn(name = "curso", referencedColumnName = "curso", insertable = false, updatable = false)
         , @JoinColumn(name = "alumno", referencedColumnName = "alumno", insertable = false, updatable = false)})
@@ -47,15 +47,13 @@ public class AsistenciaFpa implements Serializable {
     private InscripcionFpa inscripcionFpa;
 
     public AsistenciaFpa() {
-        this.inscripcionFpa = new InscripcionFpa();
-        this.asistenciaFpaPK = new AsistenciaFpaPK();
     }
 
     public AsistenciaFpa(AsistenciaFpaPK asistenciaFpaPK) {
         this.asistenciaFpaPK = asistenciaFpaPK;
     }
 
-    public AsistenciaFpa(AsistenciaFpaPK asistenciaFpaPK, int presencia) {
+    public AsistenciaFpa(AsistenciaFpaPK asistenciaFpaPK, boolean presencia) {
         this.asistenciaFpaPK = asistenciaFpaPK;
         this.presencia = presencia;
     }
@@ -72,11 +70,11 @@ public class AsistenciaFpa implements Serializable {
         this.asistenciaFpaPK = asistenciaFpaPK;
     }
 
-    public int getPresencia() {
+    public boolean getPresencia() {
         return presencia;
     }
 
-    public void setPresencia(int presencia) {
+    public void setPresencia(boolean presencia) {
         this.presencia = presencia;
     }
 

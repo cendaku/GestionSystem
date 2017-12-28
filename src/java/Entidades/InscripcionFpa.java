@@ -20,7 +20,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.Size;
 
 /**
  *
@@ -39,9 +38,8 @@ public class InscripcionFpa implements Serializable {
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected InscripcionFpaPK inscripcionFpaPK;
-    @Size(max = 5)
     @Column(name = "culminado")
-    private String culminado;
+    private Boolean culminado;
     @Column(name = "fecha_inscripcion")
     @Temporal(TemporalType.DATE)
     private Date fechaInscripcion;
@@ -57,9 +55,6 @@ public class InscripcionFpa implements Serializable {
     private List<Certificado> certificadoList;
 
     public InscripcionFpa() {
-        this.alumno1 = new Alumno();
-        this.curso1 = new Curso();
-        this.inscripcionFpaPK = new InscripcionFpaPK();
     }
 
     public InscripcionFpa(InscripcionFpaPK inscripcionFpaPK) {
@@ -78,11 +73,11 @@ public class InscripcionFpa implements Serializable {
         this.inscripcionFpaPK = inscripcionFpaPK;
     }
 
-    public String getCulminado() {
+    public Boolean getCulminado() {
         return culminado;
     }
 
-    public void setCulminado(String culminado) {
+    public void setCulminado(Boolean culminado) {
         this.culminado = culminado;
     }
 

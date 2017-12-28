@@ -7,17 +7,19 @@ package Entidades;
 
 import java.io.Serializable;
 import java.util.List;
+import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 /**
  *
@@ -27,58 +29,46 @@ import javax.persistence.Table;
 @Table(name = "inscripcion_cpi")
 @NamedQueries({
     @NamedQuery(name = "InscripcionCpi.findAll", query = "SELECT i FROM InscripcionCpi i")
-    , @NamedQuery(name = "InscripcionCpi.findByAlumno", query = "SELECT i FROM InscripcionCpi i WHERE i.inscripcionCpiPK.alumno = :alumno")
+    , @NamedQuery(name = "InscripcionCpi.findByAlumno", query = "SELECT i FROM InscripcionCpi i WHERE i.alumno = :alumno")
     , @NamedQuery(name = "InscripcionCpi.findByPuntajeTotal", query = "SELECT i FROM InscripcionCpi i WHERE i.puntajeTotal = :puntajeTotal")
-    , @NamedQuery(name = "InscripcionCpi.findByCpiAnho", query = "SELECT i FROM InscripcionCpi i WHERE i.inscripcionCpiPK.cpiAnho = :cpiAnho")
-    , @NamedQuery(name = "InscripcionCpi.findByCpiNum", query = "SELECT i FROM InscripcionCpi i WHERE i.inscripcionCpiPK.cpiNum = :cpiNum")
     , @NamedQuery(name = "InscripcionCpi.findByIngreso", query = "SELECT i FROM InscripcionCpi i WHERE i.ingreso = :ingreso")})
 public class InscripcionCpi implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @EmbeddedId
-    protected InscripcionCpiPK inscripcionCpiPK;
+    @Id
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "alumno")
+    private Integer alumno;
     @Column(name = "puntaje_total")
     private Integer puntajeTotal;
     @Column(name = "ingreso")
     private Boolean ingreso;
-    @JoinColumns({
-        @JoinColumn(name = "cpi_anho", referencedColumnName = "anho", insertable = false, updatable = false)
-        , @JoinColumn(name = "cpi_num", referencedColumnName = "numero_nacional", insertable = false, updatable = false)})
-    @ManyToOne(optional = false)
-    private PdCpi pdCpi;
-    @JoinColumn(name = "alumno", referencedColumnName = "ci", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
-    private Alumno alumno1;
     @JoinColumn(name = "alternativa1", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Carrera alternativa1;
     @JoinColumn(name = "alternativa2", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Carrera alternativa2;
+    @JoinColumn(name = "alumno", referencedColumnName = "ci", insertable = false, updatable = false)
+    @OneToOne(optional = false)
+    private Alumno alumno1;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "inscripcionCpi")
     private List<PuntajeCpi> puntajeCpiList;
 
     public InscripcionCpi() {
-        this.alternativa1 = new Carrera();
-        this.alternativa2 = new Carrera();
-        this.alumno1 = new Alumno();
-        this.pdCpi = new PdCpi();
     }
 
-    public InscripcionCpi(InscripcionCpiPK inscripcionCpiPK) {
-        this.inscripcionCpiPK = inscripcionCpiPK;
+    public InscripcionCpi(Integer alumno) {
+        this.alumno = alumno;
     }
 
-    public InscripcionCpi(int alumno, int cpiAnho, int cpiNum) {
-        this.inscripcionCpiPK = new InscripcionCpiPK(alumno, cpiAnho, cpiNum);
+    public Integer getAlumno() {
+        return alumno;
     }
 
-    public InscripcionCpiPK getInscripcionCpiPK() {
-        return inscripcionCpiPK;
-    }
-
-    public void setInscripcionCpiPK(InscripcionCpiPK inscripcionCpiPK) {
-        this.inscripcionCpiPK = inscripcionCpiPK;
+    public void setAlumno(Integer alumno) {
+        this.alumno = alumno;
     }
 
     public Integer getPuntajeTotal() {
@@ -97,22 +87,6 @@ public class InscripcionCpi implements Serializable {
         this.ingreso = ingreso;
     }
 
-    public PdCpi getPdCpi() {
-        return pdCpi;
-    }
-
-    public void setPdCpi(PdCpi pdCpi) {
-        this.pdCpi = pdCpi;
-    }
-
-    public Alumno getAlumno1() {
-        return alumno1;
-    }
-
-    public void setAlumno1(Alumno alumno1) {
-        this.alumno1 = alumno1;
-    }
-
     public Carrera getAlternativa1() {
         return alternativa1;
     }
@@ -129,6 +103,14 @@ public class InscripcionCpi implements Serializable {
         this.alternativa2 = alternativa2;
     }
 
+    public Alumno getAlumno1() {
+        return alumno1;
+    }
+
+    public void setAlumno1(Alumno alumno1) {
+        this.alumno1 = alumno1;
+    }
+
     public List<PuntajeCpi> getPuntajeCpiList() {
         return puntajeCpiList;
     }
@@ -140,7 +122,7 @@ public class InscripcionCpi implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (inscripcionCpiPK != null ? inscripcionCpiPK.hashCode() : 0);
+        hash += (alumno != null ? alumno.hashCode() : 0);
         return hash;
     }
 
@@ -151,7 +133,7 @@ public class InscripcionCpi implements Serializable {
             return false;
         }
         InscripcionCpi other = (InscripcionCpi) object;
-        if ((this.inscripcionCpiPK == null && other.inscripcionCpiPK != null) || (this.inscripcionCpiPK != null && !this.inscripcionCpiPK.equals(other.inscripcionCpiPK))) {
+        if ((this.alumno == null && other.alumno != null) || (this.alumno != null && !this.alumno.equals(other.alumno))) {
             return false;
         }
         return true;
@@ -159,7 +141,7 @@ public class InscripcionCpi implements Serializable {
 
     @Override
     public String toString() {
-        return "Entidades.InscripcionCpi[ inscripcionCpiPK=" + inscripcionCpiPK + " ]";
+        return "Entidades.InscripcionCpi[ alumno=" + alumno + " ]";
     }
     
 }

@@ -45,7 +45,6 @@ public class MateriaCpi implements Serializable {
     private List<ContratoInstructorcpi> contratoInstructorcpiList;
 
     public MateriaCpi() {
-        this.id=0;
     }
 
     public MateriaCpi(Integer id) {

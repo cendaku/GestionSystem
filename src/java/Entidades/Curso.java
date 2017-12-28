@@ -38,7 +38,7 @@ import javax.validation.constraints.Size;
     , @NamedQuery(name = "Curso.findByHoraSalida", query = "SELECT c FROM Curso c WHERE c.horaSalida = :horaSalida")
     , @NamedQuery(name = "Curso.findByFechaInicio", query = "SELECT c FROM Curso c WHERE c.fechaInicio = :fechaInicio")
     , @NamedQuery(name = "Curso.findByFechaClausura", query = "SELECT c FROM Curso c WHERE c.fechaClausura = :fechaClausura")
-    , @NamedQuery(name = "Curso.findByMunicipio", query = "SELECT c FROM Curso c WHERE c.municipio = :municipio")})
+    , @NamedQuery(name = "Curso.findByActivo", query = "SELECT c FROM Curso c WHERE c.activo = :activo")})
 public class Curso implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -62,10 +62,8 @@ public class Curso implements Serializable {
     @Column(name = "fecha_clausura")
     @Temporal(TemporalType.DATE)
     private Date fechaClausura;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "municipio")
-    private int municipio;
+    @Column(name = "activo")
+    private Boolean activo;
     @JoinColumn(name = "especialidad", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Especialidad especialidad;
@@ -85,19 +83,10 @@ public class Curso implements Serializable {
     private List<InscripcionFpa> inscripcionFpaList;
 
     public Curso() {
-        this.especialidad = new Especialidad() ;
-        this.frecuenciaDiaria = new FrecuenciaDiaria();
-        this.instructor = new Instructor();
-        this.localidad = new Localidad();
     }
 
     public Curso(Integer numeroNacional) {
         this.numeroNacional = numeroNacional;
-    }
-
-    public Curso(Integer numeroNacional, int municipio) {
-        this.numeroNacional = numeroNacional;
-        this.municipio = municipio;
     }
 
     public Integer getNumeroNacional() {
@@ -148,12 +137,12 @@ public class Curso implements Serializable {
         this.fechaClausura = fechaClausura;
     }
 
-    public int getMunicipio() {
-        return municipio;
+    public Boolean getActivo() {
+        return activo;
     }
 
-    public void setMunicipio(int municipio) {
-        this.municipio = municipio;
+    public void setActivo(Boolean activo) {
+        this.activo = activo;
     }
 
     public Especialidad getEspecialidad() {

@@ -9,6 +9,7 @@ import Entidades.Discapacidad;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -29,4 +30,26 @@ public class DiscapacidadFacade extends AbstractFacade<Discapacidad> {
         super(Discapacidad.class);
     }
     
+    public boolean DiscapacidadUnico(Discapacidad discapacidad) {
+        boolean b;
+        TypedQuery<Discapacidad> q = this.em.createQuery("SELECT f FROM Discapacidad f WHERE f.descripcion = :n", Discapacidad.class);
+        q.setParameter("n", discapacidad.getDescripcion());
+        if (q.getResultList().isEmpty()) {
+            b = true;
+            return b;
+        } else {
+            b = false;
+            return b;
+        }
+    }
+
+    public Discapacidad findByDiscapacidad(String discapacidad) {
+        TypedQuery<Discapacidad> q = this.em.createQuery("SELECT f FROM Discapacidad f WHERE f.descripcion = :n", Discapacidad.class);
+        q.setParameter("n", discapacidad);
+        if (!q.getResultList().isEmpty()) {
+            return q.getResultList().get(0);
+        } else {
+            return null;
+        }
+    }
 }

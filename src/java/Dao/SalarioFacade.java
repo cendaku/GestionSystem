@@ -9,6 +9,7 @@ import Entidades.Salario;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -29,4 +30,26 @@ public class SalarioFacade extends AbstractFacade<Salario> {
         super(Salario.class);
     }
     
+    public boolean SalarioUnico(Salario salario) {
+        boolean b;
+        TypedQuery<Salario> q = this.em.createQuery("SELECT f FROM Salario f WHERE f.descripcion = :n", Salario.class);
+        q.setParameter("n", salario.getDescripcion());
+        if (q.getResultList().isEmpty()) {
+            b = true;
+            return b;
+        } else {
+            b = false;
+            return b;
+        }
+    }
+
+    public Salario findBySalario(String salario) {
+        TypedQuery<Salario> q = this.em.createQuery("SELECT f FROM Salario f WHERE f.descripcion = :n", Salario.class);
+        q.setParameter("n", salario);
+        if (!q.getResultList().isEmpty()) {
+            return q.getResultList().get(0);
+        } else {
+            return null;
+        }
+    }
 }

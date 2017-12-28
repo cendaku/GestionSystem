@@ -4,7 +4,8 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:jsf="http://xmlns.jcp.org/jsf">
 
     <f:view contentType="text/html">
         <h:head>
@@ -25,190 +26,1112 @@
                     <p:growl id="msgs" showDetail="true" />
 
                     <h:form rendered="#{loginBean.ulog.rol.id==1}">
-                        <p:commandButton update=":formCreate,:formDateTable" oncomplete="PF('dialogAlumnoCreate').show()" icon="ui-icon-disk" title="Crear cuenta de Alumno" value="Cargar Alumno"/>
+                        <p:commandButton update=":formCreate,:formDateTable" oncomplete="PF('dialogAlumnoCreate').show()" icon="ui-icon-disk" title="Crear cuenta de Alumno" value="Crear"/>
                     </h:form>
 
-                    <h:form class="textsize" id="formDateTable" >
+                    <h:form id="formDateTable" >
 
-                        <p:dataTable id="basicDT" var="alumno" value="#{alumnoBean.alumnos}">
+                        <p:dataTable id="basicDT" var="alumno" value="#{alumnoBean.alumnos}"
+                                     paginator="true" rows="10" paginatorPosition="bottom" 
+                                     paginatorTemplate="{CurrentPageReport} {FirstPageLink}
+                                     {PreviousPageLink} {NextPageLink} {LastPageLink} {PageLinks} {RowsPerPageDropdown}"
+                                     rowsPerPageTemplate="10,15,30" emptyMessage="No se encontro ningun resultado">
                             <f:facet name="header">
                                 Listado de Alumno
                             </f:facet>
-                            <p:column style="width:30px;text-align: center; font-size: 90%" headerText="Foto">
+                            <p:column style="width:30px;text-align: center" headerText="Foto">
                                 <p:graphicImage value="/img/#{alumno.ruta}" width="30px" height="30" />
                             </p:column>
-                            <p:column style="width:100%;text-align: center; font-size: 90%" headerText="Alumno">
+                            <p:column style="width:auto;text-align: center" headerText="Alumno">
                                 <h:outputText value="#{alumno.apellido} #{alumno.nombre}" />
                             </p:column>
-                            <p:column style="width:100%;text-align: center; font-size: 90%" headerText="Celular">
+                            <p:column style="width:auto;text-align: center" headerText="Celular">
                                 <h:outputText value="#{alumno.celular}" />
                             </p:column>
-                            <p:column class="vmo" style="width:100%;text-align: center; font-size: 90%" headerText="Dirección">
+                            <p:column class="vmo" style="width:auto;text-align: center" headerText="Dirección">
                                 <h:outputText value="#{alumno.direccion}" />
                             </p:column>
-                            <p:column class="vmo" style="width:100%;text-align: center; font-size: 90%" headerText="Email">
+                            <p:column class="vmo" style="width:auto;text-align: center" headerText="Email">
                                 <h:outputText value="#{alumno.email}" />
                             </p:column>
-                            <p:column class="vmo" style="width:100%;text-align: center; font-size: 90%" headerText="Telefono">
+                            <p:column class="vmo" style="width:auto;text-align: center" headerText="Telefono">
                                 <h:outputText value="#{alumno.telefono}" />
                             </p:column>
-                            <p:column class="vmo" style="width:100%;text-align: center; font-size: 90%" headerText="Fecha Nac.">
+                            <p:column class="vmo" style="width:auto;text-align: center" headerText="Fecha Nac.">
                                 <h:outputText value="#{alumno.fechaNacimiento}" >
                                     <f:convertDateTime pattern="dd/MMM/y" />
                                 </h:outputText>
                             </p:column>
-                            <p:column class="vmo" style="width:100%;text-align: center; font-size: 90%" headerText="Nom. Contacto">
+                            <p:column class="vmo" style="width:auto;text-align: center" headerText="Nom. Contacto">
                                 <h:outputText value="#{alumno.nombreContacto}" />
                             </p:column>
-                            <p:column class="vmo" style="width:100%;text-align: center; font-size: 90%" headerText="Contacto Tele.">
+                            <p:column class="vmo" style="width:auto;text-align: center" headerText="Contacto Tele.">
                                 <h:outputText value="#{alumno.telefonoContacto}" />
                             </p:column>
-                            <p:column class="vmo" style="width:100%;text-align: center; font-size: 90%" headerText="Sexo">
-                                <h:outputText value="#{alumno.sexo}" />
+                            <p:column class="vmo" style="width:auto;text-align: center" headerText="Sexo">
+                                <h:outputText value="#{alumno.sexo.descripcion}" />
                             </p:column>
-                            <p:column class="vmo" style="width:100%;text-align: center; font-size: 90%" headerText="Nacionalidad">
-                                <h:outputText value="#{alumno.nacionalidad}" />
+                            <p:column style="width:auto;text-align: center" headerText="Nacionalidad">
+                                <h:outputText value="#{alumno.nacionalidad.descripcion}" />
                             </p:column>
-                            <p:column class="vmo" style="width:100%;text-align: center; font-size: 90%" headerText="Zona">
-                                <h:outputText value="#{alumno.zona}" />
+                            <p:column class="vmo" style="width:auto;text-align: center" headerText="Zona">
+                                <h:outputText value="#{alumno.zona.descripcion}" />
                             </p:column>
-                            <p:column class="vmo" style="width:100%;text-align: center; font-size: 90%" headerText="Situación Laboral">
-                                <h:outputText value="#{alumno.situacionLaboral}" />
+                            <p:column class="vmo" style="width:auto;text-align: center" headerText="Estado Civil">
+                                <h:outputText value="#{alumno.estadoCivil.descripcion}" />
                             </p:column>
-                            <p:column class="vmo" style="width:100%;text-align: center; font-size: 90%" headerText="Estado Civil">
-                                <h:outputText value="#{alumno.estadoCivil}" />
+                            <p:column class="vmo" style="width:auto;text-align: center" headerText="Localidad">
+                                <h:outputText value="#{alumno.localidad.descripcion}" />
                             </p:column>
-                            <p:column class="vmo" style="width:100%;text-align: center; font-size: 90%" headerText="Localidad">
-                                <h:outputText value="#{alumno.localidad}" />
+                            <p:column class="vmo" style="width:auto;text-align: center" headerText="Municipio">
+                                <h:outputText value="#{alumno.localidad.municipio.descripcion}" />
                             </p:column>
-                            <p:column class="vmo" style="width:100%;text-align: center; font-size: 90%" headerText="Municipio">
-                                <h:outputText value="#{alumno.municipio}" />
+                            <p:column style="width:auto;text-align: center" headerText="Usuario">
+                                <h:outputText value="#{alumno.usuario.nombre}" />
                             </p:column>
-                            <p:column style="width:100%;text-align: center; font-size: 90%" headerText="Usuario">
-                                <h:outputText value="#{alumno.usuario}" />
+                            <p:column class="vmo" style="width:auto;text-align: center" headerText="Estado Academico">
+                                <h:outputText value="#{alumno.estadoAcademico.descripcion}" />
                             </p:column>
-                            <p:column class="vmo" style="width:100%;text-align: center; font-size: 90%" headerText="Estado Academico">
-                                <h:outputText value="#{alumno.estadoAcademico}" />
+                            <p:column class="vmo" style="width:auto;text-align: center" headerText="Nivel Academico">
+                                <h:outputText value="#{alumno.estadoAcademico.nivelAcademico.descripcion}" />
                             </p:column>
-                            <p:column class="vmo" style="width:88px;text-align: center" rendered="#{loginBean.ulog.rol.id==1}">
-                                <p:commandButton update=":formUpdate:alumnoDetalle" oncomplete="PF('dialogAlumnoUpdate').show()" icon="ui-icon-pencil" title="Actualizar">
-                                    <f:setPropertyActionListener value="#{alumno}" target="#{alumnoBean.selectedAlumno}" />
-                                </p:commandButton>
-                                <p:commandButton update=":formDelete" oncomplete="PF('dialogAlumnoDelete').show()" icon="ui-icon-trash" title="Borrar">
+                            <p:column class="vmo" style=";text-align:center" headerText="Situacion Laboral">
+                                <p:outputLabel value="#{alumno.estado==true?'Trabaja':'No Trabaja'}" />
+                            </p:column>
+                            <p:column class="vmo" style=";text-align:center" headerText="Forma de Trabajo">
+                                <p:outputLabel value="#{alumno.tipoTrabajo==true?'Independiente':'Dependiente'}" />
+                            </p:column>
+                            <p:column class="vmo" style=";text-align:center" headerText="Experiencia">
+                                <p:outputLabel value="#{alumno.experiencia==true?'Si':'No'}" />
+                            </p:column>
+                            <p:column class="vmo" style="width:auto;text-align: center" headerText="Salario">
+                                <h:outputText value="#{alumno.salario.descripcion}hs" />
+                            </p:column>
+                            <p:column class="vmo" style="width:auto;text-align: center" headerText="Horas Trabajo">
+                                <h:outputText value="#{alumno.horasTrabajo.descripcion}hs" />
+                            </p:column>
+                            <p:column class="vmo" style="width:auto;text-align: center" headerText="Discapacidad">
+                                <ui:repeat value="#{alumno.discapacidadList}" var="d">
+                                    <h:outputLabel value="#{d.descripcion}" />
+                                </ui:repeat>
+                            </p:column>
+
+                            <p:column style="width:30px;text-align: center" >
+                                <p:commandButton update=":formMostrar:alumnoDetalle" oncomplete="PF('dialogAlumnoMostrar').show()" icon="ui-icon-search" title="Ver" actionListener="#{alumnoBean.seleccionarAlumno(alumno.ci)}"/>
+                                <p:commandButton rendered="#{loginBean.ulog.rol.id==1}" update=":formUpdate:alumnoDetalle" oncomplete="PF('dialogAlumnoUpdate').show()" icon="ui-icon-pencil" title="Actualizar" actionListener="#{alumnoBean.seleccionarAlumno(alumno.ci)}"/>
+                                <p:commandButton rendered="#{loginBean.ulog.rol.id==1}" update=":formDelete" oncomplete="PF('dialogAlumnoDelete').show()" icon="ui-icon-trash" title="Borrar">
                                     <f:setPropertyActionListener value="#{alumno}" target="#{alumnoBean.selectedAlumno}" />
                                 </p:commandButton>
                             </p:column>
                         </p:dataTable>
                     </h:form>
 
-                    <h:form id="formCreate" enctype="multipart/form-data">
+                    <!--############################################ Mostrar ############################################-->
 
-                        <p:dialog id="dlgAlumnoCreate" header="Cargar Alumno" widgetVar="dialogAlumnoCreate" closeOnEscape="true" hideEffect="explode" resizable="explode">
-                            <p:outputPanel id="alumnoDetalle" style="text-align: left;">
-                                <h:panelGrid  columns="2" style="padding: 2px;" >
+                    <h:form id="formMostrar" enctype="multipart/form-data" >
+                        <p:dialog id="dlgAlumnoMostrar" header="Ver Alumno" closeOnEscape="true" widgetVar="dialogAlumnoMostrar" showEffect="fade" hideEffect="fade" resizable="false">
+                            <p:outputPanel id="alumnoDetalle" style="text-align: left;overflow-y: scroll;  height:500px;padding-bottom: 15px">
 
-                                    <h:outputText value="Nombre:" />
-                                    <p:inputText value="#{alumnoBean.selectedAlumno.nombre}" />
+                                <!-- ********************************Separador de panel Grid********************************-->
 
-                                    <h:outputText value="Apellido:" />
-                                    <p:inputText value="#{alumnoBean.selectedAlumno.apellido}" />
-
-                                    <h:outputText value="Celular:" />
-                                    <p:inputText value="#{alumnoBean.selectedAlumno.celular}" />
-
-                                    <h:outputText value="Dirección:" />
-                                    <p:inputText value="#{alumnoBean.selectedAlumno.direccion}" />
-
-                                    <h:outputText value="Email:" />
-                                    <p:inputText value="#{alumnoBean.selectedAlumno.email}" />
-
-                                    <h:outputText value="Telefono:" />
-                                    <p:inputText value="#{alumnoBean.selectedAlumno.telefono}" />
-
-                                    <h:outputText value="Fecha Nac.:" />
-                                    <p:calendar value="#{alumnoBean.selectedAlumno.fechaNacimiento}" />
-
-                                    <h:outputText value="Nombre de Contacto:" />
-                                    <p:inputText value="#{alumnoBean.selectedAlumno.nombreContacto}" />
-
-                                    <h:outputText value="Contacto Telefono:" />
-                                    <p:inputText value="#{alumnoBean.selectedAlumno.nombreContacto}" />
-
-                                    <h:outputText value="Sexo:" />
-                                    <p:selectOneMenu value="#{alumnoBean.selectedAlumno.sexo.id}" style="width:auto">
-                                        <f:selectItem itemLabel="- Seleccione -" itemValue="" />
-                                        <f:selectItems value="#{sexoBean.listasexoes}" itemValue="#{sexo.id}" itemLabel="#{sexo.descripcion}" var="sexo" />
-                                    </p:selectOneMenu>
-                                    
-                                    <h:outputText value="Nacionalidad:" />
-                                    <p:selectOneMenu value="#{alumnoBean.selectedAlumno.nacionalidad.id}" style="width:auto">
-                                        <f:selectItem itemLabel="- Seleccione -" itemValue="" />
-                                        <f:selectItems value="#{nacionalidadBean.listanacionalidades}" itemValue="#{nacionalidad.id}" itemLabel="#{nacionalidad.descripcion}" var="nacionalidad" />
-                                    </p:selectOneMenu>
-                                    
-                                    <h:outputText value="Zona" />
-                                    <p:selectOneMenu value="#{alumnoBean.selectedAlumno.zona.id}" style="width:auto">
-                                        <f:selectItem itemLabel="- Seleccione -" itemValue="" />
-                                        <f:selectItems value="#{zonaBean.listazonaes}" itemValue="#{zona.id}" itemLabel="#{zona.descripcion}" var="zona" />
-                                    </p:selectOneMenu>
-                                    
-                                    <h:outputText value="Situacion Laboral" />
-                                    <p:selectOneMenu value="#{alumnoBean.selectedAlumno.situacionLaboral.id}" style="width:auto">
-                                        <f:selectItem itemLabel="- Seleccione -" itemValue="" />
-                                        <f:selectItems value="#{situacionLaboralBean.listazonaes}" itemValue="#{situacionLaboral.id}" itemLabel="#{situacionLaboral.tipoTrabajo}" var="situacionLaboral" />
-                                    </p:selectOneMenu>
-
-                                    <p:fileUpload value="#{alumnoBean.archivo}" mode="simple" sizeLimit="1000000" allowTypes="/(\.|\/)(gif|jpe?g)|png)$/" />
-                                    <h:inputHidden value="#{alumnoBean.selectedAlumno.ruta}" />
-
-                                    <f:facet name="footer">
-                                        <p:commandButton update=":formDateTable,:msgs" oncomplete="PF('dialogAlumnoCreate').hide()" actionListener="#{alumnoBean.CrearAlumno(actionEvent)}" icon="ui-icon-disk" title="Guardar cuenta de Alumno" value="Guardar" ajax="false" />
-                                        <p:commandButton oncomplete="PF('dialogAlumnoCreate').hide()" icon="ui-icon-cancel" title="Cancelar crear cuenta de Alumno" value="Cancelar"/>
+                                <p:panelGrid  id="panelGrip" style="width: 80%;  margin: auto; margin-top: 5%;">
+                                    <f:facet name="header">
+                                        <p:row>
+                                            <p:column colspan="5">Alumno</p:column>
+                                        </p:row>
+                                        <p:row>
+                                            <p:column colspan="5" style="text-align: left;color: green">Datos Personales
+                                                <h:inputHidden value="#{alumnoBean.selectedAlumno.ruta}" />
+                                            </p:column>
+                                        </p:row>
                                     </f:facet>
-                                </h:panelGrid>
+
+                                    <p:row>
+                                        <p:column colspan="1" style="color: blue">Número de Cédula: </p:column>
+                                        <p:column colspan="2">
+                                            <center>
+                                                <p:outputLabel id="ci" value="#{alumnoBean.selectedAlumno.ci}"/>
+                                            </center> 
+                                        </p:column>
+
+                                        <p:column style="color: blue" colspan="1">
+                                            Estado Civil:
+                                        </p:column>
+                                        <p:column colspan="2">
+                                            <p:outputLabel value="#{alumnoBean.selectedAlumno.estadoCivil.descripcion}" />
+                                        </p:column>
+                                    </p:row>
+
+                                    <p:row>
+                                        <p:column style="color: blue" colspan="1"> 
+                                            Apellido:
+                                        </p:column>
+                                        <p:column colspan="2"> 
+                                            <p:outputLabel id="apellido" value="#{alumnoBean.selectedAlumno.apellido}"/>
+                                        </p:column>
+
+                                        <p:column style="color: blue" colspan="1"> 
+                                            Nombre:
+                                        </p:column>
+
+                                        <p:column colspan="2"> 
+                                            <p:outputLabel id="nombre" value="#{alumnoBean.selectedAlumno.nombre}"/>
+                                        </p:column>           
+                                    </p:row>
+
+                                    <p:row>
+                                        <p:column style="color: blue" colspan="1">
+                                            Sexo:
+                                        </p:column>
+
+                                        <p:column colspan="2" >
+                                            <p:outputLabel value="#{alumnoBean.selectedAlumno.sexo.descripcion}" />
+                                        </p:column>
+                                        <p:column style="color: blue" colspan="1">
+                                            Nacionalidad:
+                                        </p:column>
+
+                                        <p:column colspan="2" >
+                                            <p:outputLabel value="#{alumnoBean.selectedAlumno.nacionalidad.descripcion}" />
+                                        </p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column style="color: blue" colspan="1"> 
+                                            Dirección:
+                                        </p:column>
+                                        <p:column colspan="2"> 
+                                            <p:outputLabel id="direccion" value="#{alumnoBean.selectedAlumno.direccion}"/>
+                                        </p:column>
+                                        <p:column style="color: blue" colspan="1">
+                                            Zona:
+                                        </p:column>
+
+                                        <p:column colspan="2" >
+                                            <p:outputLabel value="#{alumnoBean.selectedAlumno.zona.descripcion}" />
+                                        </p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column style="color: blue" colspan="1"> 
+                                            Nombre de Contacto:
+                                        </p:column>
+                                        <p:column colspan="2"> 
+                                            <p:outputLabel id="nombrecontacto" value="#{alumnoBean.selectedAlumno.nombreContacto}"/>
+                                        </p:column>
+                                        <p:column style="color: blue" colspan="1"> 
+                                            Telefono de Contacto:
+                                        </p:column>
+
+                                        <p:column colspan="5"> 
+                                            <p:outputLabel value="#{alumnoBean.selectedAlumno.telefonoContacto}" />   
+                                        </p:column>  
+                                    </p:row>
+                                    <p:row>
+                                        <p:column style="color: blue" colspan="1"> 
+                                            Municipio:
+                                        </p:column>
+                                        <p:column colspan="2"> 
+                                            <p:outputLabel value="#{alumnoBean.selectedAlumno.localidad.municipio.descripcion}" />
+                                        </p:column>
+                                        <p:column style="color: blue" colspan="1">
+                                            Localidad:
+                                        </p:column>
+
+                                        <p:column colspan="2" >
+                                            <p:outputLabel value="#{alumnoBean.selectedAlumno.localidad.descripcion}" />
+                                        </p:column>
+                                    </p:row>
+                                </p:panelGrid>
+
+                                <!-- ********************************Separador de panel Grid********************************-->
+
+                                <p:panelGrid id="panelGrip2" style="width: 80%; margin: auto; margin-top: 0px;">
+                                    <f:facet name="header">
+                                        <p:row>
+                                            <p:column colspan="7" style="text-align: left;color: green">Formación Academica</p:column>
+                                        </p:row>
+                                    </f:facet>
+                                    <p:row>
+                                        <p:column style="color: blue" colspan="1"> 
+                                            Nivel Academico:
+                                        </p:column>
+                                        <p:column colspan="2"> 
+                                            <p:outputLabel value="#{alumnoBean.selectedAlumno.estadoAcademico.nivelAcademico.descripcion}" />
+                                        </p:column>
+                                        <p:column style="color: blue" colspan="1"> 
+                                            Estado Academico:
+                                        </p:column>
+                                        <p:column colspan="2"> 
+                                            <p:outputLabel value="#{alumnoBean.selectedAlumno.estadoAcademico.descripcion}" />
+                                        </p:column>
+                                    </p:row>
+                                </p:panelGrid>
+
+                                <!-- ********************************Separador de panel Grid********************************-->
+
+                                <p:panelGrid id="panelGrip3" style="width: 80%; margin: auto; margin-top: 0px;">
+                                    <f:facet name="header">
+                                        <p:row>
+                                            <p:column colspan="7" style="text-align: left;color: green">Medio de Contacto</p:column>
+                                        </p:row>
+                                    </f:facet>
+
+                                    <p:row>
+                                        <p:column style="color: blue" colspan="1"> 
+                                            Telefono:
+                                        </p:column>
+
+                                        <p:column colspan="5"> 
+                                            <p:outputLabel value="#{alumnoBean.selectedAlumno.telefono}" />
+                                        </p:column>           
+                                    </p:row>
+                                    <p:row>
+                                        <p:column style="color: blue" colspan="1"> 
+                                            Celular:
+                                        </p:column>
+
+                                        <p:column colspan="5"> 
+                                            <p:outputLabel value="#{alumnoBean.selectedAlumno.celular}" />
+                                        </p:column>           
+                                    </p:row>
+
+                                    <p:row>
+                                        <p:column style="color: blue" colspan="1"> 
+                                            Email (Correo Electronico):
+                                        </p:column>
+                                        <p:column colspan="5"> 
+                                            <p:outputLabel value="#{alumnoBean.selectedAlumno.email}" />
+                                        </p:column>
+
+                                    </p:row>
+
+                                    <p:row>
+                                        <p:column style="color: blue" colspan="1"> 
+                                            Fecha de Nacimiento:
+                                        </p:column>
+                                        <p:column colspan="5">
+                                            <h:outputText value="#{alumnoBean.selectedAlumno.fechaNacimiento}" >
+                                                <f:convertDateTime pattern="dd MMMM y" />
+                                            </h:outputText>
+                                        </p:column>
+                                    </p:row>
+                                </p:panelGrid>
+
+                                <!-- ********************************Separador de panel Grid********************************-->
+
+                                <p:panelGrid id="panelGri5" style="width: 80%; margin: auto; margin-top: 0px;">
+                                    <f:facet name="header">
+                                        <p:row>
+                                            <p:column colspan="7" style="text-align: left;color: green">¿Posee discapacidad?</p:column>
+                                        </p:row>
+                                    </f:facet>
+                                    <p:row>
+                                        <p:column style="color: blue" >
+                                            Discapacidad:
+                                        </p:column>
+                                        <p:column >
+                                            <ui:repeat value="#{alumnoBean.selectedAlumno.discapacidadList}" var="d">
+                                                <h:outputLabel value="#{d.descripcion}" />
+                                            </ui:repeat>
+                                        </p:column>
+                                    </p:row> 
+                                </p:panelGrid>
+
+                                <!-- ********************************Separador de panel Grid********************************-->
+
+                                <p:panelGrid id="panelGri6" style="width: 80%; margin: auto; margin-top: 0px;">
+                                    <f:facet name="header">
+                                        <p:row>
+                                            <p:column colspan="7" style="text-align: left;color: green">Situacion Laboral</p:column>
+                                        </p:row>
+                                    </f:facet>
+                                    
+                                    <p:row>
+                                        <p:column colspan="6">
+                                            <center>
+                                                <p:outputLabel value="#{alumno.estado==true?'Trabaja':'No Trabaja'}" />
+                                            </center>
+                                        </p:column>
+                                    </p:row>
+
+                                    <p:row>
+                                        <p:column style="color: blue" colspan="1">
+                                            Forma de Trabajo:
+                                        </p:column>
+                                        <p:column colspan="2">
+                                            <h:outputText value="#{alumnoBean.selectedAlumno.tipoTrabajo==true?'Independiente':'Dependiente'}" />
+                                        </p:column>
+                                        <p:column style="color: blue" colspan="2" rowspan="3">
+                                            Experiencia laboral:
+                                        </p:column>
+                                        <p:column colspan="1" rowspan="3" >
+                                            <center>
+                                                <h:outputText value="#{alumnoBean.selectedAlumno.experiencia==true?'Si':'No'}" />
+                                            </center>
+                                        </p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column style="color: blue" colspan="1">
+                                            Horas trabajadas:
+                                        </p:column>
+                                        <p:column colspan="2">
+                                            <h:outputText value="#{alumnoBean.selectedAlumno.horasTrabajo.descripcion}hs" />
+                                        </p:column>
+                                    </p:row>
+
+                                    <p:row>
+                                        <p:column style="color: blue" colspan="1">
+                                            Salario:
+                                        </p:column>
+                                        <p:column colspan="2">
+                                            <h:outputText value="#{alumnoBean.selectedAlumno.salario.descripcion}hs" />
+                                        </p:column>
+                                    </p:row>
+                                </p:panelGrid>
+
+                                <!-- ********************************Separador de panel Grid********************************-->
+
+                                <p:panelGrid id="panelGrip4" style="width: 80%; margin: auto; margin-top: 0px;">
+                                    <f:facet name="header">
+                                        <p:row>
+                                            <p:column colspan="7" style="text-align: left;color: green">Usuario</p:column>
+                                        </p:row>
+                                    </f:facet>
+                                    <p:row>
+                                        <p:column style="color: blue" colspan="1"> 
+                                            Usuario:
+                                        </p:column>
+                                        <p:column colspan="2"> 
+                                            <h:outputText value="#{alumnoBean.selectedAlumno.usuario.nombre}" />
+                                        </p:column>
+                                    </p:row>
+                                </p:panelGrid>
                             </p:outputPanel>
                         </p:dialog>
                     </h:form>
+
+
+
+
+
+                    <!--############################################ Crear ############################################-->
+
+                    <h:form id="formCreate" enctype="multipart/form-data">
+                        <p:dialog id="dlgAlumnoCreate" header="Crear Alumno" closeOnEscape="true" widgetVar="dialogAlumnoCreate" showEffect="fade" hideEffect="explode" resizable="explode">
+                            <p:outputPanel id="alumnoDetalle" style="text-align: left;overflow-y: scroll; height:500px; padding-bottom: 15px">
+
+                                <!-- ********************************Separador de panel Grid********************************-->
+
+                                <p:panelGrid  id="panelGrip" style="width: 80%;size:100px;  margin: auto; margin-top: 5%;">
+                                    <f:facet name="header">
+                                        <p:row>
+                                            <p:column colspan="5">Creación de Alumno</p:column>
+                                        </p:row>
+                                        <p:row>
+                                            <p:column colspan="5" style="text-align: left;">Datos Personales
+                                                <p:fileUpload  value="#{alumnoBean.archivo}" mode="simple" sizeLimit="1000000" allowTypes="/(\.|\/)(gif|jpe?g)|png)$/" />
+                                                <h:inputHidden value="#{alumnoBean.selectedAlumno.ruta}" /></p:column>
+                                        </p:row>
+                                    </f:facet>
+
+                                    <p:row>
+                                        <p:column colspan="1" style="font-weight: bold;">Número de Cédula: </p:column>
+                                        <p:column colspan="2" style="font-weight: bold;">
+                                            <center>
+                                                <p:inputText id="ci" value="#{alumnoBean.selectedAlumno.ci}">
+                                                    <p:keyFilter regEx="/[\d\-]/"/>
+                                                    <p:watermark for="ci" value="7823212"/>                               
+                                                </p:inputText> 
+                                            </center> 
+                                        </p:column>
+                                        <p:column colspan="1">
+                                            Estado Civil:
+                                        </p:column>
+                                        <p:column colspan="2">
+                                            <p:selectOneMenu id="EstadoCivilid" value="#{alumnoBean.estadoCivilid}" effect="fold" >
+                                                <f:selectItem itemLabel="Elija una opcion" itemValue="" />
+                                                <f:selectItems value="#{estadoCivilBean.estadoCivils}" var="t" itemValue="#{t.id}" itemLabel="#{t.descripcion}"/>
+                                            </p:selectOneMenu>
+                                        </p:column>
+                                    </p:row>
+
+                                    <p:row>
+                                        <p:column colspan="1"> 
+                                            Apellido:
+                                        </p:column>
+                                        <p:column colspan="2"> 
+                                            <p:inputText id="apellido" value="#{alumnoBean.selectedAlumno.apellido}">
+                                                <p:watermark for="apellido" value="Torres Hidalgo"/>                               
+                                            </p:inputText> 
+                                        </p:column>
+
+                                        <p:column colspan="1"> 
+                                            Nombre:
+                                        </p:column>
+
+                                        <p:column colspan="2"> 
+                                            <p:inputText id="nombre" value="#{alumnoBean.selectedAlumno.nombre}">
+                                                <p:watermark for="nombre" value="Alvarus Salvador"/>                               
+                                            </p:inputText> 
+                                        </p:column>           
+                                    </p:row>
+
+                                    <p:row>
+                                        <p:column colspan="1">
+                                            Sexo:
+                                        </p:column>
+                                        <p:column colspan="2" >
+                                            <p:selectOneMenu id="Sexoid" value="#{alumnoBean.sexoid}" effect="fold" >
+                                                <f:selectItem itemLabel="Elija una opcion" itemValue="" />
+                                                <f:selectItems value="#{sexoBean.sexos}" var="t" itemValue="#{t.id}" itemLabel="#{t.descripcion}"/>
+                                            </p:selectOneMenu>
+                                        </p:column>
+                                        <p:column colspan="1">
+                                            Nacionalidad:
+                                        </p:column>
+
+                                        <p:column colspan="2" >
+                                            <p:selectOneMenu id="nacionalidadid" value="#{alumnoBean.nacionalidadid}" effect="fold" >
+                                                <f:selectItem itemLabel="Elija una opcion" itemValue="" />
+                                                <f:selectItems value="#{nacionalidadBean.nacionalidads}" var="t" itemValue="#{t.id}" itemLabel="#{t.descripcion}"/>
+                                            </p:selectOneMenu>
+                                        </p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column colspan="1"> 
+                                            Dirección:
+                                        </p:column>
+                                        <p:column colspan="2"> 
+                                            <p:inputText id="direccion" value="#{alumnoBean.selectedAlumno.direccion}">                                                                       
+                                            </p:inputText> 
+                                        </p:column>
+                                        <p:column colspan="1">
+                                            Zona:
+                                        </p:column>
+
+                                        <p:column colspan="2" >
+                                            <p:selectOneMenu id="zonaid" value="#{alumnoBean.zonaid}" effect="fold" >
+                                                <f:selectItem itemLabel="Elija una opcion" itemValue="" />
+                                                <f:selectItems value="#{zonaBean.zonas}" var="t" itemValue="#{t.id}" itemLabel="#{t.descripcion}"/>
+                                            </p:selectOneMenu>
+                                        </p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column colspan="1"> 
+                                            Nombre de Contacto:
+                                        </p:column>
+                                        <p:column colspan="2"> 
+                                            <p:inputText id="nombrecontacto" value="#{alumnoBean.selectedAlumno.nombreContacto}">                                                                         
+                                            </p:inputText> 
+                                        </p:column>
+                                        <p:column colspan="1"> 
+                                            Telefono de Contacto:
+                                        </p:column>
+
+                                        <p:column colspan="5"> 
+                                            <p:inputMask id="telefonocontacto" value="#{alumnoBean.selectedAlumno.telefonoContacto}" mask="(0999)-999999">
+                                                <p:keyFilter regEx="/[\d\-]/"/>
+                                                <p:watermark for="celularid" value="(0981) 663399"/>                               
+                                            </p:inputMask>   
+                                        </p:column>  
+                                    </p:row>
+                                    <p:row>
+                                        <p:column colspan="1"> 
+                                            Municipio:
+                                        </p:column>
+                                        <p:column colspan="2"> 
+                                            <p:selectOneMenu id="municipioidid" value="#{alumnoBean.municipioid}" effect="fold"  style="width:125px" required="true" requiredMessage="Se requiere que seleccione un Nivel Academico" >
+                                                <f:selectItem itemLabel="Elija una opcion" itemValue="" />
+                                                <f:selectItems value="#{municipioBean.municipios}" var="t" itemValue="#{t.id}" itemLabel="#{t.descripcion}"/>
+                                                <p:ajax event="change" listener="#{alumnoBean.filtroLocalidads()}" partialSubmit="true" process="@this" update=":formCreate:localidadid" />
+                                            </p:selectOneMenu>
+                                        </p:column>
+                                        <p:column colspan="1">
+                                            Localidad:
+                                        </p:column>
+
+                                        <p:column colspan="2" >
+                                            <p:selectOneMenu id="localidadid" value="#{alumnoBean.localidadid}" effect="fold" >
+                                                <f:selectItem itemLabel="Elija una opcion" itemValue="" />
+                                                <f:selectItems value="#{alumnoBean.lstLocalidads}" var="lo" itemValue="#{lo.id}" itemLabel="#{lo.descripcion}"/>
+                                            </p:selectOneMenu>
+                                        </p:column>
+                                    </p:row>
+                                </p:panelGrid>
+
+                                <!-- ********************************Separador de panel Grid********************************-->
+
+                                <p:panelGrid id="panelGrip2" style="width: 80%; margin: auto; margin-top: 0px;">
+                                    <f:facet name="header">
+                                        <p:row>
+                                            <p:column colspan="7" style="text-align: left;">Formación Academica</p:column>
+                                        </p:row>
+                                    </f:facet>
+                                    <p:row>
+                                        <p:column colspan="1"> 
+                                            Nivel Academico:
+                                        </p:column>
+                                        <p:column colspan="2"> 
+                                            <p:selectOneMenu id="NivelAcademicoid" value="#{alumnoBean.nivelAcademicoid}" effect="fold"  style="width:125px" required="true" requiredMessage="Se requiere que seleccione un Nivel Academico" >
+                                                <f:selectItem itemLabel="Elija una opcion" itemValue="" />
+                                                <f:selectItems value="#{nivelAcademicoBean.nivelAcademicos}" var="t" itemValue="#{t.id}" itemLabel="#{t.descripcion}"/>
+                                                <p:ajax event="change" listener="#{alumnoBean.filtroEstados()}" partialSubmit="true" process="@this" update=":formCreate:EstadoAcademicoid" />
+                                            </p:selectOneMenu>
+                                        </p:column>
+                                        <p:column colspan="1"> 
+                                            Estado Academico:
+                                        </p:column>
+                                        <p:column colspan="2"> 
+                                            <p:selectOneMenu id="EstadoAcademicoid" value="#{alumnoBean.estadoAcademicoid}" effect="fold"  style="width:125px" required="true" requiredMessage="Se requiere que seleccione un Nivel Academico" >
+                                                <f:selectItem itemLabel="Elija una opcion" itemValue="" />
+                                                <f:selectItems value="#{alumnoBean.lstEstadosAcademicos}" var="t" itemValue="#{t.id}" itemLabel="#{t.descripcion}"/>          
+                                            </p:selectOneMenu>
+                                        </p:column>
+                                    </p:row>
+                                </p:panelGrid>
+
+                                <!-- ********************************Separador de panel Grid********************************-->
+
+                                <p:panelGrid id="panelGrip3" style="width: 80%; margin: auto; margin-top: 0px;">
+                                    <f:facet name="header">
+                                        <p:row>
+                                            <p:column colspan="7" style="text-align: left;">Medio de Contacto</p:column>
+                                        </p:row>
+                                    </f:facet>
+
+                                    <p:row>
+                                        <p:column colspan="1"> 
+                                            Telefono:
+                                        </p:column>
+
+                                        <p:column colspan="5"> 
+                                            <p:inputMask id="telefonoid" value="#{alumnoBean.selectedAlumno.telefono}" mask="(0999)-999999">
+                                                <p:keyFilter regEx="/[\d\-]/"/>
+                                                <p:watermark for="telefonoid" value="(0981) 663399"/>                               
+                                            </p:inputMask>   
+                                        </p:column>           
+                                    </p:row>
+                                    <p:row>
+                                        <p:column colspan="1"> 
+                                            Celular:
+                                        </p:column>
+
+                                        <p:column colspan="5"> 
+                                            <p:inputMask id="celularid" value="#{alumnoBean.selectedAlumno.celular}" mask="(0999)-999999">
+                                                <p:keyFilter regEx="/[\d\-]/"/>
+                                                <p:watermark for="celularid" value="(0981) 663399"/>                               
+                                            </p:inputMask>   
+                                        </p:column>           
+                                    </p:row>
+
+                                    <p:row>
+                                        <p:column colspan="1"> 
+                                            Email (Correo Electronico):
+                                        </p:column>
+                                        <p:column colspan="5"> 
+                                            <p:inputText id="email" value="#{alumnoBean.selectedAlumno.email}" style="width: 95%" >
+                                                <p:watermark for="email" value="alvarus@hotmail.com" />
+                                            </p:inputText>
+                                        </p:column>
+                                    </p:row>
+
+                                    <p:row>
+                                        <p:column colspan="1"> 
+                                            Fecha de Nacimiento:
+                                        </p:column>
+                                        <p:column colspan="5"> 
+                                            <p:calendar id="fechanac" value="#{alumnoBean.selectedAlumno.fechaNacimiento}" style="width: 95%" >
+                                            </p:calendar>
+                                        </p:column>
+                                    </p:row>
+                                </p:panelGrid>
+
+                                <!-- ********************************Separador de panel Grid********************************-->
+
+                                <p:panelGrid id="panelGri5" style="width: 80%; margin: auto; margin-top: 0px;">
+                                    <f:facet name="header">
+                                        <p:row>
+                                            <p:column colspan="7" style="text-align: left;">¿Posee discapacidades?</p:column>
+                                        </p:row>
+                                    </f:facet>
+
+                                    <p:row>
+                                        <p:column >
+                                            Marque en caso de tener la discapacidad:
+                                        </p:column>
+                                        <p:column >
+                                            <p:selectManyCheckbox id="customPanel" value="#{alumnoBean.discapacidad}">
+                                                <f:selectItems value="#{discapacidadBean.discapacidads}" var="t" itemValue="#{t.id}" itemLabel="#{ t.descripcion }" />
+                                            </p:selectManyCheckbox>
+                                        </p:column>
+                                    </p:row> 
+                                </p:panelGrid>
+
+                                <!-- ********************************Separador de panel Grid********************************-->
+
+                                <p:panelGrid id="panelGri6" style="width: 80%; margin: auto; margin-top: 0px;">
+                                    <f:facet name="header">
+                                        <p:row>
+                                            <p:column colspan="7" style="text-align: left;">Situacion Laboral</p:column>
+                                        </p:row>
+                                    </f:facet>
+
+
+                                    <p:row>
+                                        <p:column colspan="6">
+                                            <center>
+                                                <p:selectBooleanButton id="value1" value="#{alumnoBean.checkedTrabaja}" onLabel="Trabaja" offLabel="No Trabaja" onIcon="ui-icon-check" offIcon="ui-icon-close" style="width:400px" >
+                                                    <p:ajax event="change" update="spanTipoTrabajo spanExperiencia" partialSubmit="True"          process="@this" />
+                                                </p:selectBooleanButton>
+                                            </center>
+                                        </p:column>
+                                    </p:row>
+
+                                    <p:row>
+                                        <p:column colspan="1">
+                                            Forma de Trabajo:
+                                        </p:column>
+                                        <p:column colspan="2">
+                                            <span jsf:id="spanTipoTrabajo">
+                                                <p:selectBooleanButton id="tipotrabajo" value="#{alumnoBean.tipoTrabajo}" 
+                                                                       disabled="#{!alumnoBean.checkedTrabaja?'true':'false'}"
+                                                                       onLabel="Independiente" offLabel="Dependiente" style="width:250px"  />  
+                                            </span>
+                                        </p:column>
+                                        <p:column colspan="2" rowspan="3">
+                                            ¿Tiene experiencia laboral?
+                                        </p:column>
+                                        <p:column colspan="2" rowspan="3" >
+                                            <center>
+                                                <span jsf:id="spanExperiencia">
+                                                    <p:selectBooleanButton id="experiencialab" disabled="#{alumnoBean.checkedTrabaja?'true':'false'}" value="#{alumnoBean.experiencia}" onLabel="Yes" offLabel="No" style="width:60px" />
+                                                </span>
+                                            </center>
+                                        </p:column>
+                                    </p:row>
+
+                                    <p:row>
+                                        <p:column colspan="1">
+                                            Horas trabajadas:
+                                        </p:column>
+                                        <p:column colspan="2">
+                                            <p:selectOneMenu id="horasTrabajoid" value="#{alumnoBean.horasTrabajoid}" effect="fold" >
+                                                <f:selectItem itemLabel="Elija una opcion" itemValue="" />
+                                                <f:selectItems value="#{horasTrabajoBean.horasTrabajos}" var="t" itemValue="#{t.id}" itemLabel="#{t.descripcion}"/>
+                                            </p:selectOneMenu>
+                                        </p:column>
+                                    </p:row>
+
+                                    <p:row>
+                                        <p:column colspan="1">
+                                            Salario:
+                                        </p:column>
+                                        <p:column colspan="2">
+                                            <p:selectOneMenu id="salarioid" value="#{alumnoBean.salarioid}" effect="fold" >
+                                                <f:selectItem itemLabel="Elija una opcion" itemValue="" />
+                                                <f:selectItems value="#{salarioBean.salarios}" var="t" itemValue="#{t.id}" itemLabel="#{t.descripcion}"/>
+                                            </p:selectOneMenu>
+                                        </p:column>
+                                    </p:row>
+                                </p:panelGrid>
+
+                                <!-- ********************************Separador de panel Grid********************************-->
+
+                                <p:panelGrid id="panelGrip4" style="width: 80%; margin: auto; margin-top: 0px;">
+                                    <f:facet name="header">
+                                        <p:row>
+                                            <p:column colspan="7" style="text-align: left;">Usuario</p:column>
+                                        </p:row>
+                                    </f:facet>
+                                    <p:row>
+                                        <p:column colspan="1"> 
+                                            Usuario:
+                                        </p:column>
+                                        <p:column colspan="2"> 
+                                            <p:selectOneMenu id="Usuarioid" value="#{alumnoBean.usuarioid}" effect="fold" >
+                                                <f:selectItem itemLabel="Elija una opcion" itemValue="" />
+                                                <f:selectItems value="#{usuarioBean.usuarios}" var="p" itemValue="#{p.ci}" itemLabel="#{p.nombre}"/>
+                                            </p:selectOneMenu>
+                                        </p:column>
+                                    </p:row>
+                                    <f:facet name="footer">
+                                        <p:row>
+                                            <p:column  colspan="6" style="text-align: center">
+                                                <p:commandButton update=":formDateTable,:msgs" oncomplete="PF('dialogAlumnoCreate').hide()" actionListener="#{alumnoBean.CrearAlumno(actionEvent)}" icon="ui-icon-disk" title="Guardar cuenta de Alumno" value="Guardar"  ajax="false" />
+                                                <p:commandButton oncomplete="PF('dialogAlumnoCreate').hide()" icon="ui-icon-cancel" title="Cancelar crear Alumno" value="Cancelar"/>
+                                            </p:column>
+                                        </p:row>
+                                    </f:facet>
+                                </p:panelGrid>
+                            </p:outputPanel>
+                        </p:dialog>
+                    </h:form>
+
+
+
+
+
+
+                    <!--############################################ Modificar ############################################-->
 
                     <h:form id="formUpdate" enctype="multipart/form-data" >
+                        <p:dialog id="dlgAlumnoUpdate" header="Modificar Alumno" closeOnEscape="true" widgetVar="dialogAlumnoUpdate" showEffect="fade" hideEffect="fade" resizable="false">
+                            <p:outputPanel id="alumnoDetalle" style="text-align: left;overflow-y: scroll;  height:500px; padding-bottom: 15px">
 
-                        <p:dialog id="dlgAlumnoUpdate" header="Modificar Alumno" widgetVar="dialogAlumnoUpdate" showEffect="fade" hideEffect="fade" resizable="false">
-                            <p:outputPanel id="alumnoDetalle" style="text-align: left;">
-                                <h:panelGrid  columns="2" style="padding: 2px;" >
+                                <!-- ********************************Separador de panel Grid********************************-->
 
-                                    <h:outputText value="Nombre:" />
-                                    <p:inputText value="#{alumnoBean.selectedAlumno.nombre}" />
-
-                                    <h:outputText value="Apellido:" />
-                                    <p:inputText value="#{alumnoBean.selectedAlumno.apellido}" />
-
-                                    <h:outputText value="Fecha Nac.:" />
-                                    <p:calendar value="#{alumnoBean.selectedAlumno.fechaNacimiento}" />
-
-                                    <h:outputText value="Ciudad:" />
-                                    <p:inputText value="#{alumnoBean.selectedAlumno.direccion}" />
-
-                                    <h:outputText value="Dirección:" />
-                                    <p:inputText value="#{alumnoBean.selectedAlumno.direccion}" />
-
-                                    <h:outputText value="Telefono:" />
-                                    <p:inputText value="#{alumnoBean.selectedAlumno.telefono}" />
-
-                                    <p:graphicImage value="/img/#{alumnoBean.selectedAlumno.ruta}" width="50px" height="50px" />
-                                    <p:fileUpload value="#{alumnoBean.archivo}" mode="simple" sizeLimit="1000000" allowTypes="/(\.|\/)(gif|jpe?g)|png)$/" />
-                                    <h:inputHidden value="#{alumnoBean.selectedAlumno.ruta}" />
-
-                                    <h:inputHidden value="#{alumnoBean.selectedAlumno.ci}" />
-
-                                    <f:facet name="footer">
-                                        <p:commandButton update=":formDateTable,:msgs" oncomplete="PF('dialogAlumnoUpdate').hide()" actionListener="#{alumnoBean.ModificarAlumno(actionEvent)}" icon="ui-icon-disk" title="Guardar cuenta de Alumno" value="Modificar" ajax="false" />
-                                        <p:commandButton oncomplete="PF('dialogAlumnoUpdate').hide()" icon="ui-icon-cancel" title="Cancelar modificación de cuenta de Alumno" value="Cancelar"/>
+                                <p:panelGrid  id="panelGrip" style="width: 80%;  margin: auto; margin-top: 5%;">
+                                    <f:facet name="header">
+                                        <p:row>
+                                            <p:column colspan="5">Modificar de Alumno</p:column>
+                                        </p:row>
+                                        <p:row>
+                                            <p:column colspan="5" style="text-align: left;">Datos Personales
+                                                <p:fileUpload  value="#{alumnoBean.archivo}" mode="simple" sizeLimit="1000000" allowTypes="/(\.|\/)(gif|jpe?g)|png)$/" />
+                                                <h:inputHidden value="#{alumnoBean.selectedAlumno.ruta}" /></p:column>
+                                        </p:row>
                                     </f:facet>
-                                </h:panelGrid>
+
+                                    <p:row>
+                                        <p:column colspan="1" style="font-weight: bold;">Número de Cédula: </p:column>
+                                        <p:column colspan="2" style="font-weight: bold;">
+                                            <center>
+                                                <p:inputText id="ci" value="#{alumnoBean.selectedAlumno.ci}">
+                                                    <p:keyFilter regEx="/[\d\-]/"/>
+                                                    <p:watermark for="ci" value="7823212"/>                               
+                                                </p:inputText> 
+                                            </center> 
+                                        </p:column>
+                                        <p:column colspan="1">
+                                            Estado Civil
+                                        </p:column>
+                                        <p:column colspan="2">
+                                            <p:selectOneMenu id="EstadoCivilid" value="#{alumnoBean.estadoCivilid}" effect="fold" >
+                                                <f:selectItem itemLabel="Elija una opcion" itemValue="" />
+                                                <f:selectItems value="#{estadoCivilBean.estadoCivils}" var="t" itemValue="#{t.id}" itemLabel="#{t.descripcion}"/>
+                                            </p:selectOneMenu>
+                                        </p:column>
+                                    </p:row>
+
+                                    <p:row>
+                                        <p:column colspan="1"> 
+                                            Apellidos
+                                        </p:column>
+                                        <p:column colspan="2"> 
+                                            <p:inputText id="apellido" value="#{alumnoBean.selectedAlumno.apellido}">
+                                                <p:watermark for="apellido" value="Torres Hidalgo"/>                               
+                                            </p:inputText> 
+                                        </p:column>
+
+                                        <p:column colspan="1"> 
+                                            Nombres
+                                        </p:column>
+
+                                        <p:column colspan="2"> 
+                                            <p:inputText id="nombre" value="#{alumnoBean.selectedAlumno.nombre}">
+                                                <p:watermark for="nombre" value="Alvarus Salvador"/>                               
+                                            </p:inputText> 
+                                        </p:column>           
+                                    </p:row>
+
+                                    <p:row>
+                                        <p:column colspan="1">
+                                            Sexo
+                                        </p:column>
+
+                                        <p:column colspan="2" >
+
+                                            <p:selectOneMenu id="Sexoid" value="#{alumnoBean.sexoid}" effect="fold" >
+                                                <f:selectItem itemLabel="Elija una opcion" itemValue="" />
+                                                <f:selectItems value="#{sexoBean.sexos}" var="t" itemValue="#{t.id}" itemLabel="#{t.descripcion}"/>
+                                            </p:selectOneMenu>
+                                        </p:column>
+                                        <p:column colspan="1">
+                                            Nacionalidad
+                                        </p:column>
+
+                                        <p:column colspan="2" >
+
+                                            <p:selectOneMenu id="nacionalidadid" value="#{alumnoBean.nacionalidadid}" effect="fold" >
+                                                <f:selectItem itemLabel="Elija una opcion" itemValue="" />
+                                                <f:selectItems value="#{nacionalidadBean.nacionalidads}" var="t" itemValue="#{t.id}" itemLabel="#{t.descripcion}"/>
+                                            </p:selectOneMenu>
+                                        </p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column colspan="1"> 
+                                            Direccion
+                                        </p:column>
+                                        <p:column colspan="2"> 
+                                            <p:inputText id="direccion" value="#{alumnoBean.selectedAlumno.direccion}">                                                                       
+                                            </p:inputText> 
+                                        </p:column>
+                                        <p:column colspan="1">
+                                            Zona
+                                        </p:column>
+
+                                        <p:column colspan="2" >
+                                            <p:selectOneMenu id="zonaid" value="#{alumnoBean.zonaid}" effect="fold" >
+                                                <f:selectItem itemLabel="Elija una opcion" itemValue="" />
+                                                <f:selectItems value="#{zonaBean.zonas}" var="t" itemValue="#{t.id}" itemLabel="#{t.descripcion}"/>
+                                            </p:selectOneMenu>
+                                        </p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column colspan="1"> 
+                                            Nombre de Contacto
+                                        </p:column>
+                                        <p:column colspan="2"> 
+                                            <p:inputText id="nombrecontacto" value="#{alumnoBean.selectedAlumno.nombreContacto}">                                                                         
+                                            </p:inputText> 
+                                        </p:column>
+                                        <p:column colspan="1"> 
+                                            Telefono de Contacto
+                                        </p:column>
+
+                                        <p:column colspan="5"> 
+                                            <p:inputMask id="telefonocontacto" value="#{alumnoBean.selectedAlumno.telefonoContacto}" mask="(0999)-999999">
+                                                <p:keyFilter regEx="/[\d\-]/"/>
+                                                <p:watermark for="celularid" value="(0981) 663399"/>                               
+                                            </p:inputMask>   
+                                        </p:column>  
+                                    </p:row>
+                                    <p:row>
+                                        <p:column colspan="1"> 
+                                            Municipio
+                                        </p:column>
+                                        <p:column colspan="2"> 
+                                            <p:selectOneMenu id="municipioidid" value="#{alumnoBean.municipioid}" effect="fold"  style="width:125px" required="true" requiredMessage="Se requiere que seleccione un Nivel Academico" >
+                                                <f:selectItem itemLabel="Elija una opcion" itemValue="" />
+                                                <f:selectItems value="#{municipioBean.municipios}" var="t" itemValue="#{t.id}" itemLabel="#{t.descripcion}"/>
+                                                <p:ajax event="change" listener="#{alumnoBean.filtroLocalidads()}" partialSubmit="true" process="@this" update=":formCreate:localidadid" />
+                                            </p:selectOneMenu>
+                                        </p:column>
+                                        <p:column colspan="1">
+                                            Localidad
+                                        </p:column>
+
+                                        <p:column colspan="2" >
+                                            <p:selectOneMenu id="localidadid" value="#{alumnoBean.localidadid}" effect="fold" >
+                                                <f:selectItem itemLabel="Elija una opcion" itemValue="" />
+                                                <f:selectItems value="#{alumnoBean.lstLocalidads}" var="lo" itemValue="#{lo.id}" itemLabel="#{lo.descripcion}"/>
+                                            </p:selectOneMenu>
+                                        </p:column>
+                                    </p:row>
+                                </p:panelGrid>
+
+                                <!-- ********************************Separador de panel Grid********************************-->
+
+                                <p:panelGrid id="panelGrip2" style="width: 80%; margin: auto; margin-top: 0px;">
+                                    <f:facet name="header">
+                                        <p:row>
+                                            <p:column colspan="7" style="text-align: left;">Formación Academica</p:column>
+                                        </p:row>
+                                    </f:facet>
+                                    <p:row>
+                                        <p:column colspan="1"> 
+                                            Nivel Academico
+                                        </p:column>
+                                        <p:column colspan="2"> 
+                                            <p:selectOneMenu id="NivelAcademicoid" value="#{alumnoBean.nivelAcademicoid}" effect="fold"  style="width:125px" required="true" requiredMessage="Se requiere que seleccione un Nivel Academico" >
+                                                <f:selectItem itemLabel="Elija una opcion" itemValue="" />
+                                                <f:selectItems value="#{nivelAcademicoBean.nivelAcademicos}" var="t" itemValue="#{t.id}" itemLabel="#{t.descripcion}"/>
+                                                <p:ajax event="change" listener="#{alumnoBean.filtroEstados()}" partialSubmit="true" process="@this" update=":formCreate:EstadoAcademicoid" />
+                                            </p:selectOneMenu>
+                                        </p:column>
+                                        <p:column colspan="1"> 
+                                            Estado Academico
+                                        </p:column>
+                                        <p:column colspan="2"> 
+                                            <p:selectOneMenu id="EstadoAcademicoid" value="#{alumnoBean.estadoAcademicoid}" effect="fold"  style="width:125px" required="true" requiredMessage="Se requiere que seleccione un Nivel Academico" >
+                                                <f:selectItem itemLabel="Elija una opcion" itemValue="" />
+                                                <f:selectItems value="#{alumnoBean.lstEstadosAcademicos}" var="t" itemValue="#{t.id}" itemLabel="#{t.descripcion}"/>          
+                                            </p:selectOneMenu>
+                                        </p:column>
+                                    </p:row>
+                                </p:panelGrid>
+
+                                <!-- ********************************Separador de panel Grid********************************-->
+
+                                <p:panelGrid id="panelGrip3" style="width: 80%; margin: auto; margin-top: 0px;">
+                                    <f:facet name="header">
+                                        <p:row>
+                                            <p:column colspan="7" style="text-align: left;">Medio de Contacto</p:column>
+                                        </p:row>
+                                    </f:facet>
+
+                                    <p:row>
+                                        <p:column colspan="1"> 
+                                            Telefono
+                                        </p:column>
+
+                                        <p:column colspan="5"> 
+                                            <p:inputMask id="telefonoid" value="#{alumnoBean.selectedAlumno.telefono}" mask="(0999)-999999">
+                                                <p:keyFilter regEx="/[\d\-]/"/>
+                                                <p:watermark for="telefonoid" value="(0981) 663399"/>                               
+                                            </p:inputMask>   
+                                        </p:column>           
+                                    </p:row>
+                                    <p:row>
+                                        <p:column colspan="1"> 
+                                            Celular
+                                        </p:column>
+
+                                        <p:column colspan="5"> 
+                                            <p:inputMask id="celularid" value="#{alumnoBean.selectedAlumno.celular}" mask="(0999)-999999">
+                                                <p:keyFilter regEx="/[\d\-]/"/>
+                                                <p:watermark for="celularid" value="(0981) 663399"/>                               
+                                            </p:inputMask>   
+                                        </p:column>           
+                                    </p:row>
+
+                                    <p:row>
+                                        <p:column colspan="1"> 
+                                            Email (Correo Electronico)
+                                        </p:column>
+                                        <p:column colspan="5"> 
+                                            <p:inputText id="email" value="#{alumnoBean.selectedAlumno.email}" style="width: 95%" >
+
+                                                <p:watermark for="email" value="alvarus@hotmail.com" />
+                                            </p:inputText>
+                                        </p:column>
+
+                                    </p:row>
+
+                                    <p:row>
+                                        <p:column colspan="1"> 
+                                            Fecha de Nacimiento
+                                        </p:column>
+                                        <p:column colspan="5"> 
+                                            <p:calendar id="fechanac" value="#{alumnoBean.selectedAlumno.fechaNacimiento}" style="width: 95%" >
+
+
+                                            </p:calendar>
+                                        </p:column>
+                                    </p:row>
+                                </p:panelGrid>
+
+                                <!-- ********************************Separador de panel Grid********************************-->
+
+                                <p:panelGrid id="panelGri5" style="width: 80%; margin: auto; margin-top: 0px;">
+                                    <f:facet name="header">
+                                        <p:row>
+                                            <p:column colspan="7" style="text-align: left;">¿Posee discapacidades?</p:column>
+                                        </p:row>
+                                    </f:facet>
+                                    <p:row>
+                                        <p:column >
+                                            Marque en caso de tener la discapacidad
+                                        </p:column>
+                                        <p:column >
+                                            <p:selectManyCheckbox id="customPanel" value="#{alumnoBean.discapacidad}">
+                                                <f:selectItems value="#{discapacidadBean.discapacidads}" var="t" itemValue="#{t.id}" itemLabel="#{ t.descripcion }" />
+                                            </p:selectManyCheckbox>
+                                        </p:column>
+                                    </p:row> 
+                                </p:panelGrid>
+
+                                <!-- ********************************Separador de panel Grid********************************-->
+
+                                <p:panelGrid id="panelGri6" style="width: 80%; margin: auto; margin-top: 0px;">
+                                    <f:facet name="header">
+                                        <p:row>
+                                            <p:column colspan="7" style="text-align: left;">Situacion Laboral</p:column>
+                                        </p:row>
+                                    </f:facet>
+
+
+                                    <p:row>
+                                        <p:column colspan="6">
+                                            <center>
+                                                <p:selectBooleanButton id="value1" value="#{alumnoBean.checkedTrabaja}" onLabel="Trabaja" offLabel="No Trabaja" onIcon="ui-icon-check" offIcon="ui-icon-close" style="width:400px" >
+                                                    <p:ajax event="change" update="spanTipoTrabajo spanExperiencia" partialSubmit="True"          process="@this" />
+                                                </p:selectBooleanButton>
+                                            </center>
+                                        </p:column>
+                                    </p:row>
+
+                                    <p:row>
+                                        <p:column colspan="1">
+                                            Forma de Trabajo
+                                        </p:column>
+                                        <p:column colspan="2">
+                                            <span jsf:id="spanTipoTrabajo">
+                                                <p:selectBooleanButton id="tipotrabajo" value="#{alumnoBean.tipoTrabajo}" 
+                                                                       disabled="#{!alumnoBean.checkedTrabaja?'true':'false'}"
+                                                                       onLabel="Independiente" offLabel="Dependiente" style="width:250px"  />  
+                                            </span>
+                                        </p:column>
+                                        <p:column colspan="2" rowspan="3">
+                                            ¿Tiene experiencia laboral?
+                                        </p:column>
+                                        <p:column colspan="2" rowspan="3" >
+                                            <center>
+                                                <span jsf:id="spanExperiencia">
+                                                    <p:selectBooleanButton id="experiencialab" disabled="#{alumnoBean.checkedTrabaja?'true':'false'}" value="#{alumnoBean.experiencia}" onLabel="Yes" offLabel="No" style="width:60px" />
+                                                </span>
+                                            </center>
+                                        </p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column colspan="1">
+                                            Horas trabajadas
+                                        </p:column>
+                                        <p:column colspan="2">
+                                            <p:selectOneMenu id="horasTrabajoid" value="#{alumnoBean.horasTrabajoid}" effect="fold" >
+                                                <f:selectItem itemLabel="Elija una opcion" itemValue="" />
+                                                <f:selectItems value="#{horasTrabajoBean.horasTrabajos}" var="t" itemValue="#{t.id}" itemLabel="#{t.descripcion}"/>
+                                            </p:selectOneMenu>
+
+                                        </p:column>
+                                    </p:row>
+
+                                    <p:row>
+                                        <p:column colspan="1">
+                                            Salario
+                                        </p:column>
+                                        <p:column colspan="2">
+                                            <p:selectOneMenu id="salarioid" value="#{alumnoBean.salarioid}" effect="fold" >
+                                                <f:selectItem itemLabel="Elija una opcion" itemValue="" />
+                                                <f:selectItems value="#{salarioBean.salarios}" var="t" itemValue="#{t.id}" itemLabel="#{t.descripcion}"/>
+                                            </p:selectOneMenu>
+                                        </p:column>
+                                    </p:row>
+                                </p:panelGrid>
+
+                                <!-- ********************************Separador de panel Grid********************************-->
+
+                                <p:panelGrid id="panelGrip4" style="width: 80%; margin: auto; margin-top: 0px;">
+                                    <f:facet name="header">
+                                        <p:row>
+                                            <p:column colspan="7" style="text-align: left;">Usuario</p:column>
+                                        </p:row>
+                                    </f:facet>
+                                    <p:row>
+                                        <p:column colspan="1"> 
+                                            Usuario
+                                        </p:column>
+                                        <p:column colspan="2"> 
+                                            <p:selectOneMenu id="Usuarioid" value="#{alumnoBean.usuarioid}" effect="fold" >
+                                                <f:selectItem itemLabel="Elija una opcion" itemValue="" />
+                                                <f:selectItems value="#{usuarioBean.usuarios}" var="p" itemValue="#{p.ci}" itemLabel="#{p.nombre}"/>
+                                            </p:selectOneMenu>
+                                        </p:column>
+                                    </p:row>
+                                    <f:facet name="footer">
+                                        <p:row>
+                                            <p:column  colspan="6" style="text-align: center">
+                                                <p:commandButton update=":formDataTable,:msgs" oncomplete="PF('dialogAlumnoUpdate').hide()" actionListener="#{alumnoBean.ModificarAlumno(actionEvent)}" icon="ui-icon-disk" title="Modificar Alumno" value="Modificar"  ajax="false"/>
+                                                <p:commandButton  onclick="PF('dialogAlumnoUpdate').hide()" icon="ui-icon-cancel" title="Cancelar Modificacion de Alumno" value="Cancelar"/>
+
+                                            </p:column>
+                                        </p:row>
+                                    </f:facet>
+                                </p:panelGrid>
                             </p:outputPanel>
                         </p:dialog>
                     </h:form>
 
+                    <!--############################################ Boton de Elimniar ############################################-->
 
                     <p:confirmDialog showEffect="fade" hideEffect="explode" appendTo="@(body)" closeOnEscape="true" message="Esta seguro de eliminar el reigistro?" header="Eliminar Registro" severity="alert" widgetVar="dialogAlumnoDelete">
                         <h:form id="formDelete"> 

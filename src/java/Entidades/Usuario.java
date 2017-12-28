@@ -42,24 +42,18 @@ public class Usuario implements Serializable {
     @NotNull
     @Column(name = "ci")
     private Integer ci;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 50)
+    @Size(max = 50)
     @Column(name = "nombre")
     private String nombre;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 50)
+    @Size(max = 50)
     @Column(name = "apellido")
     private String apellido;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 20)
+    @Size(max = 20)
     @Column(name = "password")
     private String password;
     @Column(name = "activo")
     private Boolean activo;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuarioCi")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
     private List<Documento> documentoList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
     private List<Alumno> alumnoList;
@@ -75,13 +69,6 @@ public class Usuario implements Serializable {
 
     public Usuario(Integer ci) {
         this.ci = ci;
-    }
-
-    public Usuario(Integer ci, String nombre, String apellido, String password) {
-        this.ci = ci;
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.password = password;
     }
 
     public Integer getCi() {
@@ -180,5 +167,5 @@ public class Usuario implements Serializable {
     public String toString() {
         return "Entidades.Usuario[ ci=" + ci + " ]";
     }
-
+    
 }

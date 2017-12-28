@@ -14,6 +14,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -44,17 +45,16 @@ public class Carrera implements Serializable {
     private String descripcion;
     @Column(name = "habilitada")
     private Boolean habilitada;
+    @ManyToMany(mappedBy = "carreraList")
+    private List<Cpi> cpiList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "alternativa1")
     private List<InscripcionCpi> inscripcionCpiList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "alternativa2")
     private List<InscripcionCpi> inscripcionCpiList1;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "carrera1")
     private List<CarreraHabilitada> carreraHabilitadaList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "carrera1")
-    private List<CarrerasCpi> carrerasCpiList;
 
     public Carrera() {
-        this.id=0;
     }
 
     public Carrera(Integer id) {
@@ -85,6 +85,14 @@ public class Carrera implements Serializable {
         this.habilitada = habilitada;
     }
 
+    public List<Cpi> getCpiList() {
+        return cpiList;
+    }
+
+    public void setCpiList(List<Cpi> cpiList) {
+        this.cpiList = cpiList;
+    }
+
     public List<InscripcionCpi> getInscripcionCpiList() {
         return inscripcionCpiList;
     }
@@ -107,14 +115,6 @@ public class Carrera implements Serializable {
 
     public void setCarreraHabilitadaList(List<CarreraHabilitada> carreraHabilitadaList) {
         this.carreraHabilitadaList = carreraHabilitadaList;
-    }
-
-    public List<CarrerasCpi> getCarrerasCpiList() {
-        return carrerasCpiList;
-    }
-
-    public void setCarrerasCpiList(List<CarrerasCpi> carrerasCpiList) {
-        this.carrerasCpiList = carrerasCpiList;
     }
 
     @Override

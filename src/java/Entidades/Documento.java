@@ -8,19 +8,18 @@ package Entidades;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 /**
@@ -31,22 +30,19 @@ import javax.validation.constraints.Size;
 @Table(name = "documento")
 @NamedQueries({
     @NamedQuery(name = "Documento.findAll", query = "SELECT d FROM Documento d")
-    , @NamedQuery(name = "Documento.findById", query = "SELECT d FROM Documento d WHERE d.id = :id")
+    , @NamedQuery(name = "Documento.findById", query = "SELECT d FROM Documento d WHERE d.documentoPK.id = :id")
+    , @NamedQuery(name = "Documento.findByClaseDocumento", query = "SELECT d FROM Documento d WHERE d.documentoPK.claseDocumento = :claseDocumento")
     , @NamedQuery(name = "Documento.findByEstadoSolicitud", query = "SELECT d FROM Documento d WHERE d.estadoSolicitud = :estadoSolicitud")
     , @NamedQuery(name = "Documento.findByFechaEnviado", query = "SELECT d FROM Documento d WHERE d.fechaEnviado = :fechaEnviado")
     , @NamedQuery(name = "Documento.findByFechaRecibido", query = "SELECT d FROM Documento d WHERE d.fechaRecibido = :fechaRecibido")
     , @NamedQuery(name = "Documento.findByRevisionDireccion", query = "SELECT d FROM Documento d WHERE d.revisionDireccion = :revisionDireccion")
     , @NamedQuery(name = "Documento.findByObservacionDireccion", query = "SELECT d FROM Documento d WHERE d.observacionDireccion = :observacionDireccion")
-    , @NamedQuery(name = "Documento.findByRuta", query = "SELECT d FROM Documento d WHERE d.ruta = :ruta")
-    , @NamedQuery(name = "Documento.findByClaseDocumento", query = "SELECT d FROM Documento d WHERE d.claseDocumento = :claseDocumento")})
+    , @NamedQuery(name = "Documento.findByRuta", query = "SELECT d FROM Documento d WHERE d.ruta = :ruta")})
 public class Documento implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @Id
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "id")
-    private Integer id;
+    @EmbeddedId
+    protected DocumentoPK documentoPK;
     @Column(name = "estado_solicitud")
     private Boolean estadoSolicitud;
     @Column(name = "fecha_enviado")
@@ -63,37 +59,35 @@ public class Documento implements Serializable {
     @Size(max = 120)
     @Column(name = "ruta")
     private String ruta;
-    @Column(name = "clase_documento")
-    private Boolean claseDocumento;
-    @ManyToMany(mappedBy = "documentoList")
-    private List<TipoMotivo> tipoMotivoList;
-    @JoinColumn(name = "usuario_ci", referencedColumnName = "ci")
+    @JoinColumn(name = "usuario", referencedColumnName = "ci")
     @ManyToOne(optional = false)
-    private Usuario usuarioCi;
+    private Usuario usuario;
     @JoinColumn(name = "solicitantes", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Solicitante solicitantes;
     @JoinColumn(name = "tipo_documento", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private TipoDocumento tipoDocumento;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "documento")
+    private List<DetalleMotivo> detalleMotivoList;
 
     public Documento() {
-        this.id=0;
-        this.solicitantes = new Solicitante();
-        this.tipoDocumento = new TipoDocumento();
-        this.usuarioCi = new Usuario();
     }
 
-    public Documento(Integer id) {
-        this.id = id;
+    public Documento(DocumentoPK documentoPK) {
+        this.documentoPK = documentoPK;
     }
 
-    public Integer getId() {
-        return id;
+    public Documento(int id, boolean claseDocumento) {
+        this.documentoPK = new DocumentoPK(id, claseDocumento);
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public DocumentoPK getDocumentoPK() {
+        return documentoPK;
+    }
+
+    public void setDocumentoPK(DocumentoPK documentoPK) {
+        this.documentoPK = documentoPK;
     }
 
     public Boolean getEstadoSolicitud() {
@@ -144,28 +138,12 @@ public class Documento implements Serializable {
         this.ruta = ruta;
     }
 
-    public Boolean getClaseDocumento() {
-        return claseDocumento;
+    public Usuario getUsuario() {
+        return usuario;
     }
 
-    public void setClaseDocumento(Boolean claseDocumento) {
-        this.claseDocumento = claseDocumento;
-    }
-
-    public List<TipoMotivo> getTipoMotivoList() {
-        return tipoMotivoList;
-    }
-
-    public void setTipoMotivoList(List<TipoMotivo> tipoMotivoList) {
-        this.tipoMotivoList = tipoMotivoList;
-    }
-
-    public Usuario getUsuarioCi() {
-        return usuarioCi;
-    }
-
-    public void setUsuarioCi(Usuario usuarioCi) {
-        this.usuarioCi = usuarioCi;
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
     public Solicitante getSolicitantes() {
@@ -184,10 +162,18 @@ public class Documento implements Serializable {
         this.tipoDocumento = tipoDocumento;
     }
 
+    public List<DetalleMotivo> getDetalleMotivoList() {
+        return detalleMotivoList;
+    }
+
+    public void setDetalleMotivoList(List<DetalleMotivo> detalleMotivoList) {
+        this.detalleMotivoList = detalleMotivoList;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        hash += (documentoPK != null ? documentoPK.hashCode() : 0);
         return hash;
     }
 
@@ -198,7 +184,7 @@ public class Documento implements Serializable {
             return false;
         }
         Documento other = (Documento) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        if ((this.documentoPK == null && other.documentoPK != null) || (this.documentoPK != null && !this.documentoPK.equals(other.documentoPK))) {
             return false;
         }
         return true;
@@ -206,7 +192,7 @@ public class Documento implements Serializable {
 
     @Override
     public String toString() {
-        return "Entidades.Documento[ id=" + id + " ]";
+        return "Entidades.Documento[ documentoPK=" + documentoPK + " ]";
     }
     
 }

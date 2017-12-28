@@ -9,6 +9,7 @@ import Entidades.HorasTrabajo;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -29,4 +30,26 @@ public class HorasTrabajoFacade extends AbstractFacade<HorasTrabajo> {
         super(HorasTrabajo.class);
     }
     
+    public boolean HorasTrabajoUnico(HorasTrabajo horasTrabajo) {
+        boolean b;
+        TypedQuery<HorasTrabajo> q = this.em.createQuery("SELECT f FROM HorasTrabajo f WHERE f.descripcion = :n", HorasTrabajo.class);
+        q.setParameter("n", horasTrabajo.getDescripcion());
+        if (q.getResultList().isEmpty()) {
+            b = true;
+            return b;
+        } else {
+            b = false;
+            return b;
+        }
+    }
+
+    public HorasTrabajo findByHorasTrabajo(String horasTrabajo) {
+        TypedQuery<HorasTrabajo> q = this.em.createQuery("SELECT f FROM HorasTrabajo f WHERE f.descripcion = :n", HorasTrabajo.class);
+        q.setParameter("n", horasTrabajo);
+        if (!q.getResultList().isEmpty()) {
+            return q.getResultList().get(0);
+        } else {
+            return null;
+        }
+    }
 }

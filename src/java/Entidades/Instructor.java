@@ -43,14 +43,10 @@ public class Instructor implements Serializable {
     @NotNull
     @Column(name = "ci")
     private Integer ci;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 50)
+    @Size(max = 50)
     @Column(name = "nombre")
     private String nombre;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 50)
+    @Size(max = 50)
     @Column(name = "apellido")
     private String apellido;
     // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
@@ -60,9 +56,7 @@ public class Instructor implements Serializable {
     @Size(max = 80)
     @Column(name = "ruta")
     private String ruta;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 80)
+    @Size(max = 80)
     @Column(name = "telefono")
     private String telefono;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "instructor1")
@@ -88,23 +82,10 @@ public class Instructor implements Serializable {
     private List<ContratoInstructorits> contratoInstructoritsList;
 
     public Instructor() {
-        this.ci=0;
-        this.estadoAcademico = new EstadoAcademico();
-        this.estadoCivil = new EstadoCivil();
-        this.municipio = new Municipio();
-        this.sexo = new Sexo();
-        this.usuario = new Usuario();
     }
 
     public Instructor(Integer ci) {
         this.ci = ci;
-    }
-
-    public Instructor(Integer ci, String nombre, String apellido, String telefono) {
-        this.ci = ci;
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.telefono = telefono;
     }
 
     public Integer getCi() {

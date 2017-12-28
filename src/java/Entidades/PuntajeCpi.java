@@ -26,10 +26,10 @@ import javax.persistence.Table;
     @NamedQuery(name = "PuntajeCpi.findAll", query = "SELECT p FROM PuntajeCpi p")
     , @NamedQuery(name = "PuntajeCpi.findByInstructor", query = "SELECT p FROM PuntajeCpi p WHERE p.puntajeCpiPK.instructor = :instructor")
     , @NamedQuery(name = "PuntajeCpi.findByMateria", query = "SELECT p FROM PuntajeCpi p WHERE p.puntajeCpiPK.materia = :materia")
-    , @NamedQuery(name = "PuntajeCpi.findByPuntosAlcanzados", query = "SELECT p FROM PuntajeCpi p WHERE p.puntosAlcanzados = :puntosAlcanzados")
     , @NamedQuery(name = "PuntajeCpi.findByAlumno", query = "SELECT p FROM PuntajeCpi p WHERE p.puntajeCpiPK.alumno = :alumno")
     , @NamedQuery(name = "PuntajeCpi.findByCpiAnho", query = "SELECT p FROM PuntajeCpi p WHERE p.puntajeCpiPK.cpiAnho = :cpiAnho")
-    , @NamedQuery(name = "PuntajeCpi.findByCpiNum", query = "SELECT p FROM PuntajeCpi p WHERE p.puntajeCpiPK.cpiNum = :cpiNum")})
+    , @NamedQuery(name = "PuntajeCpi.findByCpiNum", query = "SELECT p FROM PuntajeCpi p WHERE p.puntajeCpiPK.cpiNum = :cpiNum")
+    , @NamedQuery(name = "PuntajeCpi.findByPuntosAlcanzados", query = "SELECT p FROM PuntajeCpi p WHERE p.puntosAlcanzados = :puntosAlcanzados")})
 public class PuntajeCpi implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -37,10 +37,7 @@ public class PuntajeCpi implements Serializable {
     protected PuntajeCpiPK puntajeCpiPK;
     @Column(name = "puntos_alcanzados")
     private Integer puntosAlcanzados;
-    @JoinColumns({
-        @JoinColumn(name = "alumno", referencedColumnName = "alumno", insertable = false, updatable = false)
-        , @JoinColumn(name = "cpi_anho", referencedColumnName = "cpi_anho", insertable = false, updatable = false)
-        , @JoinColumn(name = "cpi_num", referencedColumnName = "cpi_num", insertable = false, updatable = false)})
+    @JoinColumn(name = "alumno", referencedColumnName = "alumno", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private InscripcionCpi inscripcionCpi;
     @JoinColumns({
@@ -50,8 +47,6 @@ public class PuntajeCpi implements Serializable {
     private ContratoInstructorcpi contratoInstructorcpi;
 
     public PuntajeCpi() {
-        this.contratoInstructorcpi = new ContratoInstructorcpi();
-        this.inscripcionCpi = new InscripcionCpi();
     }
 
     public PuntajeCpi(PuntajeCpiPK puntajeCpiPK) {

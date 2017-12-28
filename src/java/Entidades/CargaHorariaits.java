@@ -56,7 +56,6 @@ public class CargaHorariaits implements Serializable {
     private List<MateriaIts> materiaItsList;
 
     public CargaHorariaits() {
-        this.id=0;
     }
 
     public CargaHorariaits(Integer id) {

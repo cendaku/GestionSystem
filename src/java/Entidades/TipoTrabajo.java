@@ -40,7 +40,6 @@ public class TipoTrabajo implements Serializable {
     private String descripcion;
 
     public TipoTrabajo() {
-        this.id=0;
     }
 
     public TipoTrabajo(Integer id) {

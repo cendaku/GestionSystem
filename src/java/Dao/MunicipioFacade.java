@@ -9,6 +9,7 @@ import Entidades.Municipio;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -29,4 +30,26 @@ public class MunicipioFacade extends AbstractFacade<Municipio> {
         super(Municipio.class);
     }
     
+    public boolean MunicipioUnico(Municipio municipio) {
+        boolean b;
+        TypedQuery<Municipio> q = this.em.createQuery("SELECT f FROM Municipio f WHERE f.descripcion = :n", Municipio.class);
+        q.setParameter("n", municipio.getDescripcion());
+        if (q.getResultList().isEmpty()) {
+            b = true;
+            return b;
+        } else {
+            b = false;
+            return b;
+        }
+    }
+
+    public Municipio findByMunicipio(String municipio) {
+        TypedQuery<Municipio> q = this.em.createQuery("SELECT f FROM Municipio f WHERE f.descripcion = :n", Municipio.class);
+        q.setParameter("n", municipio);
+        if (!q.getResultList().isEmpty()) {
+            return q.getResultList().get(0);
+        } else {
+            return null;
+        }
+    }
 }

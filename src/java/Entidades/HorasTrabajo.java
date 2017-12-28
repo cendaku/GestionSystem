@@ -42,6 +42,8 @@ public class HorasTrabajo implements Serializable {
     @Column(name = "descripcion")
     private String descripcion;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "horasTrabajo")
+    private List<Alumno> alumnoList;
+    @OneToMany(mappedBy = "horasTrabajo")
     private List<SituacionLaboral> situacionLaboralList;
 
     public HorasTrabajo() {
@@ -66,6 +68,14 @@ public class HorasTrabajo implements Serializable {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+
+    public List<Alumno> getAlumnoList() {
+        return alumnoList;
+    }
+
+    public void setAlumnoList(List<Alumno> alumnoList) {
+        this.alumnoList = alumnoList;
     }
 
     public List<SituacionLaboral> getSituacionLaboralList() {

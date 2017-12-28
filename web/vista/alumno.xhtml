@@ -40,7 +40,7 @@
                                 Listado de Alumno
                             </f:facet>
                             <p:column style="width:30px;text-align: center" headerText="Foto">
-                                <p:graphicImage value="/img/#{alumno.ruta}" width="30px" height="30" />
+                                <p:graphicImage value="/img/#{alumno.ruta}" width="30px" height="30px" />
                             </p:column>
                             <p:column style="width:auto;text-align: center" headerText="Alumno">
                                 <h:outputText value="#{alumno.apellido} #{alumno.nombre}" />
@@ -133,15 +133,18 @@
                             <p:outputPanel id="alumnoDetalle" style="text-align: left;overflow-y: scroll;  height:500px;padding-bottom: 15px">
 
                                 <!-- ********************************Separador de panel Grid********************************-->
-
+                                
                                 <p:panelGrid  id="panelGrip" style="width: 80%;  margin: auto; margin-top: 5%;">
                                     <f:facet name="header">
                                         <p:row>
                                             <p:column colspan="5">Alumno</p:column>
+                                            <p:column colspan="5" style="text-align: left;color: green;">
+                                                <p:graphicImage value="/img/#{alumnoBean.selectedAlumno.ruta}" width="100px" />
+                                            </p:column>
                                         </p:row>
+                                        
                                         <p:row>
-                                            <p:column colspan="5" style="text-align: left;color: green">Datos Personales
-                                                <h:inputHidden value="#{alumnoBean.selectedAlumno.ruta}" />
+                                            <p:column colspan="6" style="text-align: left;color: green;">Datos Personales
                                             </p:column>
                                         </p:row>
                                     </f:facet>

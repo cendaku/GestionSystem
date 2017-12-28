@@ -304,13 +304,6 @@ public class alumnoBean implements Serializable {
     public void CrearAlumno(ActionEvent actionEvent) {
         System.out.println("sexo: " + this.sexoid);
         Alumno alumno = new Alumno();
-        String nombreArchivo;
-        this.cargarArchivo = new CargarArchivo();
-        if (!this.archivo.getFileName().isEmpty()) {
-            System.out.println("Cargamos la Imagen");
-            nombreArchivo = this.cargarArchivo.capturaArchivo(this.archivo, this.destino);
-            this.selectedAlumno.setRuta(nombreArchivo);
-        }
         this.selectedAlumno.setEstadoCivil(this.estadoCivilFacade.find(this.estadoCivilid));
         this.selectedAlumno.setEstadoAcademico(this.estadoAcademicoFacade.find(this.estadoAcademicoid));
         this.selectedAlumno.setUsuario(this.UsuarioFacade.find(this.usuarioid));

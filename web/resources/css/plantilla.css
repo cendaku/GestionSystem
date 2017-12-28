@@ -1,7 +1,9 @@
 body{
     margin: 0;
+    padding: 0;
     font-family: sans-serif;
     background: url(../images/fondo/bg.png) 50% 50% repeat;
+    margin-bottom: -120px;
 }
 
 .img{
@@ -240,7 +242,7 @@ header label.mp div.mip:hover {
 
 #content{
     padding-top: 20px;
-    padding-bottom: 1px;
+    padding-bottom: 0;
     background: url(../images/fondo/bgctgri.jpg);
     width: 1075px;
     box-shadow: 5px 5px 10px #000;
@@ -263,6 +265,7 @@ header label.mp div.mip:hover {
     margin-left: auto;
     padding-right: 10px;
     padding-bottom: 5px;
+    margin-bottom: 0;
 }
 
 @media (max-width:1075px){
@@ -314,4 +317,15 @@ main {
 
 .uc{
     margin-top: 8%;
+}
+
+#scrollUp {
+    bottom: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    background: url(../images/icons/up.png);
+    background-size: cover;
+    border-radius: 50px;
+    box-shadow: 5px 5px 10px #000;
 }

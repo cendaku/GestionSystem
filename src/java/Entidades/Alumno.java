@@ -14,6 +14,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
@@ -48,7 +49,9 @@ import javax.validation.constraints.Size;
     , @NamedQuery(name = "Alumno.findByEstado", query = "SELECT a FROM Alumno a WHERE a.estado = :estado")
     , @NamedQuery(name = "Alumno.findByDeseo", query = "SELECT a FROM Alumno a WHERE a.deseo = :deseo")
     , @NamedQuery(name = "Alumno.findByExperiencia", query = "SELECT a FROM Alumno a WHERE a.experiencia = :experiencia")
-    , @NamedQuery(name = "Alumno.findByTipoTrabajo", query = "SELECT a FROM Alumno a WHERE a.tipoTrabajo = :tipoTrabajo")})
+    , @NamedQuery(name = "Alumno.findByTipoTrabajo", query = "SELECT a FROM Alumno a WHERE a.tipoTrabajo = :tipoTrabajo")
+    , @NamedQuery(name = "Alumno.findByHorasTrabajo", query = "SELECT a FROM Alumno a WHERE a.horasTrabajo = :horasTrabajo")
+    , @NamedQuery(name = "Alumno.findBySalario", query = "SELECT a FROM Alumno a WHERE a.salario = :salario")})
 public class Alumno implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -96,8 +99,20 @@ public class Alumno implements Serializable {
     private Boolean experiencia;
     @Column(name = "tipo_trabajo")
     private Boolean tipoTrabajo;
-    @ManyToMany(mappedBy = "alumnoList")
+    @Size(max = 45)
+    @Column(name = "horas_trabajo")
+    private String horasTrabajo;
+    @Column(name = "salario")
+    private Integer salario;
+    @JoinTable(name = "detalle_discapacidad", joinColumns = {
+        @JoinColumn(name = "alumno", referencedColumnName = "ci")}, inverseJoinColumns = {
+        @JoinColumn(name = "discapacidad", referencedColumnName = "id")})
+    @ManyToMany
     private List<Discapacidad> discapacidadList;
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "alumno1")
+    private IngresantesCpi ingresantesCpi;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "alumno1")
+    private List<InscripcionFpa> inscripcionFpaList;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "alumno1")
     private InscripcionCpi inscripcionCpi;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "alumno1")
@@ -108,18 +123,12 @@ public class Alumno implements Serializable {
     @JoinColumn(name = "estado_civil", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private EstadoCivil estadoCivil;
-    @JoinColumn(name = "horas_trabajo", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private HorasTrabajo horasTrabajo;
     @JoinColumn(name = "localidad", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Localidad localidad;
     @JoinColumn(name = "nacionalidad", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Nacionalidad nacionalidad;
-    @JoinColumn(name = "salario", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Salario salario;
     @JoinColumn(name = "sexo", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Sexo sexo;
@@ -129,22 +138,8 @@ public class Alumno implements Serializable {
     @JoinColumn(name = "zona", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Zona zona;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "alumno1")
-    private IngresantesCpi ingresantesCpi;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "alumno1")
-    private List<InscripcionFpa> inscripcionFpaList;
 
     public Alumno() {
-        this.zona = new Zona();
-        this.usuario = new Usuario();
-        this.salario = new Salario();
-        this.nacionalidad = new Nacionalidad();
-        this.localidad = new Localidad();
-        this.horasTrabajo = new HorasTrabajo();
-        this.estadoCivil = new EstadoCivil();
-        this.estadoAcademico = new EstadoAcademico();
-        this.estadoCivil = new EstadoCivil();
-        this.sexo = new Sexo();
     }
 
     public Alumno(Integer ci) {
@@ -271,12 +266,44 @@ public class Alumno implements Serializable {
         this.tipoTrabajo = tipoTrabajo;
     }
 
+    public String getHorasTrabajo() {
+        return horasTrabajo;
+    }
+
+    public void setHorasTrabajo(String horasTrabajo) {
+        this.horasTrabajo = horasTrabajo;
+    }
+
+    public Integer getSalario() {
+        return salario;
+    }
+
+    public void setSalario(Integer salario) {
+        this.salario = salario;
+    }
+
     public List<Discapacidad> getDiscapacidadList() {
         return discapacidadList;
     }
 
     public void setDiscapacidadList(List<Discapacidad> discapacidadList) {
         this.discapacidadList = discapacidadList;
+    }
+
+    public IngresantesCpi getIngresantesCpi() {
+        return ingresantesCpi;
+    }
+
+    public void setIngresantesCpi(IngresantesCpi ingresantesCpi) {
+        this.ingresantesCpi = ingresantesCpi;
+    }
+
+    public List<InscripcionFpa> getInscripcionFpaList() {
+        return inscripcionFpaList;
+    }
+
+    public void setInscripcionFpaList(List<InscripcionFpa> inscripcionFpaList) {
+        this.inscripcionFpaList = inscripcionFpaList;
     }
 
     public InscripcionCpi getInscripcionCpi() {
@@ -311,14 +338,6 @@ public class Alumno implements Serializable {
         this.estadoCivil = estadoCivil;
     }
 
-    public HorasTrabajo getHorasTrabajo() {
-        return horasTrabajo;
-    }
-
-    public void setHorasTrabajo(HorasTrabajo horasTrabajo) {
-        this.horasTrabajo = horasTrabajo;
-    }
-
     public Localidad getLocalidad() {
         return localidad;
     }
@@ -333,14 +352,6 @@ public class Alumno implements Serializable {
 
     public void setNacionalidad(Nacionalidad nacionalidad) {
         this.nacionalidad = nacionalidad;
-    }
-
-    public Salario getSalario() {
-        return salario;
-    }
-
-    public void setSalario(Salario salario) {
-        this.salario = salario;
     }
 
     public Sexo getSexo() {
@@ -365,22 +376,6 @@ public class Alumno implements Serializable {
 
     public void setZona(Zona zona) {
         this.zona = zona;
-    }
-
-    public IngresantesCpi getIngresantesCpi() {
-        return ingresantesCpi;
-    }
-
-    public void setIngresantesCpi(IngresantesCpi ingresantesCpi) {
-        this.ingresantesCpi = ingresantesCpi;
-    }
-
-    public List<InscripcionFpa> getInscripcionFpaList() {
-        return inscripcionFpaList;
-    }
-
-    public void setInscripcionFpaList(List<InscripcionFpa> inscripcionFpaList) {
-        this.inscripcionFpaList = inscripcionFpaList;
     }
 
     @Override

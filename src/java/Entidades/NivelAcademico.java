@@ -45,7 +45,6 @@ public class NivelAcademico implements Serializable {
     private List<EstadoAcademico> estadoAcademicoList;
 
     public NivelAcademico() {
-        this.id=0;
     }
 
     public NivelAcademico(Integer id) {

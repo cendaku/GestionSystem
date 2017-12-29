@@ -29,7 +29,7 @@ public class DiscapacidadFacade extends AbstractFacade<Discapacidad> {
     public DiscapacidadFacade() {
         super(Discapacidad.class);
     }
-    
+
     public boolean DiscapacidadUnico(Discapacidad discapacidad) {
         boolean b;
         TypedQuery<Discapacidad> q = this.em.createQuery("SELECT f FROM Discapacidad f WHERE f.descripcion = :n", Discapacidad.class);

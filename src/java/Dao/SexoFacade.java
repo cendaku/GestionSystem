@@ -1,3 +1,8 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package Dao;
 
 import Entidades.Sexo;
@@ -24,7 +29,7 @@ public class SexoFacade extends AbstractFacade<Sexo> {
     public SexoFacade() {
         super(Sexo.class);
     }
-
+    
     public boolean SexoUnico(Sexo sexo) {
         boolean b;
         TypedQuery<Sexo> q = this.em.createQuery("SELECT f FROM Sexo f WHERE f.descripcion = :n", Sexo.class);
@@ -47,5 +52,4 @@ public class SexoFacade extends AbstractFacade<Sexo> {
             return null;
         }
     }
-
 }

@@ -44,15 +44,15 @@ public class InscripcionCpi implements Serializable {
     private Integer puntajeTotal;
     @Column(name = "ingreso")
     private Boolean ingreso;
+    @JoinColumn(name = "alumno", referencedColumnName = "ci", insertable = false, updatable = false)
+    @OneToOne(optional = false)
+    private Alumno alumno1;
     @JoinColumn(name = "alternativa1", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Carrera alternativa1;
     @JoinColumn(name = "alternativa2", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Carrera alternativa2;
-    @JoinColumn(name = "alumno", referencedColumnName = "ci", insertable = false, updatable = false)
-    @OneToOne(optional = false)
-    private Alumno alumno1;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "inscripcionCpi")
     private List<PuntajeCpi> puntajeCpiList;
 
@@ -87,6 +87,14 @@ public class InscripcionCpi implements Serializable {
         this.ingreso = ingreso;
     }
 
+    public Alumno getAlumno1() {
+        return alumno1;
+    }
+
+    public void setAlumno1(Alumno alumno1) {
+        this.alumno1 = alumno1;
+    }
+
     public Carrera getAlternativa1() {
         return alternativa1;
     }
@@ -101,14 +109,6 @@ public class InscripcionCpi implements Serializable {
 
     public void setAlternativa2(Carrera alternativa2) {
         this.alternativa2 = alternativa2;
-    }
-
-    public Alumno getAlumno1() {
-        return alumno1;
-    }
-
-    public void setAlumno1(Alumno alumno1) {
-        this.alumno1 = alumno1;
     }
 
     public List<PuntajeCpi> getPuntajeCpiList() {

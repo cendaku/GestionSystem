@@ -43,8 +43,6 @@ public class InscripcionFpa implements Serializable {
     @Column(name = "fecha_inscripcion")
     @Temporal(TemporalType.DATE)
     private Date fechaInscripcion;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "inscripcionFpa")
-    private List<AsistenciaFpa> asistenciaFpaList;
     @JoinColumn(name = "alumno", referencedColumnName = "ci", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Alumno alumno1;
@@ -53,6 +51,8 @@ public class InscripcionFpa implements Serializable {
     private Curso curso1;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "inscripcionFpa")
     private List<Certificado> certificadoList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "inscripcionFpa")
+    private List<AsistenciaFpa> asistenciaFpaList;
 
     public InscripcionFpa() {
     }
@@ -89,14 +89,6 @@ public class InscripcionFpa implements Serializable {
         this.fechaInscripcion = fechaInscripcion;
     }
 
-    public List<AsistenciaFpa> getAsistenciaFpaList() {
-        return asistenciaFpaList;
-    }
-
-    public void setAsistenciaFpaList(List<AsistenciaFpa> asistenciaFpaList) {
-        this.asistenciaFpaList = asistenciaFpaList;
-    }
-
     public Alumno getAlumno1() {
         return alumno1;
     }
@@ -119,6 +111,14 @@ public class InscripcionFpa implements Serializable {
 
     public void setCertificadoList(List<Certificado> certificadoList) {
         this.certificadoList = certificadoList;
+    }
+
+    public List<AsistenciaFpa> getAsistenciaFpaList() {
+        return asistenciaFpaList;
+    }
+
+    public void setAsistenciaFpaList(List<AsistenciaFpa> asistenciaFpaList) {
+        this.asistenciaFpaList = asistenciaFpaList;
     }
 
     @Override

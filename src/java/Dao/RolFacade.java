@@ -52,5 +52,4 @@ public class RolFacade extends AbstractFacade<Rol> {
             return null;
         }
     }
-    
 }

@@ -4,21 +4,17 @@ import Dao.AlumnoFacade;
 import Dao.DiscapacidadFacade;
 import Dao.EstadoAcademicoFacade;
 import Dao.EstadoCivilFacade;
-import Dao.HorasTrabajoFacade;
 import Dao.LocalidadFacade;
 import Dao.MunicipioFacade;
 import Dao.NacionalidadFacade;
 import Dao.NivelAcademicoFacade;
-import Dao.SalarioFacade;
 import Dao.SexoFacade;
 import Dao.UsuarioFacade;
 import Dao.ZonaFacade;
 import Entidades.Alumno;
 import Entidades.Discapacidad;
 import Entidades.EstadoAcademico;
-import Entidades.HorasTrabajo;
 import Entidades.Localidad;
-import Entidades.Salario;
 import Util.CargarArchivo;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -26,7 +22,6 @@ import java.util.LinkedList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.inject.Named;
-
 import javax.faces.event.ActionEvent;
 import javax.faces.view.ViewScoped;
 import org.primefaces.model.UploadedFile;
@@ -91,10 +86,6 @@ public class alumnoBean implements Serializable {
     NacionalidadFacade nacionalidadFacade;
     @EJB
     ZonaFacade zonaFacade;
-    @EJB
-    SalarioFacade salarioFacade;
-    @EJB
-    HorasTrabajoFacade horasTrabajoFacade;
     @EJB
     LocalidadFacade localidadFacade;
     @EJB
@@ -295,25 +286,34 @@ public class alumnoBean implements Serializable {
         this.selectedAlumno.setSexo(this.sexoFacade.find(this.sexoid));
         this.selectedAlumno.setNacionalidad(this.nacionalidadFacade.find(this.nacionalidadid));
         this.selectedAlumno.setZona(this.zonaFacade.find(this.zonaid));
-        this.selectedAlumno.setSalario(this.salarioFacade.find(this.salarioid));
-        this.selectedAlumno.setHorasTrabajo(this.horasTrabajoFacade.find(this.horasTrabajoid));
         this.selectedAlumno.setLocalidad(this.localidadFacade.find(this.localidadid));
+        List<Discapacidad> lstDiscapSeleccionada = new LinkedList<>();
+        for (String idD : this.discapacidad) {
+            Discapacidad d = this.EJBDiscapacidad.find(Integer.parseInt(idD));
+            lstDiscapSeleccionada.add(d);
+        }
+        this.selectedAlumno.setDiscapacidadList(lstDiscapSeleccionada);
         alumnoFacade.edit(selectedAlumno);
     }
 
     public void CrearAlumno(ActionEvent actionEvent) {
         System.out.println("sexo: " + this.sexoid);
         Alumno alumno = new Alumno();
+        String nombreArchivo;
+        this.cargarArchivo = new CargarArchivo();
+        if (!this.archivo.getFileName().isEmpty()) {
+            System.out.println("Cargamos la Imagen");
+            nombreArchivo = this.cargarArchivo.capturaArchivo(this.archivo, this.destino);
+            this.selectedAlumno.setRuta(nombreArchivo);
+        }
         this.selectedAlumno.setEstadoCivil(this.estadoCivilFacade.find(this.estadoCivilid));
         this.selectedAlumno.setEstadoAcademico(this.estadoAcademicoFacade.find(this.estadoAcademicoid));
         this.selectedAlumno.setUsuario(this.UsuarioFacade.find(this.usuarioid));
         this.selectedAlumno.setSexo(this.sexoFacade.find(this.sexoid));
         this.selectedAlumno.setNacionalidad(this.nacionalidadFacade.find(this.nacionalidadid));
         this.selectedAlumno.setZona(this.zonaFacade.find(this.zonaid));
-        this.selectedAlumno.setSalario(this.salarioFacade.find(this.salarioid));
-        this.selectedAlumno.setHorasTrabajo(this.horasTrabajoFacade.find(this.horasTrabajoid));
         this.selectedAlumno.setLocalidad(this.localidadFacade.find(this.localidadid));
-        List<Discapacidad> lstDiscapSeleccionada=new LinkedList<>();
+        List<Discapacidad> lstDiscapSeleccionada = new LinkedList<>();
         for (String idD : this.discapacidad) {
             Discapacidad d = this.EJBDiscapacidad.find(Integer.parseInt(idD));
             lstDiscapSeleccionada.add(d);
@@ -328,8 +328,6 @@ public class alumnoBean implements Serializable {
         this.estadoCivilid = this.selectedAlumno.getEstadoCivil().getId();
         this.nacionalidadid = this.selectedAlumno.getNacionalidad().getId();
         this.zonaid = this.selectedAlumno.getZona().getId();
-        this.salarioid = this.selectedAlumno.getSalario().getId();
-        this.horasTrabajoid = this.selectedAlumno.getHorasTrabajo().getId();
         this.municipioid = this.selectedAlumno.getLocalidad().getMunicipio().getId();
         this.lstLocalidads.clear();
         this.lstLocalidads.addAll(this.localidadFacade.findByMunicipio(municipioid));
@@ -340,7 +338,7 @@ public class alumnoBean implements Serializable {
         this.localidadid = this.selectedAlumno.getLocalidad().getId();
         this.usuarioid = this.selectedAlumno.getUsuario().getCi();
         this.discapacidad.clear();
-        for(Discapacidad d:this.selectedAlumno.getDiscapacidadList()){
+        for (Discapacidad d : this.selectedAlumno.getDiscapacidadList()) {
             this.discapacidad.clear();
             this.discapacidad.add(d.getId().toString());
         }

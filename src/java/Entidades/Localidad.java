@@ -43,16 +43,15 @@ public class Localidad implements Serializable {
     @Size(max = 50)
     @Column(name = "descripcion")
     private String descripcion;
+    @JoinColumn(name = "municipio", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Municipio municipio;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "localidad")
     private List<Alumno> alumnoList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "localidad")
     private List<Curso> cursoList;
-    @JoinColumn(name = "municipio", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Municipio municipio;
 
     public Localidad() {
-        this.id=0;
     }
 
     public Localidad(Integer id) {
@@ -75,6 +74,14 @@ public class Localidad implements Serializable {
         this.descripcion = descripcion;
     }
 
+    public Municipio getMunicipio() {
+        return municipio;
+    }
+
+    public void setMunicipio(Municipio municipio) {
+        this.municipio = municipio;
+    }
+
     public List<Alumno> getAlumnoList() {
         return alumnoList;
     }
@@ -89,14 +96,6 @@ public class Localidad implements Serializable {
 
     public void setCursoList(List<Curso> cursoList) {
         this.cursoList = cursoList;
-    }
-
-    public Municipio getMunicipio() {
-        return municipio;
-    }
-
-    public void setMunicipio(Municipio municipio) {
-        this.municipio = municipio;
     }
 
     @Override

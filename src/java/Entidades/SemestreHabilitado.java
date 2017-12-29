@@ -45,8 +45,6 @@ public class SemestreHabilitado implements Serializable {
     private List<Horario> horarioList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "semestreHabilitado")
     private List<MateriaIts> materiaItsList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "semestreHabilitado")
-    private List<InscripcionIts> inscripcionItsList;
     @JoinColumns({
         @JoinColumn(name = "grupo", referencedColumnName = "grupo", insertable = false, updatable = false)
         , @JoinColumn(name = "carrera", referencedColumnName = "carrera", insertable = false, updatable = false)})
@@ -55,6 +53,8 @@ public class SemestreHabilitado implements Serializable {
     @JoinColumn(name = "semestre", referencedColumnName = "id", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Semestre semestre1;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "semestreHabilitado")
+    private List<InscripcionIts> inscripcionItsList;
 
     public SemestreHabilitado() {
     }
@@ -99,14 +99,6 @@ public class SemestreHabilitado implements Serializable {
         this.materiaItsList = materiaItsList;
     }
 
-    public List<InscripcionIts> getInscripcionItsList() {
-        return inscripcionItsList;
-    }
-
-    public void setInscripcionItsList(List<InscripcionIts> inscripcionItsList) {
-        this.inscripcionItsList = inscripcionItsList;
-    }
-
     public CarreraHabilitada getCarreraHabilitada() {
         return carreraHabilitada;
     }
@@ -121,6 +113,14 @@ public class SemestreHabilitado implements Serializable {
 
     public void setSemestre1(Semestre semestre1) {
         this.semestre1 = semestre1;
+    }
+
+    public List<InscripcionIts> getInscripcionItsList() {
+        return inscripcionItsList;
+    }
+
+    public void setInscripcionItsList(List<InscripcionIts> inscripcionItsList) {
+        this.inscripcionItsList = inscripcionItsList;
     }
 
     @Override

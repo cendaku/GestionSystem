@@ -61,6 +61,8 @@ public class Instructor implements Serializable {
     private String telefono;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "instructor1")
     private List<ContratoInstructorcpi> contratoInstructorcpiList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "instructor1")
+    private List<ContratoInstructorits> contratoInstructoritsList;
     @JoinColumn(name = "sexo", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Sexo sexo;
@@ -78,8 +80,6 @@ public class Instructor implements Serializable {
     private Usuario usuario;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "instructor")
     private List<Curso> cursoList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "instructor1")
-    private List<ContratoInstructorits> contratoInstructoritsList;
 
     public Instructor() {
     }
@@ -144,6 +144,14 @@ public class Instructor implements Serializable {
         this.contratoInstructorcpiList = contratoInstructorcpiList;
     }
 
+    public List<ContratoInstructorits> getContratoInstructoritsList() {
+        return contratoInstructoritsList;
+    }
+
+    public void setContratoInstructoritsList(List<ContratoInstructorits> contratoInstructoritsList) {
+        this.contratoInstructoritsList = contratoInstructoritsList;
+    }
+
     public Sexo getSexo() {
         return sexo;
     }
@@ -190,14 +198,6 @@ public class Instructor implements Serializable {
 
     public void setCursoList(List<Curso> cursoList) {
         this.cursoList = cursoList;
-    }
-
-    public List<ContratoInstructorits> getContratoInstructoritsList() {
-        return contratoInstructoritsList;
-    }
-
-    public void setContratoInstructoritsList(List<ContratoInstructorits> contratoInstructoritsList) {
-        this.contratoInstructoritsList = contratoInstructoritsList;
     }
 
     @Override

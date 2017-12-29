@@ -47,7 +47,6 @@ public class EstadoCivil implements Serializable {
     private List<Instructor> instructorList;
 
     public EstadoCivil() {
-        this.id=0;
     }
 
     public EstadoCivil(Integer id) {

@@ -52,5 +52,4 @@ public class NacionalidadFacade extends AbstractFacade<Nacionalidad> {
             return null;
         }
     }
-    
 }

@@ -64,6 +64,8 @@ public class Curso implements Serializable {
     private Date fechaClausura;
     @Column(name = "activo")
     private Boolean activo;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "curso1")
+    private List<InscripcionFpa> inscripcionFpaList;
     @JoinColumn(name = "especialidad", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Especialidad especialidad;
@@ -79,8 +81,6 @@ public class Curso implements Serializable {
     @JoinColumn(name = "tipo_frecuencia", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private TipoFrecuencia tipoFrecuencia;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "curso1")
-    private List<InscripcionFpa> inscripcionFpaList;
 
     public Curso() {
     }
@@ -145,6 +145,14 @@ public class Curso implements Serializable {
         this.activo = activo;
     }
 
+    public List<InscripcionFpa> getInscripcionFpaList() {
+        return inscripcionFpaList;
+    }
+
+    public void setInscripcionFpaList(List<InscripcionFpa> inscripcionFpaList) {
+        this.inscripcionFpaList = inscripcionFpaList;
+    }
+
     public Especialidad getEspecialidad() {
         return especialidad;
     }
@@ -183,14 +191,6 @@ public class Curso implements Serializable {
 
     public void setTipoFrecuencia(TipoFrecuencia tipoFrecuencia) {
         this.tipoFrecuencia = tipoFrecuencia;
-    }
-
-    public List<InscripcionFpa> getInscripcionFpaList() {
-        return inscripcionFpaList;
-    }
-
-    public void setInscripcionFpaList(List<InscripcionFpa> inscripcionFpaList) {
-        this.inscripcionFpaList = inscripcionFpaList;
     }
 
     @Override

@@ -36,14 +36,14 @@ public class DetalleMotivo implements Serializable {
     @NotNull
     @Column(name = "tipo_motivo")
     private Integer tipoMotivo;
-    @JoinColumn(name = "tipo_motivo", referencedColumnName = "id", insertable = false, updatable = false)
-    @OneToOne(optional = false)
-    private TipoMotivo tipoMotivo1;
     @JoinColumns({
         @JoinColumn(name = "id", referencedColumnName = "id")
         , @JoinColumn(name = "clase_documento", referencedColumnName = "clase_documento")})
     @ManyToOne(optional = false)
     private Documento documento;
+    @JoinColumn(name = "tipo_motivo", referencedColumnName = "id", insertable = false, updatable = false)
+    @OneToOne(optional = false)
+    private TipoMotivo tipoMotivo1;
 
     public DetalleMotivo() {
     }
@@ -60,20 +60,20 @@ public class DetalleMotivo implements Serializable {
         this.tipoMotivo = tipoMotivo;
     }
 
-    public TipoMotivo getTipoMotivo1() {
-        return tipoMotivo1;
-    }
-
-    public void setTipoMotivo1(TipoMotivo tipoMotivo1) {
-        this.tipoMotivo1 = tipoMotivo1;
-    }
-
     public Documento getDocumento() {
         return documento;
     }
 
     public void setDocumento(Documento documento) {
         this.documento = documento;
+    }
+
+    public TipoMotivo getTipoMotivo1() {
+        return tipoMotivo1;
+    }
+
+    public void setTipoMotivo1(TipoMotivo tipoMotivo1) {
+        this.tipoMotivo1 = tipoMotivo1;
     }
 
     @Override

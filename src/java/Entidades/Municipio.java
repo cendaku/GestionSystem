@@ -42,9 +42,9 @@ public class Municipio implements Serializable {
     @Column(name = "descripcion")
     private String descripcion;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "municipio")
-    private List<Instructor> instructorList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "municipio")
     private List<Localidad> localidadList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "municipio")
+    private List<Instructor> instructorList;
 
     public Municipio() {
     }
@@ -69,20 +69,20 @@ public class Municipio implements Serializable {
         this.descripcion = descripcion;
     }
 
-    public List<Instructor> getInstructorList() {
-        return instructorList;
-    }
-
-    public void setInstructorList(List<Instructor> instructorList) {
-        this.instructorList = instructorList;
-    }
-
     public List<Localidad> getLocalidadList() {
         return localidadList;
     }
 
     public void setLocalidadList(List<Localidad> localidadList) {
         this.localidadList = localidadList;
+    }
+
+    public List<Instructor> getInstructorList() {
+        return instructorList;
+    }
+
+    public void setInstructorList(List<Instructor> instructorList) {
+        this.instructorList = instructorList;
     }
 
     @Override

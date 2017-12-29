@@ -52,5 +52,4 @@ public class EstadoCivilFacade extends AbstractFacade<EstadoCivil> {
             return null;
         }
     }
-
 }

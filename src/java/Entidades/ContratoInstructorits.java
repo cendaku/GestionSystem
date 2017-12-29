@@ -43,9 +43,9 @@ public class ContratoInstructorits implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "contratoInstructorits1")
     private List<AsistenciaIts> asistenciaItsList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "contratoInstructorits")
-    private List<TrabajoPracticoits> trabajoPracticoitsList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "contratoInstructorits")
     private List<Notasits> notasitsList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "contratoInstructorits")
+    private List<TrabajoPracticoits> trabajoPracticoitsList;
     @JoinColumn(name = "materia_its", referencedColumnName = "id", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private MateriaIts materiaIts1;
@@ -95,20 +95,20 @@ public class ContratoInstructorits implements Serializable {
         this.asistenciaItsList = asistenciaItsList;
     }
 
-    public List<TrabajoPracticoits> getTrabajoPracticoitsList() {
-        return trabajoPracticoitsList;
-    }
-
-    public void setTrabajoPracticoitsList(List<TrabajoPracticoits> trabajoPracticoitsList) {
-        this.trabajoPracticoitsList = trabajoPracticoitsList;
-    }
-
     public List<Notasits> getNotasitsList() {
         return notasitsList;
     }
 
     public void setNotasitsList(List<Notasits> notasitsList) {
         this.notasitsList = notasitsList;
+    }
+
+    public List<TrabajoPracticoits> getTrabajoPracticoitsList() {
+        return trabajoPracticoitsList;
+    }
+
+    public void setTrabajoPracticoitsList(List<TrabajoPracticoits> trabajoPracticoitsList) {
+        this.trabajoPracticoitsList = trabajoPracticoitsList;
     }
 
     public MateriaIts getMateriaIts1() {

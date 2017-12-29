@@ -40,6 +40,8 @@ public class InscripcionIts implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "inscripcionIts")
     private List<AsistenciaIts> asistenciaItsList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "inscripcionIts")
+    private List<Notasits> notasitsList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "inscripcionIts")
     private List<TrabajoPracticoits> trabajoPracticoitsList;
     @JoinColumns({
         @JoinColumn(name = "sem_habi_num", referencedColumnName = "numero_nacional", insertable = false, updatable = false)
@@ -52,8 +54,6 @@ public class InscripcionIts implements Serializable {
     @JoinColumn(name = "alumno", referencedColumnName = "ci", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Alumno alumno1;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "inscripcionIts")
-    private List<Notasits> notasitsList;
 
     public InscripcionIts() {
     }
@@ -82,6 +82,14 @@ public class InscripcionIts implements Serializable {
         this.asistenciaItsList = asistenciaItsList;
     }
 
+    public List<Notasits> getNotasitsList() {
+        return notasitsList;
+    }
+
+    public void setNotasitsList(List<Notasits> notasitsList) {
+        this.notasitsList = notasitsList;
+    }
+
     public List<TrabajoPracticoits> getTrabajoPracticoitsList() {
         return trabajoPracticoitsList;
     }
@@ -104,14 +112,6 @@ public class InscripcionIts implements Serializable {
 
     public void setAlumno1(Alumno alumno1) {
         this.alumno1 = alumno1;
-    }
-
-    public List<Notasits> getNotasitsList() {
-        return notasitsList;
-    }
-
-    public void setNotasitsList(List<Notasits> notasitsList) {
-        this.notasitsList = notasitsList;
     }
 
     @Override

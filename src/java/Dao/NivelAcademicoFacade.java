@@ -52,5 +52,4 @@ public class NivelAcademicoFacade extends AbstractFacade<NivelAcademico> {
             return null;
         }
     }
-
 }

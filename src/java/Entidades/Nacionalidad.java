@@ -45,7 +45,6 @@ public class Nacionalidad implements Serializable {
     private List<Alumno> alumnoList;
 
     public Nacionalidad() {
-        this.id=0;
     }
 
     public Nacionalidad(Integer id) {

@@ -64,10 +64,10 @@ public class Horario implements Serializable {
     private List<SemestreHabilitado> semestreHabilitadoList;
     @ManyToMany(mappedBy = "horarioList")
     private List<ContratoInstructorcpi> contratoInstructorcpiList;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "horario1")
-    private HorarioCpi horarioCpi;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "horario1")
     private List<HorarioInstructorits> horarioInstructoritsList;
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "horario1")
+    private HorarioCpi horarioCpi;
 
     public Horario() {
     }
@@ -124,20 +124,20 @@ public class Horario implements Serializable {
         this.contratoInstructorcpiList = contratoInstructorcpiList;
     }
 
-    public HorarioCpi getHorarioCpi() {
-        return horarioCpi;
-    }
-
-    public void setHorarioCpi(HorarioCpi horarioCpi) {
-        this.horarioCpi = horarioCpi;
-    }
-
     public List<HorarioInstructorits> getHorarioInstructoritsList() {
         return horarioInstructoritsList;
     }
 
     public void setHorarioInstructoritsList(List<HorarioInstructorits> horarioInstructoritsList) {
         this.horarioInstructoritsList = horarioInstructoritsList;
+    }
+
+    public HorarioCpi getHorarioCpi() {
+        return horarioCpi;
+    }
+
+    public void setHorarioCpi(HorarioCpi horarioCpi) {
+        this.horarioCpi = horarioCpi;
     }
 
     @Override

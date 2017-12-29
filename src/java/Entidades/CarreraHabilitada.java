@@ -45,14 +45,14 @@ public class CarreraHabilitada implements Serializable {
     @NotNull
     @Column(name = "cupo")
     private int cupo;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "carreraHabilitada")
+    private List<SemestreHabilitado> semestreHabilitadoList;
     @JoinColumn(name = "carrera", referencedColumnName = "id", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Carrera carrera1;
     @JoinColumn(name = "grupo", referencedColumnName = "id", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Grupo grupo1;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "carreraHabilitada")
-    private List<SemestreHabilitado> semestreHabilitadoList;
 
     public CarreraHabilitada() {
     }
@@ -95,6 +95,14 @@ public class CarreraHabilitada implements Serializable {
         this.cupo = cupo;
     }
 
+    public List<SemestreHabilitado> getSemestreHabilitadoList() {
+        return semestreHabilitadoList;
+    }
+
+    public void setSemestreHabilitadoList(List<SemestreHabilitado> semestreHabilitadoList) {
+        this.semestreHabilitadoList = semestreHabilitadoList;
+    }
+
     public Carrera getCarrera1() {
         return carrera1;
     }
@@ -109,14 +117,6 @@ public class CarreraHabilitada implements Serializable {
 
     public void setGrupo1(Grupo grupo1) {
         this.grupo1 = grupo1;
-    }
-
-    public List<SemestreHabilitado> getSemestreHabilitadoList() {
-        return semestreHabilitadoList;
-    }
-
-    public void setSemestreHabilitadoList(List<SemestreHabilitado> semestreHabilitadoList) {
-        this.semestreHabilitadoList = semestreHabilitadoList;
     }
 
     @Override

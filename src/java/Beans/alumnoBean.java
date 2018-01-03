@@ -287,6 +287,7 @@ public class alumnoBean implements Serializable {
         this.selectedAlumno.setNacionalidad(this.nacionalidadFacade.find(this.nacionalidadid));
         this.selectedAlumno.setZona(this.zonaFacade.find(this.zonaid));
         this.selectedAlumno.setLocalidad(this.localidadFacade.find(this.localidadid));
+        this.selectedAlumno.setEstado(this.checkedTrabaja);
         List<Discapacidad> lstDiscapSeleccionada = new LinkedList<>();
         for (String idD : this.discapacidad) {
             Discapacidad d = this.EJBDiscapacidad.find(Integer.parseInt(idD));
@@ -313,6 +314,7 @@ public class alumnoBean implements Serializable {
         this.selectedAlumno.setNacionalidad(this.nacionalidadFacade.find(this.nacionalidadid));
         this.selectedAlumno.setZona(this.zonaFacade.find(this.zonaid));
         this.selectedAlumno.setLocalidad(this.localidadFacade.find(this.localidadid));
+        this.selectedAlumno.setEstado(this.checkedTrabaja);
         List<Discapacidad> lstDiscapSeleccionada = new LinkedList<>();
         for (String idD : this.discapacidad) {
             Discapacidad d = this.EJBDiscapacidad.find(Integer.parseInt(idD));

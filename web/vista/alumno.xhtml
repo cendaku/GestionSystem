@@ -13,7 +13,6 @@
                 <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
                 <title>Alumno</title>
                 <h:outputStylesheet name="css/plantilla.css"/>
-                <h:outputStylesheet name="css/vistaamplia.css"/>
             </f:facet>
         </h:head>
 
@@ -42,73 +41,17 @@
                             <p:column style="width:30px;text-align: center" headerText="Foto">
                                 <p:graphicImage value="/img/#{alumno.ruta}" width="30px" height="30px" />
                             </p:column>
+                            <p:column style="width:auto;text-align: center" headerText="N° Cedular">
+                                <h:outputText value="#{alumno.ci}" />
+                            </p:column>
                             <p:column style="width:auto;text-align: center" headerText="Alumno">
                                 <h:outputText value="#{alumno.apellido} #{alumno.nombre}" />
                             </p:column>
                             <p:column style="width:auto;text-align: center" headerText="Celular">
                                 <h:outputText value="#{alumno.celular}" />
                             </p:column>
-                            <p:column class="vmo" style="width:auto;text-align: center" headerText="Dirección">
-                                <h:outputText value="#{alumno.direccion}" />
-                            </p:column>
-                            <p:column class="vmo" style="width:auto;text-align: center" headerText="Email">
-                                <h:outputText value="#{alumno.email}" />
-                            </p:column>
                             <p:column class="vmo" style="width:auto;text-align: center" headerText="Telefono">
                                 <h:outputText value="#{alumno.telefono}" />
-                            </p:column>
-                            <p:column class="vmo" style="width:auto;text-align: center" headerText="Fecha Nac.">
-                                <h:outputText value="#{alumno.fechaNacimiento}" >
-                                    <f:convertDateTime pattern="dd/MMM/y" />
-                                </h:outputText>
-                            </p:column>
-                            <p:column class="vmo" style="width:auto;text-align: center" headerText="Nom. Contacto">
-                                <h:outputText value="#{alumno.nombreContacto}" />
-                            </p:column>
-                            <p:column class="vmo" style="width:auto;text-align: center" headerText="Contacto Tele.">
-                                <h:outputText value="#{alumno.telefonoContacto}" />
-                            </p:column>
-                            <p:column class="vmo" style="width:auto;text-align: center" headerText="Sexo">
-                                <h:outputText value="#{alumno.sexo.descripcion}" />
-                            </p:column>
-                            <p:column style="width:auto;text-align: center" headerText="Nacionalidad">
-                                <h:outputText value="#{alumno.nacionalidad.descripcion}" />
-                            </p:column>
-                            <p:column class="vmo" style="width:auto;text-align: center" headerText="Zona">
-                                <h:outputText value="#{alumno.zona.descripcion}" />
-                            </p:column>
-                            <p:column class="vmo" style="width:auto;text-align: center" headerText="Estado Civil">
-                                <h:outputText value="#{alumno.estadoCivil.descripcion}" />
-                            </p:column>
-                            <p:column class="vmo" style="width:auto;text-align: center" headerText="Localidad">
-                                <h:outputText value="#{alumno.localidad.descripcion}" />
-                            </p:column>
-                            <p:column class="vmo" style="width:auto;text-align: center" headerText="Municipio">
-                                <h:outputText value="#{alumno.localidad.municipio.descripcion}" />
-                            </p:column>
-                            <p:column style="width:auto;text-align: center" headerText="Usuario">
-                                <h:outputText value="#{alumno.usuario.nombre}" />
-                            </p:column>
-                            <p:column class="vmo" style="width:auto;text-align: center" headerText="Estado Academico">
-                                <h:outputText value="#{alumno.estadoAcademico.descripcion}" />
-                            </p:column>
-                            <p:column class="vmo" style="width:auto;text-align: center" headerText="Nivel Academico">
-                                <h:outputText value="#{alumno.estadoAcademico.nivelAcademico.descripcion}" />
-                            </p:column>
-                            <p:column class="vmo" style=";text-align:center" headerText="Situacion Laboral">
-                                <p:outputLabel value="#{alumno.estado==true?'Trabaja':'No Trabaja'}" />
-                            </p:column>
-                            <p:column class="vmo" style=";text-align:center" headerText="Forma de Trabajo">
-                                <p:outputLabel value="#{alumno.tipoTrabajo==true?'Independiente':'Dependiente'}" />
-                            </p:column>
-                            <p:column class="vmo" style=";text-align:center" headerText="Experiencia">
-                                <p:outputLabel value="#{alumno.experiencia==true?'Si':'No'}" />
-                            </p:column>
-                            <p:column class="vmo" style="width:auto;text-align: center" headerText="Salario">
-                                <h:outputText value="#{alumno.salario}" />
-                            </p:column>
-                            <p:column class="vmo" style="width:auto;text-align: center" headerText="Horas Trabajo">
-                                <h:outputText value="#{alumno.horasTrabajo}hs" />
                             </p:column>
                             <p:column class="vmo" style="width:auto;text-align: center" headerText="Discapacidad">
                                 <ui:repeat value="#{alumno.discapacidadList}" var="d">
@@ -116,7 +59,7 @@
                                 </ui:repeat>
                             </p:column>
 
-                            <p:column style="width:30px;text-align: center" >
+                            <p:column style="width:98px;text-align: center" >
                                 <p:commandButton update=":formMostrar:alumnoDetalle" oncomplete="PF('dialogAlumnoMostrar').show()" icon="ui-icon-search" title="Ver" actionListener="#{alumnoBean.seleccionarAlumno(alumno.ci)}"/>
                                 <p:commandButton rendered="#{loginBean.ulog.rol.id==1}" update=":formUpdate:alumnoDetalle" oncomplete="PF('dialogAlumnoUpdate').show()" icon="ui-icon-pencil" title="Actualizar" actionListener="#{alumnoBean.seleccionarAlumno(alumno.ci)}"/>
                                 <p:commandButton rendered="#{loginBean.ulog.rol.id==1}" update=":formDelete" oncomplete="PF('dialogAlumnoDelete').show()" icon="ui-icon-trash" title="Borrar">
@@ -331,6 +274,8 @@
                                         <p:column style="color: blue" >
                                             Discapacidad:
                                         </p:column>
+                                    </p:row>
+                                    <p:row>
                                         <p:column >
                                             <ui:repeat value="#{alumnoBean.selectedAlumno.discapacidadList}" var="d">
                                                 <h:outputLabel value="#{d.descripcion}" />
@@ -363,21 +308,13 @@
                                         <p:column colspan="2">
                                             <h:outputText value="#{alumnoBean.selectedAlumno.tipoTrabajo==true?'Independiente':'Dependiente'}" />
                                         </p:column>
-                                        <p:column style="color: blue" colspan="2" rowspan="3">
+                                        <p:column style="color: blue" colspan="1" rowspan="2">
                                             Experiencia laboral:
                                         </p:column>
-                                        <p:column colspan="1" rowspan="3" >
+                                        <p:column colspan="2" rowspan="2" >
                                             <center>
                                                 <h:outputText value="#{alumnoBean.selectedAlumno.experiencia==true?'Si':'No'}" />
                                             </center>
-                                        </p:column>
-                                    </p:row>
-                                    <p:row>
-                                        <p:column style="color: blue" colspan="1">
-                                            Horas trabajadas:
-                                        </p:column>
-                                        <p:column colspan="2">
-                                            <h:outputText value="#{alumnoBean.selectedAlumno.horasTrabajo}hs" />
                                         </p:column>
                                     </p:row>
 
@@ -387,6 +324,20 @@
                                         </p:column>
                                         <p:column colspan="2">
                                             <h:outputText value="#{alumnoBean.selectedAlumno.salario}" />
+                                        </p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column style="color: blue" colspan="1">
+                                            Horas trabajadas:
+                                        </p:column>
+                                        <p:column colspan="2">
+                                            <h:outputText value="#{alumnoBean.selectedAlumno.horasTrabajo}hs" />
+                                        </p:column>
+                                        <p:column style="color: blue" colspan="1" rowspan="3">
+                                            Deseo:
+                                        </p:column>
+                                        <p:column colspan="2" rowspan="3" >
+                                            <h:outputText value="#{alumnoBean.selectedAlumno.deseo==true?'Trabajar':'Estudiar'}" />
                                         </p:column>
                                     </p:row>
                                 </p:panelGrid>
@@ -662,6 +613,8 @@
                                         <p:column >
                                             Marque en caso de tener la discapacidad:
                                         </p:column>
+                                    </p:row>
+                                    <p:row>
                                         <p:column >
                                             <p:selectManyCheckbox id="customPanel" value="#{alumnoBean.discapacidad}">
                                                 <f:selectItems value="#{discapacidadBean.discapacidads}" var="t" itemValue="#{t.id}" itemLabel="#{ t.descripcion }" />
@@ -684,7 +637,7 @@
                                         <p:column colspan="6">
                                             <center>
                                                 <p:selectBooleanButton id="value1" value="#{alumnoBean.checkedTrabaja}" onLabel="Trabaja" offLabel="No Trabaja" onIcon="ui-icon-check" offIcon="ui-icon-close" style="width:400px" >
-                                                    <p:ajax event="change" update="spanTipoTrabajo spanExperiencia" partialSubmit="True"          process="@this" />
+                                                    <p:ajax event="change" update="spanTipoTrabajo spanExperiencia" partialSubmit="True" process="@this" />
                                                 </p:selectBooleanButton>
                                             </center>
                                         </p:column>
@@ -701,13 +654,15 @@
                                                                        onLabel="Independiente" offLabel="Dependiente" style="width:250px"  />  
                                             </span>
                                         </p:column>
-                                        <p:column colspan="2" rowspan="3">
+                                        <p:column colspan="1" rowspan="2">
                                             ¿Tiene experiencia laboral?
                                         </p:column>
-                                        <p:column colspan="2" rowspan="3" >
+                                        <p:column colspan="2" rowspan="2" >
                                             <center>
                                                 <span jsf:id="spanExperiencia">
-                                                    <p:selectBooleanButton id="experiencialab" disabled="#{alumnoBean.checkedTrabaja?'true':'false'}" value="#{alumnoBean.selectedAlumno.experiencia}" onLabel="Si" offLabel="No" style="width:60px" />
+                                                    <p:selectBooleanButton id="experiencialab" value="#{alumnoBean.selectedAlumno.experiencia}" 
+                                                                           disabled="#{alumnoBean.checkedTrabaja?'true':'false'}" 
+                                                                           onLabel="Si" offLabel="No" style="width:60px" />
                                                 </span>
                                             </center>
                                         </p:column>
@@ -715,19 +670,28 @@
 
                                     <p:row>
                                         <p:column colspan="1">
-                                            Horas trabajadas:
+                                            Salario
                                         </p:column>
                                         <p:column colspan="2">
-                                            <p:inputText value="#{alumnoBean.selectedAlumno.horasTrabajo}"/>
+                                            <p:inputText value="#{alumnoBean.selectedAlumno.salario}"/>
                                         </p:column>
                                     </p:row>
 
                                     <p:row>
                                         <p:column colspan="1">
-                                            Salario:
+                                            Horas trabajadas
                                         </p:column>
                                         <p:column colspan="2">
-                                            <p:inputText value="#{alumnoBean.selectedAlumno.salario}"/>
+                                            <p:inputText value="#{alumnoBean.selectedAlumno.horasTrabajo}"/>
+                                        </p:column>
+
+                                        <p:column colspan="1" rowspan="3">
+                                            Deseo:
+                                        </p:column>
+                                        <p:column colspan="2" rowspan="3" >
+                                            <center>
+                                                <p:selectBooleanButton id="deseo" value="#{alumnoBean.selectedAlumno.deseo}" onLabel="Trabajar" offLabel="Estudiar" style="auto" />
+                                            </center>
                                         </p:column>
                                     </p:row>
                                 </p:panelGrid>
@@ -1020,6 +984,8 @@
                                         <p:column >
                                             Marque en caso de tener la discapacidad
                                         </p:column>
+                                    </p:row>
+                                    <p:row>
                                         <p:column >
                                             <p:selectManyCheckbox id="customPanel" value="#{alumnoBean.discapacidad}">
                                                 <f:selectItems value="#{discapacidadBean.discapacidads}" var="t" itemValue="#{t.id}" itemLabel="#{ t.descripcion }" />
@@ -1059,24 +1025,17 @@
                                                                        onLabel="Independiente" offLabel="Dependiente" style="width:250px"  />  
                                             </span>
                                         </p:column>
-                                        <p:column colspan="2" rowspan="3">
+                                        <p:column colspan="1" rowspan="2">
                                             ¿Tiene experiencia laboral?
                                         </p:column>
-                                        <p:column colspan="2" rowspan="3" >
+                                        <p:column colspan="2" rowspan="2" >
                                             <center>
                                                 <span jsf:id="spanExperiencia">
-                                                    <p:selectBooleanButton id="experiencialab" disabled="#{alumnoBean.checkedTrabaja?'true':'false'}" 
-                                                                           value="#{alumnoBean.selectedAlumno.experiencia}" onLabel="Si" offLabel="No" style="width:60px" />
+                                                    <p:selectBooleanButton id="experiencialab" value="#{alumnoBean.selectedAlumno.experiencia}" 
+                                                                           disabled="#{alumnoBean.checkedTrabaja?'true':'false'}" 
+                                                                           onLabel="Si" offLabel="No" style="width:60px" />
                                                 </span>
                                             </center>
-                                        </p:column>
-                                    </p:row>
-                                    <p:row>
-                                        <p:column colspan="1">
-                                            Horas trabajadas
-                                        </p:column>
-                                        <p:column colspan="2">
-                                            <p:inputText value="#{alumnoBean.selectedAlumno.horasTrabajo}"/>
                                         </p:column>
                                     </p:row>
 
@@ -1086,6 +1045,25 @@
                                         </p:column>
                                         <p:column colspan="2">
                                             <p:inputText value="#{alumnoBean.selectedAlumno.salario}"/>
+                                        </p:column>
+                                    </p:row>
+
+                                    <p:row>
+                                        <p:column colspan="1">
+                                            Horas trabajadas
+                                        </p:column>
+                                        <p:column colspan="2">
+                                            <p:inputText value="#{alumnoBean.selectedAlumno.horasTrabajo}"/>
+                                        </p:column>
+
+
+                                        <p:column colspan="1" rowspan="3">
+                                            Deseo:
+                                        </p:column>
+                                        <p:column colspan="2" rowspan="3" >
+                                            <center>
+                                                <p:selectBooleanButton id="deseo" value="#{alumnoBean.selectedAlumno.deseo}" onLabel="Trabajar" offLabel="Estudiar" style="auto" />
+                                            </center>
                                         </p:column>
                                     </p:row>
                                 </p:panelGrid>

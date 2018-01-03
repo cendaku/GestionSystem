@@ -51,21 +51,28 @@
                                 <ul id="subm">
                                     <li jsf:rendered="#{loginBean.ulog.rol.id==1}"><h:link class="m2" outcome="usuario.xhtml" value="Usuario"/></li>
                                     <li jsf:rendered="#{loginBean.ulog.rol.id==1}"><h:link outcome="rol.xhtml" class="m2" value="Rol"/></li>
-                                    <li><label for="submenu-toggle1" class="m2">Cursos &#x25BE;</label>
-                                        <input type="checkbox" id="submenu-toggle1"/>
-                                        <ul id="subm">
-                                            <li><a href="" class="mb1">Nota 1</a></li>
-                                            <li><a href="" class="mb1">Nota 2</a></li>
-                                        </ul></li>
+                                    
                                     <li><h:link outcome="instructor.xhtml" class="m2" value="Instructor"/></li>
+                                    <li><h:link outcome="semestre.xhtml" class="m2" value="Semestre"/></li>
                                     <li><h:link outcome="grupo.xhtml" class="m2" value="Grupos"/></li>
                                 </ul></li>
 
-                            <li><label for="submenu1-toggle" class="m1">Institucional &#x25BE;</label>
+                            <li jsf:rendered="#{loginBean.ulog.rol.id==1}"><label for="submenu1-toggle" class="m1">Detalle &#x25BE;</label>
                                 <input type="checkbox" id="submenu1-toggle"/>
                                 <ul id="subm">
-                                    <li><a href="" class="m2">SNPP</a></li>
-                                    <li><a href="" class="m2">ITS/PTS</a></li>
+                                    <li><h:link outcome="discapacidad.xhtml" class="m2" value="Discapacidad"/></li>
+                                    <li><h:link outcome="estadoCivil.xhtml" class="m2" value="Estado Civil"/></li>
+                                    <li><label for="submenu-toggle1" class="m2">Academia &#x25BE;</label>
+                                        <input type="checkbox" id="submenu-toggle1"/>
+                                        <ul id="subm">
+                                            <li><h:link outcome="estadoAcademico.xhtml" class="mb1" value="Estado"/></li>
+                                            <li><h:link outcome="nivelAcademico.xhtml" class="mb1" value="Nivel"/></li>
+                                        </ul></li>
+                                    <li><h:link outcome="localidad.xhtml" class="m2" value="Localidad"/></li>
+                                    <li><h:link outcome="municipio.xhtml" class="m2" value="Municipio"/></li>
+                                    <li><h:link outcome="nacionalidad.xhtml" class="m2" value="Nacionalidad"/></li>
+                                    <li><h:link outcome="zona.xhtml" class="m2" value="Zona"/></li>
+                                    <!--<li><h:link outcome="" class="m2" value=""/></li>-->
                                 </ul></li>
 
                             <li><h:link outcome="Leyendas.xhtml" class="m1" value="Texto"/></li>
@@ -178,9 +185,9 @@
                 }
             }
         </script>
-        
+
         <script>
-            $(function(){
+            $(function () {
                 $.scrollUp({
                     scrollImg: true
                 });

@@ -4,496 +4,650 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
-    <body>
+    <f:view contentType="text/html">
+        <h:head>
+            <f:facet name="first">
+                <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+                <title>Instructor</title>
+            </f:facet>
+        </h:head>
 
-        <ui:composition template="./Plantilla.xhtml">
+        <body>
 
-            <ui:define name="content">
-                <p:growl id="msgs" showDetail="true" />
-                <h:form>
-                    <p:commandButton update=":formCreate,:formDataTable" oncomplete="PF('dialogInstructorCreate').show()" icon="ui-icon-disk" value="Crear" title="Registrar Instructores"/>
-                </h:form>
-                <h:form id="formDataTable">
+            <ui:composition template="./Plantilla.xhtml">
 
-                    <p:dataTable id="basicDT" var="instructor" value="#{instructorBean.instructors}"
-                                 paginator="true" rows="10" paginatorPosition="bottom" 
-                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink}
-                                 {PreviousPageLink} {NextPageLink} {LastPageLink} {PageLinks} {RowsPerPageDropdown}"
-                                 rowsPerPageTemplate="10,15,30" emptyMessage="No se encontro ningun resultado">
-                        <f:facet name="header">
-                            Listado de Instructor
-                        </f:facet>
-                        <p:column style="width:30px;text-align: center" headerText="Foto">
-                            <p:graphicImage value="/img/#{instructor.ruta}" width="30px" height="30px" />
-                        </p:column>
-                        <p:column style="width:auto;text-align: center" headerText="CI">
-                            <h:outputText value="#{instructor.ci}" />
-                        </p:column>
-                        <p:column style="width:auto;text-align: center" headerText="Instructor">
-                            <h:outputText value="#{instructor.apellido} #{instructor.nombre}" />
-                        </p:column>
-                        <p:column style="width:92px;text-align: center"  headerText="Telefono">
-                            <h:outputText value="#{instructor.telefono}" />
-                        </p:column>
-                        <p:column style="width:auto;text-align: center"  headerText="Municipio">
-                            <h:outputText value="#{instructor.municipio.descripcion}" />
-                        </p:column> 
-                        <p:column style="width:auto;text-align: center"  headerText="Nivel Academico">
-                            <h:outputText value="  #{instructor.estadoAcademico.nivelAcademico.descripcion}   "  />
-                        </p:column> 
-                        <p:column style="width:auto;text-align: center"  headerText="Estado Academico">
-                            <h:outputText value="#{instructor.estadoAcademico.descripcion}" />
-                        </p:column> 
-                        <p:column style="width:auto;text-align: center"  headerText="Estado Civil">
-                            <h:outputText value="#{instructor.estadoCivil.descripcion}" />
-                        </p:column> 
-                        <p:column style="width:auto;text-align: center"  headerText="Email">
-                            <h:outputText value="#{instructor.email}" />
-                        </p:column>
-                        <p:column style="width:auto;text-align: center"  headerText="Sexo">
-                            <h:outputText value="#{instructor.sexo.descripcion}" />
-                        </p:column> 
-                        <p:column style="width:auto;text-align: center"  headerText="Usuario">
-                            <h:outputText value="#{instructor.usuario.nombre}  #{instructor.usuario.apellido}" />
-                        </p:column>
-                        <p:column style="width:88px;text-align: center">
-                            <p:commandButton update=":formUpdate:instructorDetalle" oncomplete="PF('dialogInstructorUpdate').show()" icon="ui-icon-pencil" title="Actualizar" actionListener="#{instructorBean.seleccionarInstructor(instructor.ci)}"/>
-                            <p:commandButton update=":formDelete" oncomplete="PF('dialogInstructorDelete').show()" icon="ui-icon-trash" title="Borrar">
-                                <f:setPropertyActionListener value="#{instructor}" target="#{instructorBean.selectedInstructor}" />
-                            </p:commandButton>
-                        </p:column>
-                    </p:dataTable>
+                <ui:define name="content">
+                    <p:growl id="msgs" showDetail="true" />
+                    <h:form class="vmo" rendered="#{loginBean.ulog.rol.id==1}">
+                        <p:commandButton update=":formCreate,:formDataTable" oncomplete="PF('dialogInstructorCreate').show()" icon="ui-icon-disk" value="Crear" title="Registrar Instructores"/>
+                    </h:form>
+                    <h:form id="formDataTable">
 
-                </h:form>
-                <h:form id="formCreate"  enctype="multipart/form-data">
-                    <p:dialog id = "dlgInstructorCreate" header="Crear Instructor" widgetVar="dialogInstructorCreate" closeOnEscape="true" showEffect="fade" hideEffect="fade" resizable="false">
-                        <p:outputPanel id="instructorDetalle"  style="text-align: left;">
+                        <p:dataTable id="basicDT" var="instructor" value="#{instructorBean.instructors}"
+                                     paginator="true" rows="10" paginatorPosition="bottom" 
+                                     paginatorTemplate="{CurrentPageReport} {FirstPageLink}
+                                     {PreviousPageLink} {NextPageLink} {LastPageLink} {PageLinks} {RowsPerPageDropdown}"
+                                     rowsPerPageTemplate="10,15,30" emptyMessage="No se encontro ningun resultado">
+                            <f:facet name="header">
+                                Listado de Instructor
+                            </f:facet>
+                            <p:column style="width:30px;text-align: center" headerText="Foto">
+                                <p:graphicImage value="/img/#{instructor.ruta}" width="30px" height="30px" />
+                            </p:column>
+                            <p:column style="width:auto;text-align: center" headerText="CI">
+                                <h:outputText value="#{instructor.ci}" />
+                            </p:column>
+                            <p:column style="width:auto;text-align: center" headerText="Instructor">
+                                <h:outputText value="#{instructor.apellido} #{instructor.nombre}" />
+                            </p:column>
+                            <p:column style="width:92px;text-align: center"  headerText="Telefono">
+                                <h:outputText value="#{instructor.telefono}" />
+                            </p:column>
+                            <p:column style="width:auto;text-align: center"  headerText="Municipio">
+                                <h:outputText value="#{instructor.municipio.descripcion}" />
+                            </p:column> 
+                            <p:column class="vmo" style="width:auto;text-align: center"  headerText="Nivel Academico">
+                                <h:outputText value="  #{instructor.estadoAcademico.nivelAcademico.descripcion}   "  />
+                            </p:column> 
+                            <p:column class="vmo" style="width:auto;text-align: center"  headerText="Estado Academico">
+                                <h:outputText value="#{instructor.estadoAcademico.descripcion}" />
+                            </p:column> 
+                            <p:column style="width:auto;text-align: center"  headerText="Usuario">
+                                <h:outputText value="#{instructor.usuario.nombre}  #{instructor.usuario.apellido}" />
+                            </p:column>
+                            <p:column style="width:68px;text-align: center">
+                                <p:commandButton update=":formMostrar:instructorDetalle" oncomplete="PF('dialogInstructorMostrar').show()" icon="ui-icon-search" title="Ver" actionListener="#{instructorBean.seleccionarInstructor(instructor.ci)}"/>
+                                <div class="vmo">
+                                    <p:commandButton rendered="#{loginBean.ulog.rol.id==1}" update=":formUpdate:instructorDetalle" oncomplete="PF('dialogInstructorUpdate').show()" icon="ui-icon-pencil" title="Actualizar" actionListener="#{instructorBean.seleccionarInstructor(instructor.ci)}"/>
+                                    <p:commandButton rendered="#{loginBean.ulog.rol.id==1}" update=":formDelete" oncomplete="PF('dialogInstructorDelete').show()" icon="ui-icon-trash" title="Borrar">
+                                        <f:setPropertyActionListener value="#{instructor}" target="#{instructorBean.selectedInstructor}" />
+                                    </p:commandButton>
+                                </div>
+                            </p:column>
+                        </p:dataTable>
+                    </h:form>
 
-                            <!-- ********************************Separador de panel Grid********************************-->
+                    <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++ Mostrar ++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
 
-                            <p:panelGrid id="panelGrip" style="width: 90%; margin: auto; margin-top: 5%;">
-                                <f:facet name="header">
+                    <h:form id="formMostrar" enctype="multipart/form-data" >
+                        <p:dialog id="dlgInstructorMostrar" header="Ver Instructor" closeOnEscape="true" widgetVar="dialogInstructorMostrar" showEffect="fade" hideEffect="fade" resizable="false">
+                            <p:outputPanel id="instructorDetalle" style="text-align: left;overflow-y: scroll;  height:500px;padding-bottom: 15px">
+
+                                <!-- ********************************Separador de panel Grid********************************-->
+
+                                <p:panelGrid  id="panelGrip" style="width: 90%;  margin: auto; margin-top: 5%;">
+                                    <f:facet name="header">
+                                        <p:row>
+                                            <p:column colspan="5">Instructor</p:column>
+                                            <p:column colspan="5" style="text-align: left;color: green;">
+                                                <p:graphicImage value="/img/#{instructorBean.selectedInstructor.ruta}" width="100px" />
+                                            </p:column>
+                                        </p:row>
+
+                                        <p:row>
+                                            <p:column colspan="6" style="text-align: left;color: green;">Datos Personales
+                                            </p:column>
+                                        </p:row>
+                                    </f:facet>
+
                                     <p:row>
-                                        <p:column colspan="7">Creación de Instructor</p:column>
+                                        <p:column colspan="1" style="color: blue">Número de Cédula: </p:column>
+                                        <p:column colspan="2">
+                                            <center>
+                                                <p:outputLabel id="ci" value="#{instructorBean.selectedInstructor.ci}"/>
+                                            </center> 
+                                        </p:column>
+
+                                        <p:column style="color: blue" colspan="1">
+                                            Estado Civil:
+                                        </p:column>
+                                        <p:column colspan="2">
+                                            <p:outputLabel value="#{instructorBean.selectedInstructor.estadoCivil.descripcion}" />
+                                        </p:column>
                                     </p:row>
+
                                     <p:row>
-                                        <p:column colspan="7" style="text-align: left;">Datos Personales
-                                            <p:fileUpload  value="#{instructorBean.archivo}" mode="simple" sizeLimit="1000000" allowTypes="/(\.|\/)(gif|jpe?g)|png)$/" />
-                                            <h:inputHidden value="#{instructorBean.selectedInstructor.ruta}" />
+                                        <p:column style="color: blue" colspan="1"> 
+                                            Apellido:
+                                        </p:column>
+                                        <p:column colspan="2"> 
+                                            <p:outputLabel id="apellido" value="#{instructorBean.selectedInstructor.apellido}"/>
+                                        </p:column>
+
+                                        <p:column style="color: blue" colspan="1"> 
+                                            Nombre:
+                                        </p:column>
+
+                                        <p:column colspan="2"> 
+                                            <p:outputLabel id="nombre" value="#{instructorBean.selectedInstructor.nombre}"/>
+                                        </p:column>           
+                                    </p:row>
+
+                                    <p:row>
+                                        <p:column style="color: blue" colspan="1">
+                                            Sexo:
+                                        </p:column>
+
+                                        <p:column colspan="2" >
+                                            <p:outputLabel value="#{instructorBean.selectedInstructor.sexo.descripcion}" />
+                                        </p:column>
+                                        <p:column style="color: blue" colspan="1">
+                                            Municipio:
+                                        </p:column>
+
+                                        <p:column colspan="2" >
+                                            <p:outputLabel value="#{instructorBean.selectedInstructor.municipio.descripcion}" />
+                                        </p:column>
+                                    </p:row>
+                                </p:panelGrid>
+
+                                <!-- ********************************Separador de panel Grid********************************-->
+
+                                <p:panelGrid id="panelGrip2" style="width: 90%; margin: auto; margin-top: 0px;">
+                                    <f:facet name="header">
+                                        <p:row>
+                                            <p:column colspan="7" style="text-align: left;color: green">Formación Academica</p:column>
+                                        </p:row>
+                                    </f:facet>
+                                    <p:row>
+                                        <p:column style="color: blue" colspan="1"> 
+                                            Nivel Academico:
+                                        </p:column>
+                                        <p:column colspan="2"> 
+                                            <p:outputLabel value="#{instructorBean.selectedInstructor.estadoAcademico.nivelAcademico.descripcion}" />
+                                        </p:column>
+                                        <p:column style="color: blue" colspan="1"> 
+                                            Estado Academico:
+                                        </p:column>
+                                        <p:column colspan="2"> 
+                                            <p:outputLabel value="#{instructorBean.selectedInstructor.estadoAcademico.descripcion}" />
+                                        </p:column>
+                                    </p:row>
+                                </p:panelGrid>
+
+                                <!-- ********************************Separador de panel Grid********************************-->
+
+                                <p:panelGrid id="panelGrip3" style="width: 90%; margin: auto; margin-top: 0px;">
+                                    <f:facet name="header">
+                                        <p:row>
+                                            <p:column colspan="7" style="text-align: left;color: green">Medio de Contacto</p:column>
+                                        </p:row>
+                                    </f:facet>
+
+                                    <p:row>
+                                        <p:column style="color: blue" colspan="1"> 
+                                            Telefono:
+                                        </p:column>
+
+                                        <p:column colspan="5"> 
+                                            <p:outputLabel value="#{instructorBean.selectedInstructor.telefono}" />
+                                        </p:column>           
+                                    </p:row>
+
+                                    <p:row>
+                                        <p:column style="color: blue" colspan="1"> 
+                                            Email (Correo Electronico):
+                                        </p:column>
+                                        <p:column colspan="5"> 
+                                            <p:outputLabel value="#{instructorBean.selectedInstructor.email}" />
+                                        </p:column>
+                                    </p:row>
+                                </p:panelGrid>
+
+
+                                <!-- ********************************Separador de panel Grid********************************-->
+
+                                <p:panelGrid id="panelGrip4" style="width: 90%; margin: auto; margin-top: 0px;">
+                                    <f:facet name="header">
+                                        <p:row>
+                                            <p:column colspan="7" style="text-align: left;color: green">Usuario</p:column>
+                                        </p:row>
+                                    </f:facet>
+                                    <p:row>
+                                        <p:column style="color: blue" colspan="1"> 
+                                            Usuario:
+                                        </p:column>
+                                        <p:column colspan="2"> 
+                                            <h:outputText value="#{instructorBean.selectedInstructor.usuario.nombre}" />
+                                        </p:column>
+                                    </p:row>
+                                </p:panelGrid>
+                            </p:outputPanel>
+                        </p:dialog>
+                    </h:form>
+
+                    <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++ Crear ++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+
+                    <h:form id="formCreate"  enctype="multipart/form-data">
+                        <p:dialog id = "dlgInstructorCreate" header="Crear Instructor" widgetVar="dialogInstructorCreate" closeOnEscape="true" showEffect="fade" hideEffect="fade" resizable="false">
+                            <p:outputPanel id="instructorDetalle"  style="text-align: left;">
+
+                                <!-- ********************************Separador de panel Grid********************************-->
+
+                                <p:panelGrid id="panelGrip" style="width: 90%; margin: auto; margin-top: 5%;">
+                                    <f:facet name="header">
+                                        <p:row>
+                                            <p:column colspan="7">Creación de Instructor</p:column>
+                                        </p:row>
+                                        <p:row>
+                                            <p:column colspan="7" style="text-align: left;">Datos Personales
+                                                <p:fileUpload  value="#{instructorBean.archivo}" mode="simple" sizeLimit="1000000" allowTypes="/(\.|\/)(gif|jpe?g)|png)$/" />
+                                                <h:inputHidden value="#{instructorBean.selectedInstructor.ruta}" />
+                                            </p:column>
+
+                                        </p:row>
+                                    </f:facet>
+
+
+                                    <p:row>
+                                        <p:column colspan="1" style="font-weight: bold;">Número de Cédula: </p:column>
+                                        <p:column colspan="2" style="font-weight: bold;">
+                                            <center>
+                                                <p:inputText id="ci" value="#{instructorBean.selectedInstructor.ci}">
+                                                    <p:keyFilter regEx="/[\d\-]/"/>
+                                                    <p:watermark for="ci" value="7823212"/>                               
+                                                </p:inputText> 
+                                            </center> 
+                                        </p:column>
+
+                                        <p:column colspan="1">
+                                            Estado Civil
+                                        </p:column>
+                                        <p:column colspan="2">
+                                            <p:selectOneMenu id="EstadoCivilid" value="#{instructorBean.estadoCivilid}" effect="fold" >
+                                                <f:selectItem itemLabel="Elija una opcion" itemValue="" />
+                                                <f:selectItems value="#{estadoCivilBean.estadoCivils}" var="t" itemValue="#{t.id}" itemLabel="#{t.descripcion}"/>
+                                            </p:selectOneMenu>
                                         </p:column>
 
                                     </p:row>
-                                </f:facet>
 
-
-                                <p:row>
-                                    <p:column colspan="1" style="font-weight: bold;">Número de Cédula: </p:column>
-                                    <p:column colspan="2" style="font-weight: bold;">
-                                        <center>
-                                            <p:inputText id="ci" value="#{instructorBean.selectedInstructor.ci}">
-                                                <p:keyFilter regEx="/[\d\-]/"/>
-                                                <p:watermark for="ci" value="7823212"/>                               
+                                    <p:row>
+                                        <p:column colspan="1"> 
+                                            Apellidos
+                                        </p:column>
+                                        <p:column colspan="2"> 
+                                            <p:inputText id="apellido" value="#{instructorBean.selectedInstructor.apellido}">
+                                                <p:watermark for="apellido" value="Cáceres Coronil "/>                               
                                             </p:inputText> 
-                                        </center> 
-                                    </p:column>
-
-                                    <p:column colspan="1">
-                                        Estado Civil
-                                    </p:column>
-                                    <p:column colspan="2">
-                                        <p:selectOneMenu id="EstadoCivilid" value="#{instructorBean.estadoCivilid}" effect="fold" >
-                                            <f:selectItem itemLabel="Elija una opcion" itemValue="" />
-                                            <f:selectItems value="#{estadoCivilBean.estadoCivils}" var="t" itemValue="#{t.id}" itemLabel="#{t.descripcion}"/>
-                                        </p:selectOneMenu>
-                                    </p:column>
-
-                                </p:row>
-
-                                <p:row>
-                                    <p:column colspan="1"> 
-                                        Apellidos
-                                    </p:column>
-                                    <p:column colspan="2"> 
-                                        <p:inputText id="apellido" value="#{instructorBean.selectedInstructor.apellido}">
-                                            <p:watermark for="apellido" value="Cáceres Coronil "/>                               
-                                        </p:inputText> 
-                                    </p:column>
-
-                                    <p:column colspan="1"> 
-                                        Nombres
-                                    </p:column>
-
-                                    <p:column colspan="2"> 
-                                        <p:inputText id="nombre" value="#{instructorBean.selectedInstructor.nombre}">
-                                            <p:watermark for="nombre" value="Jesús Ariel"/>                               
-                                        </p:inputText> 
-                                    </p:column>           
-                                </p:row>
-
-                                <p:row>
-                                    <p:column colspan="1">
-                                        Sexo
-                                    </p:column>
-
-                                    <p:column colspan="5" >
-
-                                        <p:selectOneMenu id="Sexoid" value="#{instructorBean.sexoid}" effect="fold" >
-                                            <f:selectItem itemLabel="Elija una opcion" itemValue="" />
-                                            <f:selectItems value="#{sexoBean.sexos}" var="t" itemValue="#{t.id}" itemLabel="#{t.descripcion}"/>
-                                        </p:selectOneMenu>
-                                    </p:column>
-                                </p:row>
-                            </p:panelGrid>
-
-                            <!-- ********************************Separador de panel Grid********************************-->
-
-                            <p:panelGrid id="panelGrip2" style="width: 90%; margin: auto; margin-top: 0px;">
-                                <f:facet name="header">
-                                    <p:row>
-                                        <p:column colspan="7" style="text-align: left;">Formación Academica</p:column>
-                                    </p:row>
-                                </f:facet>
-
-                                <p:row>
-                                    <p:column colspan="1"> 
-                                        Nivel Academico
-                                    </p:column>
-                                    <p:column colspan="2"> 
-                                        <p:selectOneMenu id="NivelAcademicoid" value="#{instructorBean.nivelAcademicoid}" effect="fold"  style="width:125px" required="true" requiredMessage="Se requiere que seleccione un Nivel Academico" >
-                                            <f:selectItem itemLabel="Elija una opcion" itemValue="" />
-                                            <f:selectItems value="#{nivelAcademicoBean.nivelAcademicos}" var="t" itemValue="#{t.id}" itemLabel="#{t.descripcion}"/>
-                                            <p:ajax event="change" listener="#{instructorBean.filtroEstados()}" partialSubmit="true" process="@this" update=":formCreate:EstadoAcademicoid" />
-                                        </p:selectOneMenu>
-
-                                    </p:column>
-                                    <p:column colspan="1"> 
-                                        Estado Academico
-                                    </p:column>
-                                    <p:column colspan="2"> 
-                                        <p:selectOneMenu id="EstadoAcademicoid" value="#{instructorBean.estadoAcademicoid}" effect="fold"  style="width:125px" required="true" requiredMessage="Se requiere que seleccione un Nivel Academico" >
-                                            <f:selectItem itemLabel="Elija una opcion" itemValue="" />
-                                            <f:selectItems value="#{instructorBean.lstEstadosAcademicos}" var="t" itemValue="#{t.id}" itemLabel="#{t.descripcion}"/>
-                                        </p:selectOneMenu>
-
-                                    </p:column>
-
-                                </p:row>
-
-                            </p:panelGrid>
-
-                            <!-- ********************************Separador de panel Grid********************************-->
-
-                            <p:panelGrid id="panelGrip3" style="width: 90%; margin: auto; margin-top: 0px;">
-                                <f:facet name="header">
-                                    <p:row>
-                                        <p:column colspan="7" style="text-align: left;">Medio de Contacto</p:column>
-                                    </p:row>
-                                </f:facet>
-
-                                <p:row>
-                                    <p:column colspan="1"> 
-                                        Celular
-                                    </p:column>
-
-                                    <p:column colspan="5"> 
-                                        <p:inputMask id="celular" value="#{instructorBean.selectedInstructor.telefono}" mask="(0999)-999999">
-                                            <p:keyFilter regEx="/[\d\-]/"/>
-                                            <p:watermark for="celular" value="(0981) 663399"/>                               
-                                        </p:inputMask>   
-                                    </p:column>           
-                                </p:row>
-
-                                <p:row>
-                                    <p:column colspan="1"> 
-                                        Email (Correo Electronico)
-                                    </p:column>
-                                    <p:column colspan="5"> 
-                                        <p:inputText id="email" value="#{instructorBean.selectedInstructor.email}" style="width: 95%" >
-
-                                            <p:watermark for="email" value="jesuscaceres@hotmail.com" />
-                                        </p:inputText>
-                                    </p:column>
-
-                                </p:row>
-
-
-                            </p:panelGrid>
-
-                            <!-- ********************************Separador de panel Grid********************************-->
-
-                            <p:panelGrid id="panelGrip4" style="width: 90%; margin: auto; margin-top: 0px;">
-                                <f:facet name="header">
-                                    <p:row>
-                                        <p:column colspan="7" style="text-align: left;">Domicilio</p:column>
-                                    </p:row>
-                                </f:facet>
-                                <p:row>
-                                    <p:column colspan="1"> 
-                                        Municipio
-                                    </p:column>
-                                    <p:column colspan="2"> 
-                                        <p:selectOneMenu id="municipioid" value="#{instructorBean.municipioid}" effect="fold" >
-                                            <f:selectItem itemLabel="Elija una opcion" itemValue="" />
-                                            <f:selectItems value="#{municipioBean.municipios}" var="t" itemValue="#{t.id}" itemLabel="#{t.descripcion}"/>
-                                        </p:selectOneMenu>
-                                    </p:column>
-                                </p:row>
-                                <p:row>
-
-                                    <p:column colspan="1"> 
-                                        Usuario
-                                    </p:column>
-                                    <p:column colspan="2"> 
-                                        <p:selectOneMenu id="Usuarioid" value="#{instructorBean.usuarioid}" effect="fold" >
-                                            <f:selectItem itemLabel="Elija una opcion" itemValue="" />
-                                            <f:selectItems value="#{usuarioBean.usuarios}" var="p" itemValue="#{p.ci}" itemLabel="#{p.nombre}"/>
-                                        </p:selectOneMenu>
-                                    </p:column>
-                                </p:row>
-
-                                <f:facet name="footer">
-                                    <p:row>
-                                        <p:column  colspan="6" style="text-align: center">
-                                            <p:commandButton update=":formDateTable,:msgs" oncomplete="PF('dialogInstructorCreate').hide()" actionListener="#{instructorBean.CrearInstructor(actionEvent)}" icon="ui-icon-disk" title="Guardar cuenta de Instructor" value="Guardar"  ajax="false" />
-                                            <p:commandButton oncomplete="PF('dialogInstructorCreate').hide()" icon="ui-icon-cancel" title="Cancelar crear Instructor" value="Cancelar"/>
                                         </p:column>
-                                    </p:row>
-                                </f:facet>
 
-
-                            </p:panelGrid>
-
-                        </p:outputPanel>
-                    </p:dialog>
-
-                </h:form>
-                <h:form id="formUpdate" enctype="multipart/form-data">
-
-                    <p:dialog id="dlgInstructorUpdate" header="Modificar Instructor" widgetVar="dialogInstructorUpdate" closeOnEscape="true"
-                              showEffect="fade" hideEffect="fade" resizable="false">
-                        <p:outputPanel id="instructorDetalle" >
-                            <p:panelGrid id="panelGrip" style="width: 90%; margin: auto; margin-top: 5%;">
-                                <f:facet name="header">
-                                    <p:row>
-                                        <p:column colspan="7">Modificación de Instructor</p:column>
-                                    </p:row>
-                                    <p:row>
-                                        <p:column colspan="7" style="text-align: left;">Datos Personales
-                                            <p:fileUpload  value="#{instructorBean.archivo}" mode="simple" sizeLimit="1000000" allowTypes="/(\.|\/)(gif|jpe?g)|png)$/" />
-                                            <h:inputHidden value="#{instructorBean.selectedInstructor.ruta}" />
+                                        <p:column colspan="1"> 
+                                            Nombres
                                         </p:column>
-                                    </p:row>
-                                </f:facet>
 
-
-                                <p:row>
-                                    <p:column colspan="1" style="font-weight: bold;">Número de Cédula: </p:column>
-                                    <p:column colspan="2" style="font-weight: bold;">
-                                        <center>
-
-
-                                            <p:inputText id="ci" value="#{instructorBean.selectedInstructor.ci}">
-                                                <p:keyFilter regEx="/[\d\-]/"/>
-                                                <p:watermark for="ci" value="7823212"/>                               
+                                        <p:column colspan="2"> 
+                                            <p:inputText id="nombre" value="#{instructorBean.selectedInstructor.nombre}">
+                                                <p:watermark for="nombre" value="Jesús Ariel"/>                               
                                             </p:inputText> 
-
-
-                                        </center> 
-                                    </p:column>
-
-                                    <p:column colspan="1">
-                                        Estado Civil
-                                    </p:column>
-                                    <p:column colspan="2">
-                                        <p:selectOneMenu id="EstadoCivilid" value="#{instructorBean.estadoCivilid}" effect="fold" >
-                                            <f:selectItem itemLabel="Elija una opcion" itemValue="" />
-                                            <f:selectItems value="#{estadoCivilBean.estadoCivils}" var="t" itemValue="#{t.id}" itemLabel="#{t.descripcion}"/>
-                                        </p:selectOneMenu>
-                                    </p:column>
-
-                                </p:row>
-
-                                <p:row>
-                                    <p:column colspan="1"> 
-                                        Apellidos
-                                    </p:column>
-                                    <p:column colspan="2"> 
-                                        <p:inputText id="apellido" value="#{instructorBean.selectedInstructor.apellido}">
-                                            <p:watermark for="apellido" value="Cáceres Coronil "/>                               
-                                        </p:inputText> 
-                                    </p:column>
-
-                                    <p:column colspan="1"> 
-                                        Nombres
-                                    </p:column>
-
-                                    <p:column colspan="2"> 
-                                        <p:inputText id="nombre" value="#{instructorBean.selectedInstructor.nombre}">
-                                            <p:watermark for="nombre" value="Jesús Ariel"/>                               
-                                        </p:inputText> 
-                                    </p:column>           
-                                </p:row>
-
-
-                                <p:row>
-                                    <p:column colspan="1">
-                                        Sexo
-                                    </p:column>
-
-                                    <p:column colspan="5" >
-
-                                        <p:selectOneMenu id="Sexoid" value="#{instructorBean.sexoid}" effect="fold" >
-                                            <f:selectItem itemLabel="Elija una opcion" itemValue="" />
-                                            <f:selectItems value="#{sexoBean.sexos}" var="t" itemValue="#{t.id}" itemLabel="#{t.descripcion}"/>
-                                        </p:selectOneMenu>
-                                    </p:column>
-                                </p:row>
-                            </p:panelGrid>
-
-
-                            <p:panelGrid id="panelGrip2" style="width: 90%; margin: auto; margin-top: 0px;">
-                                <f:facet name="header">
-                                    <p:row>
-                                        <p:column colspan="7" style="text-align: left;">Formación Academica</p:column>
+                                        </p:column>           
                                     </p:row>
-                                </f:facet>
 
-                                <p:row>
-                                    <p:column colspan="1"> 
-                                        Nivel Academico
-                                    </p:column>
-                                    <p:column colspan="2"> 
-                                        <p:selectOneMenu id="NivelAcademicoid" value="#{instructorBean.nivelAcademicoid}" effect="fold"  style="width:125px" required="true" requiredMessage="Se requiere que seleccione un Nivel Academico" >
+                                    <p:row>
+                                        <p:column colspan="1">
+                                            Sexo
+                                        </p:column>
+
+                                        <p:column colspan="5" >
+
+                                            <p:selectOneMenu id="Sexoid" value="#{instructorBean.sexoid}" effect="fold" >
+                                                <f:selectItem itemLabel="Elija una opcion" itemValue="" />
+                                                <f:selectItems value="#{sexoBean.sexos}" var="t" itemValue="#{t.id}" itemLabel="#{t.descripcion}"/>
+                                            </p:selectOneMenu>
+                                        </p:column>
+                                    </p:row>
+                                </p:panelGrid>
+
+                                <!-- ********************************Separador de panel Grid********************************-->
+
+                                <p:panelGrid id="panelGrip2" style="width: 90%; margin: auto; margin-top: 0px;">
+                                    <f:facet name="header">
+                                        <p:row>
+                                            <p:column colspan="7" style="text-align: left;">Formación Academica</p:column>
+                                        </p:row>
+                                    </f:facet>
+
+                                    <p:row>
+                                        <p:column colspan="1"> 
+                                            Nivel Academico
+                                        </p:column>
+                                        <p:column colspan="2"> 
+                                            <p:selectOneMenu id="NivelAcademicoid" value="#{instructorBean.nivelAcademicoid}" effect="fold"  style="width:125px" required="true" requiredMessage="Se requiere que seleccione un Nivel Academico" >
                                                 <f:selectItem itemLabel="Elija una opcion" itemValue="" />
                                                 <f:selectItems value="#{nivelAcademicoBean.nivelAcademicos}" var="t" itemValue="#{t.id}" itemLabel="#{t.descripcion}"/>
                                                 <p:ajax event="change" listener="#{instructorBean.filtroEstados()}" partialSubmit="true" process="@this" update=":formCreate:EstadoAcademicoid" />
                                             </p:selectOneMenu>
 
-                                    </p:column>
-
-                                    <p:column colspan="1"> 
-                                        Estado Academico
-                                    </p:column>
-                                    <p:column colspan="2"> 
-                                        <p:selectOneMenu id="EstadoAcademicoid" value="#{instructorBean.estadoAcademicoid}" effect="fold" >
-                                            <f:selectItem itemLabel="Elija una opcion" itemValue="" />
-                                            <f:selectItems value="#{estadoAcademicoBean.estadoAcademicos}" var="t" itemValue="#{t.id}" itemLabel="#{t.descripcion}"/>
-                                        </p:selectOneMenu>
-
-                                    </p:column>
-
-                                </p:row>
-
-                            </p:panelGrid>
-
-                            <p:panelGrid id="panelGrip3" style="width: 90%; margin: auto; margin-top: 0px;">
-                                <f:facet name="header">
-                                    <p:row>
-                                        <p:column colspan="7" style="text-align: left;">Medio de Contacto</p:column>
-                                    </p:row>
-                                </f:facet>
-
-                                <p:row>
-                                    <p:column colspan="1"> 
-                                        Celular
-                                    </p:column>
-
-                                    <p:column colspan="5"> 
-                                        <p:inputMask id="celular" value="#{instructorBean.selectedInstructor.telefono}" mask="(0999)-999999">
-                                            <p:keyFilter regEx="/[\d\-]/"/>
-                                            <p:watermark for="celular" value="(0981) 663399"/>                               
-                                        </p:inputMask>   
-                                    </p:column>           
-                                </p:row>
-
-
-                                <p:row>
-                                    <p:column colspan="1"> 
-                                        Email (Correo Electronico)
-                                    </p:column>
-                                    <p:column colspan="5"> 
-                                        <p:inputText id="email" value="#{instructorBean.selectedInstructor.email}" style="width: 95%" >
-                                            <!--<p:keyFilter regEx="/[a-z_]/i" />-->
-                                            <p:watermark for="email" value="jesuscaceres@hotmail.com" />
-                                        </p:inputText>
-                                    </p:column>
-
-                                </p:row>
-
-
-                            </p:panelGrid>
-
-
-                            <p:panelGrid id="panelGrip4" style="width: 90%; margin: auto; margin-top: 0px;">
-
-                                <f:facet name="header">
-                                    <p:row>
-                                        <p:column colspan="7" style="text-align: left;">Domicilio</p:column>
-                                    </p:row>
-                                </f:facet>
-
-                                <p:row>
-                                    <p:column colspan="1"> 
-                                        Municipio
-                                    </p:column>
-                                    <p:column colspan="2"> 
-                                        <p:selectOneMenu id="municipioid" value="#{instructorBean.municipioid}" effect="fold" >
-                                            <f:selectItem itemLabel="Elija una opcion" itemValue="" />
-                                            <f:selectItems value="#{municipioBean.municipios}" var="t" itemValue="#{t.id}" itemLabel="#{t.descripcion}"/>
-                                        </p:selectOneMenu>
-                                    </p:column>
-                                </p:row>
-
-                                <p:row>
-                                    <p:column colspan="1"> 
-                                        Usuario
-                                    </p:column>
-                                    <p:column colspan="2"> 
-                                        <p:selectOneMenu id="Usuarioid" value="#{instructorBean.usuarioid}" effect="fold" >
-                                            <f:selectItem itemLabel="Elija una opcion" itemValue="" />
-                                            <f:selectItems value="#{usuarioBean.usuarios}" var="p" itemValue="#{p.ci}" itemLabel="#{p.nombre}"/>
-                                        </p:selectOneMenu>
-                                    </p:column>
-                                </p:row>
-
-                                <f:facet name="footer">
-                                    <p:row>
-                                        <p:column  colspan="6" style="text-align: center">
-                                            <p:commandButton update=":formDataTable,:msgs" oncomplete="PF('dialogInstructorUpdate').hide()" actionListener="#{instructorBean.ModificarInstructor(actionEvent)}" icon="ui-icon-disk" title="Modificar Instructor" value="Modificar"  ajax="false"/>
-                                            <p:commandButton  onclick="PF('dialogInstructorUpdate').hide()" icon="ui-icon-cancel" title="Cancelar Modificacion de Instructor" value="Cancelar"/>
+                                        </p:column>
+                                        <p:column colspan="1"> 
+                                            Estado Academico
+                                        </p:column>
+                                        <p:column colspan="2"> 
+                                            <p:selectOneMenu id="EstadoAcademicoid" value="#{instructorBean.estadoAcademicoid}" effect="fold"  style="width:125px" required="true" requiredMessage="Se requiere que seleccione un Nivel Academico" >
+                                                <f:selectItem itemLabel="Elija una opcion" itemValue="" />
+                                                <f:selectItems value="#{instructorBean.lstEstadosAcademicos}" var="t" itemValue="#{t.id}" itemLabel="#{t.descripcion}"/>
+                                            </p:selectOneMenu>
 
                                         </p:column>
+
                                     </p:row>
-                                </f:facet>
 
-                            </p:panelGrid>
-                        </p:outputPanel>
-                    </p:dialog>
+                                </p:panelGrid>
 
-                </h:form>        
+                                <!-- ********************************Separador de panel Grid********************************-->
+
+                                <p:panelGrid id="panelGrip3" style="width: 90%; margin: auto; margin-top: 0px;">
+                                    <f:facet name="header">
+                                        <p:row>
+                                            <p:column colspan="7" style="text-align: left;">Medio de Contacto</p:column>
+                                        </p:row>
+                                    </f:facet>
+
+                                    <p:row>
+                                        <p:column colspan="1"> 
+                                            Celular
+                                        </p:column>
+
+                                        <p:column colspan="5"> 
+                                            <p:inputMask id="celular" value="#{instructorBean.selectedInstructor.telefono}" mask="(0999)-999999">
+                                                <p:keyFilter regEx="/[\d\-]/"/>
+                                                <p:watermark for="celular" value="(0981) 663399"/>                               
+                                            </p:inputMask>   
+                                        </p:column>           
+                                    </p:row>
+
+                                    <p:row>
+                                        <p:column colspan="1"> 
+                                            Email (Correo Electronico)
+                                        </p:column>
+                                        <p:column colspan="5"> 
+                                            <p:inputText id="email" value="#{instructorBean.selectedInstructor.email}" style="width: 95%" >
+
+                                                <p:watermark for="email" value="jesuscaceres@hotmail.com" />
+                                            </p:inputText>
+                                        </p:column>
+
+                                    </p:row>
 
 
+                                </p:panelGrid>
+
+                                <!-- ********************************Separador de panel Grid********************************-->
+
+                                <p:panelGrid id="panelGrip4" style="width: 90%; margin: auto; margin-top: 0px;">
+                                    <f:facet name="header">
+                                        <p:row>
+                                            <p:column colspan="7" style="text-align: left;">Domicilio</p:column>
+                                        </p:row>
+                                    </f:facet>
+                                    <p:row>
+                                        <p:column colspan="1"> 
+                                            Municipio
+                                        </p:column>
+                                        <p:column colspan="2"> 
+                                            <p:selectOneMenu id="municipioid" value="#{instructorBean.municipioid}" effect="fold" >
+                                                <f:selectItem itemLabel="Elija una opcion" itemValue="" />
+                                                <f:selectItems value="#{municipioBean.municipios}" var="t" itemValue="#{t.id}" itemLabel="#{t.descripcion}"/>
+                                            </p:selectOneMenu>
+                                        </p:column>
+                                    </p:row>
+                                    <p:row>
+
+                                        <p:column colspan="1"> 
+                                            Usuario
+                                        </p:column>
+                                        <p:column colspan="2"> 
+                                            <p:selectOneMenu id="Usuarioid" value="#{instructorBean.usuarioid}" effect="fold" >
+                                                <f:selectItem itemLabel="Elija una opcion" itemValue="" />
+                                                <f:selectItems value="#{usuarioBean.usuarios}" var="p" itemValue="#{p.ci}" itemLabel="#{p.nombre}"/>
+                                            </p:selectOneMenu>
+                                        </p:column>
+                                    </p:row>
+
+                                    <f:facet name="footer">
+                                        <p:row>
+                                            <p:column  colspan="6" style="text-align: center">
+                                                <p:commandButton update=":formDateTable,:msgs" oncomplete="PF('dialogInstructorCreate').hide()" actionListener="#{instructorBean.CrearInstructor(actionEvent)}" icon="ui-icon-disk" title="Guardar cuenta de Instructor" value="Guardar"  ajax="false" />
+                                                <p:commandButton oncomplete="PF('dialogInstructorCreate').hide()" icon="ui-icon-cancel" title="Cancelar crear Instructor" value="Cancelar"/>
+                                            </p:column>
+                                        </p:row>
+                                    </f:facet>
 
 
+                                </p:panelGrid>
 
-                <p:confirmDialog showEffect="fade"  hideEffect="explode" appendTo="@(body)" closeOnEscape="true"
-                                 message="Esta seguro de eliminar el registro?" header="Eliminar Registro" severity="alert" 
-                                 widgetVar="dialogInstructorDelete">
-                    <h:form id="formDelete">   
+                            </p:outputPanel>
+                        </p:dialog>
 
-                        <h:inputHidden value="#{instructorBean.selectedInstructor.ci}" />
-
-                        <p:commandButton value="Aceptar" update=":formDataTable,:msgs" actionListener="#{instructorBean.EliminarInstructor(actionEvent)}" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" onclick="PF('dialogInstructorDelete').hide()" />
-                        <p:commandButton value="Cancelar"  styleClass="ui-confirmdialog-no" icon="ui-icon-close" onclick="PF('dialogInstructorDelete').hide()"/>
                     </h:form>
+                    <h:form id="formUpdate" enctype="multipart/form-data">
 
-                </p:confirmDialog>
+                        <p:dialog id="dlgInstructorUpdate" header="Modificar Instructor" widgetVar="dialogInstructorUpdate" closeOnEscape="true"
+                                  showEffect="fade" hideEffect="fade" resizable="false">
+                            <p:outputPanel id="instructorDetalle" >
+                                <p:panelGrid id="panelGrip" style="width: 90%; margin: auto; margin-top: 5%;">
+                                    <f:facet name="header">
+                                        <p:row>
+                                            <p:column colspan="7">Modificación de Instructor</p:column>
+                                        </p:row>
+                                        <p:row>
+                                            <p:column colspan="7" style="text-align: left;">Datos Personales
+                                                <p:fileUpload  value="#{instructorBean.archivo}" mode="simple" sizeLimit="1000000" allowTypes="/(\.|\/)(gif|jpe?g)|png)$/" />
+                                                <h:inputHidden value="#{instructorBean.selectedInstructor.ruta}" />
+                                            </p:column>
+                                        </p:row>
+                                    </f:facet>
+
+
+                                    <p:row>
+                                        <p:column colspan="1" style="font-weight: bold;">Número de Cédula: </p:column>
+                                        <p:column colspan="2" style="font-weight: bold;">
+                                            <center>
+
+
+                                                <p:inputText id="ci" value="#{instructorBean.selectedInstructor.ci}">
+                                                    <p:keyFilter regEx="/[\d\-]/"/>
+                                                    <p:watermark for="ci" value="7823212"/>                               
+                                                </p:inputText> 
+
+
+                                            </center> 
+                                        </p:column>
+
+                                        <p:column colspan="1">
+                                            Estado Civil
+                                        </p:column>
+                                        <p:column colspan="2">
+                                            <p:selectOneMenu id="EstadoCivilid" value="#{instructorBean.estadoCivilid}" effect="fold" >
+                                                <f:selectItem itemLabel="Elija una opcion" itemValue="" />
+                                                <f:selectItems value="#{estadoCivilBean.estadoCivils}" var="t" itemValue="#{t.id}" itemLabel="#{t.descripcion}"/>
+                                            </p:selectOneMenu>
+                                        </p:column>
+
+                                    </p:row>
+
+                                    <p:row>
+                                        <p:column colspan="1"> 
+                                            Apellidos
+                                        </p:column>
+                                        <p:column colspan="2"> 
+                                            <p:inputText id="apellido" value="#{instructorBean.selectedInstructor.apellido}">
+                                                <p:watermark for="apellido" value="Cáceres Coronil "/>                               
+                                            </p:inputText> 
+                                        </p:column>
+
+                                        <p:column colspan="1"> 
+                                            Nombres
+                                        </p:column>
+
+                                        <p:column colspan="2"> 
+                                            <p:inputText id="nombre" value="#{instructorBean.selectedInstructor.nombre}">
+                                                <p:watermark for="nombre" value="Jesús Ariel"/>                               
+                                            </p:inputText> 
+                                        </p:column>           
+                                    </p:row>
+
+
+                                    <p:row>
+                                        <p:column colspan="1">
+                                            Sexo
+                                        </p:column>
+
+                                        <p:column colspan="5" >
+
+                                            <p:selectOneMenu id="Sexoid" value="#{instructorBean.sexoid}" effect="fold" >
+                                                <f:selectItem itemLabel="Elija una opcion" itemValue="" />
+                                                <f:selectItems value="#{sexoBean.sexos}" var="t" itemValue="#{t.id}" itemLabel="#{t.descripcion}"/>
+                                            </p:selectOneMenu>
+                                        </p:column>
+                                    </p:row>
+                                </p:panelGrid>
+
+
+                                <p:panelGrid id="panelGrip2" style="width: 90%; margin: auto; margin-top: 0px;">
+                                    <f:facet name="header">
+                                        <p:row>
+                                            <p:column colspan="7" style="text-align: left;">Formación Academica</p:column>
+                                        </p:row>
+                                    </f:facet>
+
+                                    <p:row>
+                                        <p:column colspan="1"> 
+                                            Nivel Academico
+                                        </p:column>
+                                        <p:column colspan="2"> 
+                                            <p:selectOneMenu id="NivelAcademicoid" value="#{instructorBean.nivelAcademicoid}" effect="fold"  style="width:125px" required="true" requiredMessage="Se requiere que seleccione un Nivel Academico" >
+                                                <f:selectItem itemLabel="Elija una opcion" itemValue="" />
+                                                <f:selectItems value="#{nivelAcademicoBean.nivelAcademicos}" var="t" itemValue="#{t.id}" itemLabel="#{t.descripcion}"/>
+                                                <p:ajax event="change" listener="#{instructorBean.filtroEstados()}" partialSubmit="true" process="@this" update=":formCreate:EstadoAcademicoid" />
+                                            </p:selectOneMenu>
+
+                                        </p:column>
+
+                                        <p:column colspan="1"> 
+                                            Estado Academico
+                                        </p:column>
+                                        <p:column colspan="2"> 
+                                            <p:selectOneMenu id="EstadoAcademicoid" value="#{instructorBean.estadoAcademicoid}" effect="fold" >
+                                                <f:selectItem itemLabel="Elija una opcion" itemValue="" />
+                                                <f:selectItems value="#{estadoAcademicoBean.estadoAcademicos}" var="t" itemValue="#{t.id}" itemLabel="#{t.descripcion}"/>
+                                            </p:selectOneMenu>
+
+                                        </p:column>
+
+                                    </p:row>
+
+                                </p:panelGrid>
+
+                                <p:panelGrid id="panelGrip3" style="width: 90%; margin: auto; margin-top: 0px;">
+                                    <f:facet name="header">
+                                        <p:row>
+                                            <p:column colspan="7" style="text-align: left;">Medio de Contacto</p:column>
+                                        </p:row>
+                                    </f:facet>
+
+                                    <p:row>
+                                        <p:column colspan="1"> 
+                                            Celular
+                                        </p:column>
+
+                                        <p:column colspan="5"> 
+                                            <p:inputMask id="celular" value="#{instructorBean.selectedInstructor.telefono}" mask="(0999)-999999">
+                                                <p:keyFilter regEx="/[\d\-]/"/>
+                                                <p:watermark for="celular" value="(0981) 663399"/>                               
+                                            </p:inputMask>   
+                                        </p:column>           
+                                    </p:row>
+
+
+                                    <p:row>
+                                        <p:column colspan="1"> 
+                                            Email (Correo Electronico)
+                                        </p:column>
+                                        <p:column colspan="5"> 
+                                            <p:inputText id="email" value="#{instructorBean.selectedInstructor.email}" style="width: 95%" >
+                                                <!--<p:keyFilter regEx="/[a-z_]/i" />-->
+                                                <p:watermark for="email" value="jesuscaceres@hotmail.com" />
+                                            </p:inputText>
+                                        </p:column>
+
+                                    </p:row>
+
+
+                                </p:panelGrid>
+
+
+                                <p:panelGrid id="panelGrip4" style="width: 90%; margin: auto; margin-top: 0px;">
+
+                                    <f:facet name="header">
+                                        <p:row>
+                                            <p:column colspan="7" style="text-align: left;">Domicilio</p:column>
+                                        </p:row>
+                                    </f:facet>
+
+                                    <p:row>
+                                        <p:column colspan="1"> 
+                                            Municipio
+                                        </p:column>
+                                        <p:column colspan="2"> 
+                                            <p:selectOneMenu id="municipioid" value="#{instructorBean.municipioid}" effect="fold" >
+                                                <f:selectItem itemLabel="Elija una opcion" itemValue="" />
+                                                <f:selectItems value="#{municipioBean.municipios}" var="t" itemValue="#{t.id}" itemLabel="#{t.descripcion}"/>
+                                            </p:selectOneMenu>
+                                        </p:column>
+                                    </p:row>
+
+                                    <p:row>
+                                        <p:column colspan="1"> 
+                                            Usuario
+                                        </p:column>
+                                        <p:column colspan="2"> 
+                                            <p:selectOneMenu id="Usuarioid" value="#{instructorBean.usuarioid}" effect="fold" >
+                                                <f:selectItem itemLabel="Elija una opcion" itemValue="" />
+                                                <f:selectItems value="#{usuarioBean.usuarios}" var="p" itemValue="#{p.ci}" itemLabel="#{p.nombre}"/>
+                                            </p:selectOneMenu>
+                                        </p:column>
+                                    </p:row>
+
+                                    <f:facet name="footer">
+                                        <p:row>
+                                            <p:column  colspan="6" style="text-align: center">
+                                                <p:commandButton update=":formDataTable,:msgs" oncomplete="PF('dialogInstructorUpdate').hide()" actionListener="#{instructorBean.ModificarInstructor(actionEvent)}" icon="ui-icon-disk" title="Modificar Instructor" value="Modificar"  ajax="false"/>
+                                                <p:commandButton  onclick="PF('dialogInstructorUpdate').hide()" icon="ui-icon-cancel" title="Cancelar Modificacion de Instructor" value="Cancelar"/>
+
+                                            </p:column>
+                                        </p:row>
+                                    </f:facet>
+
+                                </p:panelGrid>
+                            </p:outputPanel>
+                        </p:dialog>
+
+                    </h:form>        
 
 
 
-            </ui:define>
 
-        </ui:composition>
 
-    </body>
+                    <p:confirmDialog showEffect="fade"  hideEffect="explode" appendTo="@(body)" closeOnEscape="true"
+                                     message="Esta seguro de eliminar el registro?" header="Eliminar Registro" severity="alert" 
+                                     widgetVar="dialogInstructorDelete">
+                        <h:form id="formDelete">   
+
+                            <h:inputHidden value="#{instructorBean.selectedInstructor.ci}" />
+
+                            <p:commandButton value="Aceptar" update=":formDataTable,:msgs" actionListener="#{instructorBean.EliminarInstructor(actionEvent)}" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" onclick="PF('dialogInstructorDelete').hide()" />
+                            <p:commandButton value="Cancelar"  styleClass="ui-confirmdialog-no" icon="ui-icon-close" onclick="PF('dialogInstructorDelete').hide()"/>
+                        </h:form>
+
+                    </p:confirmDialog>
+
+
+
+                </ui:define>
+
+            </ui:composition>
+
+        </body>
+    </f:view>
 </html>

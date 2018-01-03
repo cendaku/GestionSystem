@@ -1,0 +1,102 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+   <f:view contentType="text/html">
+        <h:head>
+            <f:facet name="first">
+                <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+                <title>Discapacidad</title>
+            </f:facet>
+        </h:head>
+
+        <body>
+
+            <ui:composition template="./Plantilla.xhtml">
+
+                <ui:define name="content">
+                    <p:growl id="msgs" showDetail="true" />
+
+                    <h:form class="vmo">
+                        <p:commandButton update=":formCreate,:formDateTable" oncomplete="PF('dialogDiscapacidadCreate').show()" icon="ui-icon-disk" title="Crear cuenta de Discapacidad" value="Crear"/>
+                    </h:form>
+
+                    <h:form id="formDateTable" >
+                        <p:dataTable id="basicDT" var="discapacidad" value="#{discapacidadBean.discapacidads}">
+                            <f:facet name="header">
+                                Listado de Discapacidades
+                            </f:facet>
+
+                            <p:column style="width:40px;text-align: center" headerText="N°">
+                                <h:outputText value="#{discapacidad.id}" />
+                            </p:column>
+                            <p:column style="width:auto;text-align: center" headerText="Descripcion">
+                                <h:outputText value="#{discapacidad.descripcion}" />
+                            </p:column>
+                          
+
+                            <p:column class="vmo" style="width:88px;text-align: center">
+                                <p:commandButton update=":formUpdate:discapacidadDetalle" oncomplete="PF('dialogDiscapacidadUpdate').show()" icon="ui-icon-pencil" title="Actualizar">
+                                    <f:setPropertyActionListener value="#{discapacidad}" target="#{discapacidadBean.selectedDiscapacidad}" />
+                                </p:commandButton>
+                                <p:commandButton update=":formDelete" oncomplete="PF('dialogDiscapacidadDelete').show()" icon="ui-icon-trash" title="Borrar">
+                                    <f:setPropertyActionListener value="#{discapacidad}" target="#{discapacidadBean.selectedDiscapacidad}" />
+                                </p:commandButton>
+                            </p:column>
+                        </p:dataTable>
+                    </h:form>
+
+                    <h:form id="formCreate">
+                        <p:dialog id="dlgDiscapacidadCreate" closeOnEscape="true" header="Crear Discapacidad" widgetVar="dialogDiscapacidadCreate" showEffect="fade" hideEffect="fade" resizable="false">
+                            <p:outputPanel id="discapacidadDetalle" style="text-align: left;">
+                                <h:panelGrid  columns="2" style="padding: 2px;" >
+
+                                    <h:outputText value="Descripcion:" />
+                                    <p:inputText value="#{discapacidadBean.selectedDiscapacidad.descripcion}" />
+                                    
+                               
+                                    <f:facet name="footer">
+                                        <p:commandButton update=":formDateTable,:msgs" oncomplete="PF('dialogDiscapacidadCreate').hide()" actionListener="#{discapacidadBean.CrearDiscapacidad(actionEvent)}" icon="ui-icon-disk" title="Guardar cuenta de Discapacidad" value="Guardar"/>
+                                        <p:commandButton oncomplete="PF('dialogDiscapacidadCreate').hide()" icon="ui-icon-cancel" title="Cancelar crear cuenta de Discapacidad" value="Cancelar"/>
+                                    </f:facet>
+                                </h:panelGrid>
+                            </p:outputPanel>
+                        </p:dialog>
+                    </h:form>
+
+                    <h:form id="formUpdate">
+                        <p:dialog id="dlgDiscapacidadUpdate" closeOnEscape="true" header="Modificar Discapacidad" widgetVar="dialogDiscapacidadUpdate" showEffect="fade" hideEffect="fade" resizable="false">
+
+                            <p:outputPanel id="discapacidadDetalle" style="text-align: left;">
+                                <h:panelGrid  columns="2" style="padding: 2px;" >
+                                     <h:outputText value="Descripcion:" />
+                                    <p:inputText value="#{discapacidadBean.selectedDiscapacidad.descripcion}" />
+                                    
+                                    
+                                    <h:inputHidden value="#{discapacidadBean.selectedDiscapacidad.id}" />
+                                    <f:facet name="footer">
+                                        <p:commandButton update=":formDateTable,:msgs" oncomplete="PF('dialogDiscapacidadUpdate').hide()" actionListener="#{discapacidadBean.ModificarDiscapacidad(actionEvent)}" icon="ui-icon-disk" title="Guardar cuenta de Discapacidad" value="Modificar"/>
+                                        <p:commandButton oncomplete="PF('dialogDiscapacidadUpdate').hide()" icon="ui-icon-cancel" title="Cancelar modificación de cuenta de Discapacidad" value="Cancelar"/>
+                                    </f:facet>
+                                </h:panelGrid>
+                            </p:outputPanel>
+                        </p:dialog>
+                    </h:form>
+
+                    <p:confirmDialog showEffect="fade" hideEffect="explode" appendTo="@(body)" closeOnEscape="true" message="Esta seguro de eliminar el reigistro?" header="Eliminar Registro" severity="alert" widgetVar="dialogDiscapacidadDelete">
+                        <h:form id="formDelete"> 
+                            <h:inputHidden value="#{discapacidadBean.selectedDiscapacidad.id}" />
+                            <p:commandButton value="Aceptar" update=":formDateTable,:msgs" actionListener="#{discapacidadBean.EliminarDiscapacidad(actionEvent)}" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" oncomplete="PF('dialogDiscapacidadDelete').hide()" />
+                            <p:commandButton value="Cancelar" styleClass="ui-confirmdialog-no" icon="ui-icon-close" onclick="PF('dialogDiscapacidadDelete').hide()" />
+                        </h:form>
+                    </p:confirmDialog>
+
+                </ui:define>
+
+            </ui:composition>
+
+        </body>
+    </f:view>
+</html>

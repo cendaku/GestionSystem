@@ -40,9 +40,6 @@
                         <p:column style="width:auto;text-align: center" headerText="Apellido">
                             <h:outputText value="#{usuario.apellido}" />
                         </p:column>
-                        <p:column class="vmo" style="width:auto;text-align: center" headerText="Activo">
-                            <h:outputText value="#{usuario.activo}" />
-                        </p:column>
 
                         <p:column style="width:auto;text-align: center" headerText="Rol">
                             <h:outputText value="#{usuario.rol.descripcion}" />
@@ -75,9 +72,6 @@
                                 <h:outputText value="Contraseña:" />
                                 <p:password value="#{usuarioBean.selectedUsuario.password}" />
                                 
-                                <h:outputText value="Activo:" />
-                                <p:inputText value="#{usuarioBean.selectedUsuario.activo}" />
-                                
                                 <h:outputText value="Rol:" />
                                 <p:selectOneMenu value="#{usuarioBean.selectedUsuario.rol.id}" style="width:auto">
                                     <f:selectItem itemLabel="- Seleccione -" itemValue="" />
@@ -104,9 +98,6 @@
                                 
                                 <h:outputText value="Apellido:" />
                                 <p:inputText value="#{usuarioBean.selectedUsuario.apellido}" />
-                                
-                                <h:outputText value="Activo:" />
-                                <p:inputText value="#{usuarioBean.selectedUsuario.activo}" />
 
                                 <h:outputText value="Rol:" />
                                 <p:selectOneMenu value="#{usuarioBean.selectedUsuario.rol.id}" style="width:125px">

@@ -1,0 +1,98 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+   <f:view contentType="text/html">
+        <h:head>
+            <f:facet name="first">
+                <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+                <title>Municipio</title>
+            </f:facet>
+        </h:head>
+
+        <body>
+
+            <ui:composition template="./Plantilla.xhtml">
+
+                <ui:define name="content">
+                    <p:growl id="msgs" showDetail="true" />
+
+                    <h:form class="vmo">
+                        <p:commandButton update=":formCreate,:formDateTable" oncomplete="PF('dialogMunicipioCreate').show()" icon="ui-icon-disk" title="Crear cuenta de Municipio" value="Crear"/>
+                    </h:form>
+
+                    <h:form id="formDateTable" >
+                        <p:dataTable id="basicDT" var="municipio" value="#{municipioBean.municipios}">
+                            <f:facet name="header">
+                                Listado de Municipios
+                            </f:facet>
+
+                            <p:column style="width:40px;text-align: center" headerText="ID">
+                                <h:outputText value="#{municipio.id}" />
+                            </p:column>
+                            <p:column style="width:auto;text-align: center" headerText="Descripcion">
+                                <h:outputText value="#{municipio.descripcion}" />
+                            </p:column>
+                          
+                            <p:column class="vmo" style="width:88px;text-align: center">
+                                <p:commandButton update=":formUpdate:municipioDetalle" oncomplete="PF('dialogMunicipioUpdate').show()" icon="ui-icon-pencil" title="Actualizar">
+                                    <f:setPropertyActionListener value="#{municipio}" target="#{municipioBean.selectedMunicipio}" />
+                                </p:commandButton>
+                                <p:commandButton update=":formDelete" oncomplete="PF('dialogMunicipioDelete').show()" icon="ui-icon-trash" title="Borrar">
+                                    <f:setPropertyActionListener value="#{municipio}" target="#{municipioBean.selectedMunicipio}" />
+                                </p:commandButton>
+                            </p:column>
+                        </p:dataTable>
+                    </h:form>
+                    <h:form id="formCreate">
+                        <p:dialog id="dlgMunicipioCreate" closeOnEscape="true" header="Crear Municipio" widgetVar="dialogMunicipioCreate" showEffect="fade" hideEffect="fade" resizable="false">
+                            <p:outputPanel id="municipioDetalle" style="text-align: left;">
+                                <h:panelGrid  columns="2" style="padding: 2px;" >
+                                    <h:outputText value="Descripcion:" />
+                                    <p:inputText value="#{municipioBean.selectedMunicipio.descripcion}" />
+                                    <f:facet name="footer">
+                                        <p:commandButton update=":formDateTable,:msgs" oncomplete="PF('dialogMunicipioCreate').hide()" actionListener="#{municipioBean.CrearMunicipio(actionEvent)}" icon="ui-icon-disk" title="Guardar cuenta de Municipio" value="Guardar"/>
+                                        <p:commandButton oncomplete="PF('dialogMunicipioCreate').hide()" icon="ui-icon-cancel" title="Cancelar crear cuenta de Municipio" value="Cancelar"/>
+                                    </f:facet>
+                                </h:panelGrid>
+                            </p:outputPanel>
+                        </p:dialog>
+                    </h:form>
+
+                    <h:form id="formUpdate">
+                        <p:dialog id="dlgMunicipioUpdate" closeOnEscape="true" header="Modificar Municipio" widgetVar="dialogMunicipioUpdate" showEffect="fade" hideEffect="fade" resizable="false">
+
+                            <p:outputPanel id="municipioDetalle" style="text-align: left;">
+                                <h:panelGrid  columns="2" style="padding: 2px;" >
+                                     <h:outputText value="Descripcion:" />
+                                    <p:inputText value="#{municipioBean.selectedMunicipio.descripcion}" />
+                                    
+                                    
+                                    <h:inputHidden value="#{municipioBean.selectedMunicipio.id}" />
+                                    <f:facet name="footer">
+                                        <p:commandButton update=":formDateTable,:msgs" oncomplete="PF('dialogMunicipioUpdate').hide()" actionListener="#{municipioBean.ModificarMunicipio(actionEvent)}" icon="ui-icon-disk" title="Guardar cuenta de Municipio" value="Modificar"/>
+                                        <p:commandButton oncomplete="PF('dialogMunicipioUpdate').hide()" icon="ui-icon-cancel" title="Cancelar modificación de cuenta de Municipio" value="Cancelar"/>
+                                    </f:facet>
+                                </h:panelGrid>
+                            </p:outputPanel>
+                        </p:dialog>
+                    </h:form>
+
+                    <p:confirmDialog showEffect="fade" hideEffect="explode" appendTo="@(body)" closeOnEscape="true" message="Esta seguro de eliminar el reigistro?" header="Eliminar Registro" severity="alert" widgetVar="dialogMunicipioDelete">
+                        <h:form id="formDelete"> 
+                            <h:inputHidden value="#{municipioBean.selectedMunicipio.id}" />
+                            <p:commandButton value="Aceptar" update=":formDateTable,:msgs" actionListener="#{municipioBean.EliminarMunicipio(actionEvent)}" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" oncomplete="PF('dialogMunicipioDelete').hide()" />
+                            <p:commandButton value="Cancelar" styleClass="ui-confirmdialog-no" icon="ui-icon-close" onclick="PF('dialogMunicipioDelete').hide()" />
+                        </h:form>
+                    </p:confirmDialog>
+
+
+                </ui:define>
+
+            </ui:composition>
+
+        </body>
+    </f:view>
+</html>

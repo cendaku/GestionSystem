@@ -1,0 +1,111 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <f:view contentType="text/html">
+        <h:head>
+            <f:facet name="first">
+                <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+                <title>EstadoAcademico</title>
+            </f:facet>
+        </h:head>
+    
+    <h:body>
+
+        <ui:composition template="./Plantilla.xhtml">
+
+            <ui:define name="content">
+                <p:growl id="msgs" showDetail="true" />
+                <h:form class="vmo">
+                    <p:commandButton update=":formCreate,:formDateTable" oncomplete="PF('dialogEstadoAcademicoCreate').show()" icon="ui-icon-disk" title="Crear cuenta de EstadoAcademico" value="Crear"/>
+                </h:form>
+                
+                <h:form id="formDateTable" >
+                    <p:dataTable id="basicDT" var="estadoAcademico" value="#{estadoAcademicoBean.estadoAcademicos}">
+                        <f:facet name="header">
+                            Listado de Estado Academico
+                        </f:facet>
+                        <p:column style="width:40px;text-align: center" headerText="ID">
+                            <h:outputText value="#{estadoAcademico.id}" />
+                        </p:column>
+                        <p:column style="width:auto;text-align: center" headerText="Descripcion">
+                            <h:outputText value="#{estadoAcademico.descripcion}" />
+                        </p:column>
+                 
+
+                        <p:column style="width:auto;text-align: center" headerText="Nivel Academico">
+                            <h:outputText value="#{estadoAcademico.nivelAcademico.descripcion}" />
+                        </p:column>
+
+                        <p:column class="vmo" style="width:88px;text-align: center">
+                            <p:commandButton update=":formUpdate:estadoAcademicoDetalle" oncomplete="PF('dialogEstadoAcademicoUpdate').show()" icon="ui-icon-pencil" title="Actualizar" actionListener="#{estadoAcademicoBean.seleccionarEstadoAcademico(estadoAcademico.id)}"/>
+                            <p:commandButton update=":formDelete" oncomplete="PF('dialogEstadoAcademicoDelete').show()" icon="ui-icon-trash" title="Borrar" actionListener="#{estadoAcademicoBean.seleccionarEstadoAcademico(estadoAcademico.id)}"/>
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+
+                <h:form id="formCreate" enctype="multipart/form-data" >
+                    <p:dialog id="dlgEstadoAcademicoCreate" closeOnEscape="true" header="Crear EstadoAcademico" widgetVar="dialogEstadoAcademicoCreate" showEffect="fade" hideEffect="fade" resizable="false">
+                        <p:outputPanel id="estadoAcademicoDetalle" style="text-align: left;">
+                            <h:panelGrid  columns="2" style="padding: 2px;" >
+                                <h:outputText value="Descripcion" />
+                                <p:inputText value="#{estadoAcademicoBean.selectedEstadoAcademico.descripcion}" /> 
+                                
+                                <h:outputText value="Nivel Academico:" />
+                                <p:selectOneMenu id="NivelAcademicoid" value="#{estadoAcademicoBean.nivelAcademicoid}" effect="fold" >
+                                    <f:selectItem itemLabel="Elija una opcion" itemValue="" />
+                                    <f:selectItems value="#{nivelAcademicoBean.nivelAcademicos}" var="t" itemValue="#{t.id}" itemLabel="#{t.descripcion}"/>
+                                </p:selectOneMenu>
+                                
+                                <f:facet name="footer">
+                                    <p:commandButton update=":formDateTable,:msgs" oncomplete="PF('dialogEstadoAcademicoCreate').hide()" actionListener="#{estadoAcademicoBean.CrearEstadoAcademico(actionEvent)}" icon="ui-icon-disk" title="Guardar cuenta de EstadoAcademico" value="Guardar"  ajax="false" />
+                                    <p:commandButton oncomplete="PF('dialogEstadoAcademicoCreate').hide()" icon="ui-icon-cancel" title="Cancelar crear cuenta de EstadoAcademico" value="Cancelar"/>
+                                </f:facet>
+                            </h:panelGrid>
+                        </p:outputPanel>
+                    </p:dialog>
+                </h:form>
+
+                <h:form id="formUpdate" enctype="multipart/form-data">
+                    <p:dialog id="dlgEstadoAcademicoUpdate" closeOnEscape="true" header="Modificar EstadoAcademico" widgetVar="dialogEstadoAcademicoUpdate" showEffect="fade" hideEffect="fade" resizable="false">
+                        <p:outputPanel id="estadoAcademicoDetalle" style="text-align: left;">
+                            <h:panelGrid  columns="2" style="padding: 2px;" >
+                          
+                                
+                                <h:outputText value="Descripcion" />
+                                <p:inputText value="#{estadoAcademicoBean.selectedEstadoAcademico.descripcion}" /> 
+                                
+                                 <h:outputText value="Nivel Academico:" />
+                                <p:selectOneMenu id="NivelAcademicoid" value="#{estadoAcademicoBean.nivelAcademicoid}" effect="fold" >
+                                    <f:selectItem itemLabel="Elija una opcion" itemValue="" />
+                                    <f:selectItems value="#{nivelAcademicoBean.nivelAcademicos}" var="t" itemValue="#{t.id}" itemLabel="#{t.descripcion}"/>
+                                </p:selectOneMenu>
+                                
+                                <h:inputHidden value="#{estadoAcademicoBean.selectedEstadoAcademico.id}" />
+                                
+                              
+                                <f:facet name="footer">
+                                    <p:commandButton update=":formDateTable,:msgs" oncomplete="PF('dialogEstadoAcademicoUpdate').hide()" actionListener="#{estadoAcademicoBean.ModificarEstadoAcademico(actionEvent)}" icon="ui-icon-disk" title="Guardar cuenta de EstadoAcademico" value="Modificar" ajax="false"/>
+                                    <p:commandButton oncomplete="PF('dialogEstadoAcademicoUpdate').hide()" icon="ui-icon-cancel" title="Cancelar modificación de cuenta de EstadoAcademico" value="Cancelar"/>
+                                </f:facet>
+                            </h:panelGrid>
+                        </p:outputPanel>
+                    </p:dialog>
+                </h:form>
+
+                <p:confirmDialog showEffect="fade" hideEffect="explode" appendTo="@(body)" closeOnEscape="true" message="Esta seguro de eliminar el reigistro?" header="Eliminar Registro" severity="alert" widgetVar="dialogEstadoAcademicoDelete">
+                    <h:form id="formDelete"> 
+                        <h:inputHidden value="#{estadoAcademicoBean.selectedEstadoAcademico.id}" />
+                        <p:commandButton value="Aceptar" update=":formDateTable,:msgs" actionListener="#{estadoAcademicoBean.EliminarEstadoAcademico(actionEvent)}" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" oncomplete="PF('dialogEstadoAcademicoDelete').hide()" />
+                        <p:commandButton value="Cancelar" styleClass="ui-confirmdialog-no" icon="ui-icon-close" onclick="PF('dialogEstadoAcademicoDelete').hide()" />
+                    </h:form>
+                </p:confirmDialog>
+            </ui:define>
+
+        </ui:composition>
+
+    </h:body>
+    </f:view>
+</html>

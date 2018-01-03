@@ -12,7 +12,6 @@
                 <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
                 <title>Grupo</title>
             </f:facet>
-            <f:event type="preRenderView" listener="#{loginBean.verificarSesion()}" />
         </h:head>
 
         <body>
@@ -22,7 +21,7 @@
                 <ui:define name="content">
                     <p:growl id="msgs" showDetail="true" />
 
-                    <h:form>
+                    <h:form class="vmo" rendered="#{loginBean.ulog.rol.id==1}">
                         <p:commandButton update=":formCreate,:formDateTable" oncomplete="PF('dialogGrupoCreate').show()" icon="ui-icon-disk" title="Crear cuenta de Grupo" value="Crear"/>
                     </h:form>
 
@@ -31,8 +30,7 @@
                             <f:facet name="header">
                                 Listado de Grupos
                             </f:facet>
-
-                            <p:column style="width:auto;text-align: center" headerText="ID">
+                            <p:column style="width:40px;text-align: center" headerText="ID">
                                 <h:outputText value="#{grupo.id}" />
                             </p:column>
                             <p:column style="width:auto;text-align: center" headerText="Resolución">
@@ -44,14 +42,8 @@
                             <p:column style="width:auto;text-align: center" headerText="Año Final">
                                 <h:outputText value="#{grupo.anhoFinal}" />
                             </p:column>
-                            <p:column style="width:auto;text-align: center" headerText="Activo">
-                                <h:outputText value="#{grupo.activo}" />
-                            </p:column>
 
-                            <p:column style="width:98px;text-align: center">
-                                <p:commandButton update=":formMostrar" oncomplete="PF('dialogGrupoMostrar').show()" icon="ui-icon-search" title="Ver">
-                                    <f:setPropertyActionListener value="#{grupo}" target="#{grupoBean.selectedGrupo}" />
-                                </p:commandButton>
+                            <p:column class="vmo" rendered="#{loginBean.ulog.rol.id==1}" style="width:98px;text-align: center">
                                 <p:commandButton update=":formUpdate:grupoDetalle" oncomplete="PF('dialogGrupoUpdate').show()" icon="ui-icon-pencil" title="Editar">
                                     <f:setPropertyActionListener value="#{grupo}" target="#{grupoBean.selectedGrupo}" />
                                 </p:commandButton>
@@ -60,31 +52,6 @@
                                 </p:commandButton>
                             </p:column>
                         </p:dataTable>
-                    </h:form>
-
-                    <h:form id="formMostrar">
-                        <p:dialog id="dlgGrupoMostrar" header="Vista Grupo" widgetVar="dialogGrupoMostrar" showEffect="fade" hideEffect="explode" resizable="false" closeOnEscape="true">
-                            <p:outputPanel id="grupoDetalle" style="text-align: left;">
-                                <h:panelGrid  columns="2" style="padding: 2px;" >
-
-                                    <h:outputText value="ID:" style="color: blue" />
-                                    <p:outputLabel value="#{grupoBean.selectedGrupo.id}" />
-
-                                    <h:outputText value="Resolución:"  style="color: blue"/>
-                                    <p:outputLabel value="#{grupoBean.selectedGrupo.resolucion}" />
-
-                                    <h:outputText value="Año Inicial:"  style="color: blue"/>
-                                    <p:outputLabel value="#{grupoBean.selectedGrupo.anhoInicial}" />
-
-                                    <h:outputText value="Año Final:"  style="color: blue"/>
-                                    <p:outputLabel value="#{grupoBean.selectedGrupo.anhoFinal}" />
-
-                                    <h:outputText value="Activo:"  style="color: blue"/>
-                                    <p:outputLabel value="#{grupoBean.selectedGrupo.activo}" />
-
-                                </h:panelGrid>
-                            </p:outputPanel>
-                        </p:dialog>
                     </h:form>
 
                     <h:form id="formCreate">
@@ -103,9 +70,6 @@
 
                                     <h:outputText value="Año Final:" />
                                     <p:inputText value="#{grupoBean.selectedGrupo.anhoFinal}" />
-
-                                    <h:outputText value="Activo:" />
-                                    <p:inputText value="#{grupoBean.selectedGrupo.activo}" />
 
                                     <f:facet name="footer">
                                         <p:commandButton update=":formDateTable,:msgs" oncomplete="PF('dialogGrupoCreate').hide()" actionListener="#{grupoBean.crearGrupo(actionEvent)}" icon="ui-icon-disk" title="Guardar cuenta de Grupo" value="Guardar"/>
@@ -129,9 +93,6 @@
 
                                     <h:outputText value="Año Final:" />
                                     <p:inputText value="#{grupoBean.selectedGrupo.anhoFinal}" />
-
-                                    <h:outputText value="Activo:" />
-                                    <p:inputText value="#{grupoBean.selectedGrupo.activo}" />
 
                                     <h:inputHidden value="#{grupoBean.selectedGrupo.id}" />
                                     <f:facet name="footer">

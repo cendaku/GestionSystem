@@ -1,0 +1,99 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+   <f:view contentType="text/html">
+        <h:head>
+            <f:facet name="first">
+                <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+                <title>EstadoCivil</title>
+            </f:facet>
+        </h:head>
+
+        <body>
+
+            <ui:composition template="./Plantilla.xhtml">
+
+                <ui:define name="content">
+                    <p:growl id="msgs" showDetail="true" />
+
+                    <h:form class="vmo">
+                        <p:commandButton update=":formCreate,:formDateTable" oncomplete="PF('dialogEstadoCivilCreate').show()" icon="ui-icon-disk" title="Crear cuenta de EstadoCivil" value="Crear"/>
+                    </h:form>
+
+                    <h:form id="formDateTable" >
+                        <p:dataTable id="basicDT" var="estadoCivil" value="#{estadoCivilBean.estadoCivils}">
+                            <f:facet name="header">
+                                Listado de Estados Civiles
+                            </f:facet>
+
+                            <p:column style="width:40px;text-align: center" headerText="ID">
+                                <h:outputText value="#{estadoCivil.id}" />
+                            </p:column>
+                            <p:column style="width:auto;text-align: center" headerText="Descripcion">
+                                <h:outputText value="#{estadoCivil.descripcion}" />
+                            </p:column>
+                          
+                            <p:column class="vmo" style="width:88px;text-align: center">
+                                <p:commandButton update=":formUpdate:estadoCivilDetalle" oncomplete="PF('dialogEstadoCivilUpdate').show()" icon="ui-icon-pencil" title="Actualizar">
+                                    <f:setPropertyActionListener value="#{estadoCivil}" target="#{estadoCivilBean.selectedEstadoCivil}" />
+                                </p:commandButton>
+                                <p:commandButton update=":formDelete" oncomplete="PF('dialogEstadoCivilDelete').show()" icon="ui-icon-trash" title="Borrar">
+                                    <f:setPropertyActionListener value="#{estadoCivil}" target="#{estadoCivilBean.selectedEstadoCivil}" />
+                                </p:commandButton>
+                            </p:column>
+                        </p:dataTable>
+                    </h:form>
+
+                    <h:form id="formCreate">
+                        <p:dialog id="dlgEstadoCivilCreate" header="Crear EstadoCivil" widgetVar="dialogEstadoCivilCreate" showEffect="fade" hideEffect="fade" resizable="false">
+                            <p:outputPanel id="estadoCivilDetalle" style="text-align: left;">
+                                <h:panelGrid  columns="2" style="padding: 2px;" >
+
+                                    <h:outputText value="Descripcion:" />
+                                    <p:inputText value="#{estadoCivilBean.selectedEstadoCivil.descripcion}" />
+                                    
+                               
+                                    <f:facet name="footer">
+                                        <p:commandButton update=":formDateTable,:msgs" oncomplete="PF('dialogEstadoCivilCreate').hide()" actionListener="#{estadoCivilBean.CrearEstadoCivil(actionEvent)}" icon="ui-icon-disk" title="Guardar cuenta de EstadoCivil" value="Guardar"/>
+                                        <p:commandButton oncomplete="PF('dialogEstadoCivilCreate').hide()" icon="ui-icon-cancel" title="Cancelar crear cuenta de EstadoCivil" value="Cancelar"/>
+                                    </f:facet>
+                                </h:panelGrid>
+                            </p:outputPanel>
+                        </p:dialog>
+                    </h:form>
+
+                    <h:form id="formUpdate">
+                        <p:dialog id="dlgEstadoCivilUpdate" header="Modificar EstadoCivil" widgetVar="dialogEstadoCivilUpdate" showEffect="fade" hideEffect="fade" resizable="false">
+
+                            <p:outputPanel id="estadoCivilDetalle" style="text-align: left;">
+                                <h:panelGrid  columns="2" style="padding: 2px;" >
+                                     <h:outputText value="Descripcion:" />
+                                    <p:inputText value="#{estadoCivilBean.selectedEstadoCivil.descripcion}" />
+                                    
+                                    
+                                    <h:inputHidden value="#{estadoCivilBean.selectedEstadoCivil.id}" />
+                                    <f:facet name="footer">
+                                        <p:commandButton update=":formDateTable,:msgs" oncomplete="PF('dialogEstadoCivilUpdate').hide()" actionListener="#{estadoCivilBean.ModificarEstadoCivil(actionEvent)}" icon="ui-icon-disk" title="Guardar cuenta de EstadoCivil" value="Modificar"/>
+                                        <p:commandButton oncomplete="PF('dialogEstadoCivilUpdate').hide()" icon="ui-icon-cancel" title="Cancelar modificación de cuenta de EstadoCivil" value="Cancelar"/>
+                                    </f:facet>
+                                </h:panelGrid>
+                            </p:outputPanel>
+                        </p:dialog>
+                    </h:form>
+                    <p:confirmDialog showEffect="fade" hideEffect="explode" appendTo="@(body)" closeOnEscape="true" message="Esta seguro de eliminar el reigistro?" header="Eliminar Registro" severity="alert" widgetVar="dialogEstadoCivilDelete">
+                        <h:form id="formDelete"> 
+                            <h:inputHidden value="#{estadoCivilBean.selectedEstadoCivil.id}" />
+                            <p:commandButton value="Aceptar" update=":formDateTable,:msgs" actionListener="#{estadoCivilBean.EliminarEstadoCivil(actionEvent)}" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" oncomplete="PF('dialogEstadoCivilDelete').hide()" />
+                            <p:commandButton value="Cancelar" styleClass="ui-confirmdialog-no" icon="ui-icon-close" onclick="PF('dialogEstadoCivilDelete').hide()" />
+                        </h:form>
+                    </p:confirmDialog>
+                </ui:define>
+
+            </ui:composition>
+
+        </body>
+    </f:view>
+</html>

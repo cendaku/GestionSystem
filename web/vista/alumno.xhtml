@@ -24,7 +24,7 @@
 
                     <p:growl id="msgs" showDetail="true" />
 
-                    <h:form rendered="#{loginBean.ulog.rol.id==1}">
+                    <h:form class="vmo" rendered="#{loginBean.ulog.rol.id==1}">
                         <p:commandButton update=":formCreate,:formDateTable" oncomplete="PF('dialogAlumnoCreate').show()" icon="ui-icon-disk" title="Crear cuenta de Alumno" value="Crear"/>
                     </h:form>
 
@@ -53,22 +53,19 @@
                             <p:column class="vmo" style="width:auto;text-align: center" headerText="Telefono">
                                 <h:outputText value="#{alumno.telefono}" />
                             </p:column>
-                            <p:column class="vmo" style="width:auto;text-align: center" headerText="Discapacidad">
-                                <ui:repeat value="#{alumno.discapacidadList}" var="dis">
-                                    #{dis.descripcion}<br/>
-                                </ui:repeat>
-                            </p:column>
 
-                            <p:column style="width:98px;text-align: center" >
+                            <p:column style="width:68px;text-align: center" >
                                 <p:commandButton update=":formMostrar:alumnoDetalle" oncomplete="PF('dialogAlumnoMostrar').show()" icon="ui-icon-search" title="Ver" actionListener="#{alumnoBean.seleccionarAlumno(alumno.ci)}"/>
+                                <div class="vmo">
                                 <p:commandButton rendered="#{loginBean.ulog.rol.id==1}" update=":formUpdate:alumnoDetalle" oncomplete="PF('dialogAlumnoUpdate').show()" icon="ui-icon-pencil" title="Actualizar" actionListener="#{alumnoBean.seleccionarAlumno(alumno.ci)}"/>
                                 <p:commandButton rendered="#{loginBean.ulog.rol.id==1}" update=":formDelete" oncomplete="PF('dialogAlumnoDelete').show()" icon="ui-icon-trash" title="Borrar">
                                     <f:setPropertyActionListener value="#{alumno}" target="#{alumnoBean.selectedAlumno}" />
                                 </p:commandButton>
+                                </div>
                             </p:column>
                         </p:dataTable>
                     </h:form>
-
+                    
                     <!--############################################ Mostrar ############################################-->
 
                     <h:form id="formMostrar" enctype="multipart/form-data" >
@@ -561,7 +558,7 @@
                                         <p:column colspan="5"> 
                                             <p:inputMask id="telefonoid" value="#{alumnoBean.selectedAlumno.telefono}" mask="(0999)-999999">
                                                 <p:keyFilter regEx="/[\d\-]/"/>
-                                                <p:watermark for="telefonoid" value="(0981) 663399"/>                               
+                                                <p:watermark for="telefonoid" value="(0521) 201548"/>                               
                                             </p:inputMask>   
                                         </p:column>           
                                     </p:row>
@@ -637,7 +634,7 @@
                                         <p:column colspan="6">
                                             <center>
                                                 <p:selectBooleanButton id="value1" value="#{alumnoBean.checkedTrabaja}" onLabel="Trabaja" offLabel="No Trabaja" onIcon="ui-icon-check" offIcon="ui-icon-close" style="width:400px" >
-                                                    <p:ajax event="change" update="spanTipoTrabajo spanExperiencia" partialSubmit="True" process="@this" />
+                                                    <p:ajax event="change" update="spanTipoTrabajo spanExperiencia" partialSubmit="True" process="@this" listener="#{alumnoBean.seleccionarTrabajo()}" />
                                                 </p:selectBooleanButton>
                                             </center>
                                         </p:column>
@@ -964,10 +961,7 @@
                                             Fecha de Nacimiento
                                         </p:column>
                                         <p:column colspan="5"> 
-                                            <p:calendar id="fechanac" value="#{alumnoBean.selectedAlumno.fechaNacimiento}" style="width: 95%" >
-
-
-                                            </p:calendar>
+                                            <p:calendar id="fechanac" value="#{alumnoBean.selectedAlumno.fechaNacimiento}" style="width: 95%" />
                                         </p:column>
                                     </p:row>
                                 </p:panelGrid>
@@ -1008,7 +1002,7 @@
                                         <p:column colspan="6">
                                             <center>
                                                 <p:selectBooleanButton id="value1" value="#{alumnoBean.checkedTrabaja}"  onLabel="Trabaja" offLabel="No Trabaja" onIcon="ui-icon-check" offIcon="ui-icon-close" style="width:400px" >
-                                                    <p:ajax event="change" update="spanTipoTrabajo spanExperiencia" partialSubmit="True" process="@this" />
+                                                    <p:ajax event="change" update="spanTipoTrabajo spanExperiencia" partialSubmit="True" process="@this" listener="#{alumnoBean.seleccionarTrabajo()}" />
                                                 </p:selectBooleanButton>
                                             </center>
                                         </p:column>

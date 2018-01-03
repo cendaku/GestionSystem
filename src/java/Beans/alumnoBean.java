@@ -341,7 +341,6 @@ public class alumnoBean implements Serializable {
         this.usuarioid = this.selectedAlumno.getUsuario().getCi();
         this.discapacidad.clear();
         for (Discapacidad d : this.selectedAlumno.getDiscapacidadList()) {
-            this.discapacidad.clear();
             this.discapacidad.add(d.getId().toString());
         }
         this.checkedTrabaja=this.selectedAlumno.getEstado();
@@ -364,6 +363,12 @@ public class alumnoBean implements Serializable {
 
     public void cargarIdLocalidad() {
         System.out.println("id localidad: " + this.localidadid);
+    }
+    
+    public void  seleccionarTrabajo(){
+        if(checkedTrabaja){
+            this.selectedAlumno.setExperiencia(true);
+        }
     }
 
 }

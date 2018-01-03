@@ -1,0 +1,103 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+   <f:view contentType="text/html">
+        <h:head>
+            <f:facet name="first">
+                <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+                <title>Zona</title>
+            </f:facet>
+        </h:head>
+
+        <body>
+
+            <ui:composition template="./Plantilla.xhtml">
+
+                <ui:define name="content">
+                    <p:growl id="msgs" showDetail="true" />
+
+                    <h:form class="vmo">
+                        <p:commandButton update=":formCreate,:formDateTable" oncomplete="PF('dialogZonaCreate').show()" icon="ui-icon-disk" title="Crear cuenta de Zona" value="Crear"/>
+                    </h:form>
+
+                    <h:form id="formDateTable" >
+                        <p:dataTable id="basicDT" var="zona" value="#{zonaBean.zonas}">
+                            <f:facet name="header">
+                                Listado de Zonas
+                            </f:facet>
+
+                            <p:column style="width:40px;text-align: center" headerText="ID">
+                                <h:outputText value="#{zona.id}" />
+                            </p:column>
+                            <p:column style="width:auto;text-align: center" headerText="Descripcion">
+                                <h:outputText value="#{zona.descripcion}" />
+                            </p:column>
+                          
+                            <p:column class="vmo" style="width:88px;text-align: center">
+                                <p:commandButton update=":formUpdate:zonaDetalle" oncomplete="PF('dialogZonaUpdate').show()" icon="ui-icon-pencil" title="Actualizar">
+                                    <f:setPropertyActionListener value="#{zona}" target="#{zonaBean.selectedZona}" />
+                                </p:commandButton>
+                                <p:commandButton update=":formDelete" oncomplete="PF('dialogZonaDelete').show()" icon="ui-icon-trash" title="Borrar">
+                                    <f:setPropertyActionListener value="#{zona}" target="#{zonaBean.selectedZona}" />
+                                </p:commandButton>
+                            </p:column>
+                        </p:dataTable>
+                    </h:form>
+
+                    <h:form id="formCreate">
+                        <p:dialog id="dlgZonaCreate" closeOnEscape="true" header="Crear Zona" widgetVar="dialogZonaCreate" showEffect="fade" hideEffect="fade" resizable="false">
+                            <p:outputPanel id="zonaDetalle" style="text-align: left;">
+                                <h:panelGrid  columns="2" style="padding: 2px;" >
+
+                                    <h:outputText value="Descripcion:" />
+                                    <p:inputText value="#{zonaBean.selectedZona.descripcion}" />
+                                    
+                               
+                                    <f:facet name="footer">
+                                        <p:commandButton update=":formDateTable,:msgs" oncomplete="PF('dialogZonaCreate').hide()" actionListener="#{zonaBean.CrearZona(actionEvent)}" icon="ui-icon-disk" title="Guardar cuenta de Zona" value="Guardar"/>
+                                        <p:commandButton oncomplete="PF('dialogZonaCreate').hide()" icon="ui-icon-cancel" title="Cancelar crear cuenta de Zona" value="Cancelar"/>
+                                    </f:facet>
+                                </h:panelGrid>
+                            </p:outputPanel>
+                        </p:dialog>
+                    </h:form>
+
+                    <h:form id="formUpdate">
+                        <p:dialog id="dlgZonaUpdate" closeOnEscape="true" header="Modificar Zona" widgetVar="dialogZonaUpdate" showEffect="fade" hideEffect="fade" resizable="false">
+
+                            <p:outputPanel id="zonaDetalle" style="text-align: left;">
+                                <h:panelGrid  columns="2" style="padding: 2px;" >
+                                     <h:outputText value="Descripcion:" />
+                                    <p:inputText value="#{zonaBean.selectedZona.descripcion}" />
+                                    
+                                    
+                                    <h:inputHidden value="#{zonaBean.selectedZona.id}" />
+                                    <f:facet name="footer">
+                                        <p:commandButton update=":formDateTable,:msgs" oncomplete="PF('dialogZonaUpdate').hide()" actionListener="#{zonaBean.ModificarZona(actionEvent)}" icon="ui-icon-disk" title="Guardar cuenta de Zona" value="Modificar"/>
+                                        <p:commandButton oncomplete="PF('dialogZonaUpdate').hide()" icon="ui-icon-cancel" title="Cancelar modificación de cuenta de Zona" value="Cancelar"/>
+                                    </f:facet>
+                                </h:panelGrid>
+                            </p:outputPanel>
+                        </p:dialog>
+                    </h:form>
+
+                    <p:confirmDialog showEffect="fade" hideEffect="explode" appendTo="@(body)" closeOnEscape="true" message="Esta seguro de eliminar el reigistro?" header="Eliminar Registro" severity="alert" widgetVar="dialogZonaDelete">
+                        <h:form id="formDelete"> 
+                            <h:inputHidden value="#{zonaBean.selectedZona.id}" />
+                            <p:commandButton value="Aceptar" update=":formDateTable,:msgs" actionListener="#{zonaBean.EliminarZona(actionEvent)}" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" oncomplete="PF('dialogZonaDelete').hide()" />
+                            <p:commandButton value="Cancelar" styleClass="ui-confirmdialog-no" icon="ui-icon-close" onclick="PF('dialogZonaDelete').hide()" />
+                        </h:form>
+                    </p:confirmDialog>
+
+                </ui:define>
+
+            </ui:composition>
+
+        </body>
+    </f:view>
+</html>

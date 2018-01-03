@@ -1,0 +1,112 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <f:view contentType="text/html">
+        <h:head>
+            <f:facet name="first">
+                <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+                <title>Localidad</title>
+            </f:facet>
+        </h:head>
+    
+    <h:body>
+
+        <ui:composition template="./Plantilla.xhtml">
+
+            <ui:define name="content">
+                <p:growl id="msgs" showDetail="true" />
+                <h:form class="vmo">
+                    <p:commandButton update=":formCreate,:formDateTable" oncomplete="PF('dialogLocalidadCreate').show()" icon="ui-icon-disk" title="Crear cuenta de Localidad" value="Crear"/>
+                </h:form>
+                
+                <h:form id="formDateTable" >
+                    <p:dataTable id="basicDT" var="localidad" value="#{localidadBean.localidads}">
+                        <f:facet name="header">
+                            Listado de Localidades
+                        </f:facet>
+                        <p:column style="width:40px;text-align: center" headerText="ID">
+                            <h:outputText value="#{localidad.id}" />
+                        </p:column>
+                        <p:column style="width:auto;text-align: center" headerText="Descripcion">
+                            <h:outputText value="#{localidad.descripcion}" />
+                        </p:column>
+                 
+
+                        <p:column style="width:auto;text-align: center" headerText="Municipios">
+                            <h:outputText value="#{localidad.municipio.descripcion}" />
+                        </p:column>
+                        
+                        <p:column class="vmo" style="width:88px;text-align: center">
+                            <p:commandButton update=":formUpdate:localidadDetalle" oncomplete="PF('dialogLocalidadUpdate').show()" icon="ui-icon-pencil" title="Actualizar" actionListener="#{localidadBean.seleccionarLocalidad(localidad.id)}"/>
+                            <p:commandButton update=":formDelete" oncomplete="PF('dialogLocalidadDelete').show()" icon="ui-icon-trash" title="Borrar" actionListener="#{localidadBean.seleccionarLocalidad(localidad.id)}"/>
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+
+                <h:form id="formCreate" enctype="multipart/form-data" >
+                    <p:dialog id="dlgLocalidadCreate" closeOnEscape="true" header="Crear Localidad" widgetVar="dialogLocalidadCreate" showEffect="fade" hideEffect="fade" resizable="false">
+                        <p:outputPanel id="localidadDetalle" style="text-align: left;">
+                            <h:panelGrid  columns="2" style="padding: 2px;" >
+                                <h:outputText value="Descripcion" />
+                                <p:inputText value="#{localidadBean.selectedLocalidad.descripcion}" /> 
+                                
+                                <h:outputText value="Municipio:" />
+                                <p:selectOneMenu id="Municipioid" value="#{localidadBean.municipioid}" effect="fold" >
+                                    <f:selectItem itemLabel="Elija una opcion" itemValue="" />
+                                    <f:selectItems value="#{municipioBean.municipios}" var="t" itemValue="#{t.id}" itemLabel="#{t.descripcion}"/>
+                                </p:selectOneMenu>
+                                
+                                <f:facet name="footer">
+                                    <p:commandButton update=":formDateTable,:msgs" oncomplete="PF('dialogLocalidadCreate').hide()" actionListener="#{localidadBean.CrearLocalidad(actionEvent)}" icon="ui-icon-disk" title="Guardar cuenta de Localidad" value="Guardar"  ajax="false" />
+                                    <p:commandButton oncomplete="PF('dialogLocalidadCreate').hide()" icon="ui-icon-cancel" title="Cancelar crear cuenta de Localidad" value="Cancelar"/>
+                                </f:facet>
+                            </h:panelGrid>
+                        </p:outputPanel>
+                    </p:dialog>
+                </h:form>
+
+                <h:form id="formUpdate" enctype="multipart/form-data">
+
+                    <p:dialog id="dlgLocalidadUpdate" closeOnEscape="true" header="Modificar Localidad" widgetVar="dialogLocalidadUpdate" showEffect="fade" hideEffect="fade" resizable="false">
+                        <p:outputPanel id="localidadDetalle" style="text-align: left;">
+                            <h:panelGrid  columns="2" style="padding: 2px;" >
+                          
+                                
+                                <h:outputText value="Descripcion" />
+                                <p:inputText value="#{localidadBean.selectedLocalidad.descripcion}" /> 
+                                
+                                 <h:outputText value="Municipio:" />
+                                <p:selectOneMenu id="Municipioid" value="#{localidadBean.municipioid}" effect="fold" >
+                                    <f:selectItem itemLabel="Elija una opcion" itemValue="" />
+                                    <f:selectItems value="#{municipioBean.municipios}" var="t" itemValue="#{t.id}" itemLabel="#{t.descripcion}"/>
+                                </p:selectOneMenu>
+                                
+                                <h:inputHidden value="#{localidadBean.selectedLocalidad.id}" />
+                                
+                              
+                                <f:facet name="footer">
+                                    <p:commandButton update=":formDateTable,:msgs" oncomplete="PF('dialogLocalidadUpdate').hide()" actionListener="#{localidadBean.ModificarLocalidad(actionEvent)}" icon="ui-icon-disk" title="Guardar cuenta de Localidad" value="Modificar" ajax="false"/>
+                                    <p:commandButton oncomplete="PF('dialogLocalidadUpdate').hide()" icon="ui-icon-cancel" title="Cancelar modificación de cuenta de Localidad" value="Cancelar"/>
+                                </f:facet>
+                            </h:panelGrid>
+                        </p:outputPanel>
+                    </p:dialog>
+                </h:form>
+
+                <p:confirmDialog showEffect="fade" hideEffect="explode" appendTo="@(body)" closeOnEscape="true" message="Esta seguro de eliminar el reigistro?" header="Eliminar Registro" severity="alert" widgetVar="dialogLocalidadDelete">
+                    <h:form id="formDelete"> 
+                        <h:inputHidden value="#{localidadBean.selectedLocalidad.id}" />
+                        <p:commandButton value="Aceptar" update=":formDateTable,:msgs" actionListener="#{localidadBean.EliminarLocalidad(actionEvent)}" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" oncomplete="PF('dialogLocalidadDelete').hide()" />
+                        <p:commandButton value="Cancelar" styleClass="ui-confirmdialog-no" icon="ui-icon-close" onclick="PF('dialogLocalidadDelete').hide()" />
+                    </h:form>
+                </p:confirmDialog>
+            </ui:define>
+
+        </ui:composition>
+
+    </h:body>
+    </f:view>
+</html>

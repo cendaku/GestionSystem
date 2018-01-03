@@ -54,8 +54,8 @@
                                 <h:outputText value="#{alumno.telefono}" />
                             </p:column>
                             <p:column class="vmo" style="width:auto;text-align: center" headerText="Discapacidad">
-                                <ui:repeat value="#{alumno.discapacidadList}" var="d">
-                                    <h:outputLabel value="#{d.descripcion}" />
+                                <ui:repeat value="#{alumno.discapacidadList}" var="dis">
+                                    #{dis.descripcion}<br/>
                                 </ui:repeat>
                             </p:column>
 
@@ -277,8 +277,8 @@
                                     </p:row>
                                     <p:row>
                                         <p:column >
-                                            <ui:repeat value="#{alumnoBean.selectedAlumno.discapacidadList}" var="d">
-                                                <h:outputLabel value="#{d.descripcion}" />
+                                            <ui:repeat value="#{alumnoBean.selectedAlumno.discapacidadList}" var="dis">
+                                                - #{dis.descripcion} 
                                             </ui:repeat>
                                         </p:column>
                                     </p:row> 

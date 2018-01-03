@@ -23,6 +23,9 @@
                         <f:facet name="header">
                             Listado de Instructor
                         </f:facet>
+                        <p:column style="width:30px;text-align: center" headerText="Foto">
+                            <p:graphicImage value="/img/#{instructor.ruta}" width="30px" height="30px" />
+                        </p:column>
                         <p:column style="width:auto;text-align: center" headerText="CI">
                             <h:outputText value="#{instructor.ci}" />
                         </p:column>
@@ -65,16 +68,20 @@
                 <h:form id="formCreate"  enctype="multipart/form-data">
                     <p:dialog id = "dlgInstructorCreate" header="Crear Instructor" widgetVar="dialogInstructorCreate" closeOnEscape="true" showEffect="fade" hideEffect="fade" resizable="false">
                         <p:outputPanel id="instructorDetalle"  style="text-align: left;">
-                            
+
                             <!-- ********************************Separador de panel Grid********************************-->
-                            
+
                             <p:panelGrid id="panelGrip" style="width: 90%; margin: auto; margin-top: 5%;">
                                 <f:facet name="header">
                                     <p:row>
                                         <p:column colspan="7">Creación de Instructor</p:column>
                                     </p:row>
                                     <p:row>
-                                        <p:column colspan="7" style="text-align: left;">Datos Personales</p:column>
+                                        <p:column colspan="7" style="text-align: left;">Datos Personales
+                                            <p:fileUpload  value="#{instructorBean.archivo}" mode="simple" sizeLimit="1000000" allowTypes="/(\.|\/)(gif|jpe?g)|png)$/" />
+                                            <h:inputHidden value="#{instructorBean.selectedInstructor.ruta}" />
+                                        </p:column>
+
                                     </p:row>
                                 </f:facet>
 
@@ -137,7 +144,7 @@
                                     </p:column>
                                 </p:row>
                             </p:panelGrid>
-                            
+
                             <!-- ********************************Separador de panel Grid********************************-->
 
                             <p:panelGrid id="panelGrip2" style="width: 90%; margin: auto; margin-top: 0px;">
@@ -173,7 +180,7 @@
                                 </p:row>
 
                             </p:panelGrid>
-                            
+
                             <!-- ********************************Separador de panel Grid********************************-->
 
                             <p:panelGrid id="panelGrip3" style="width: 90%; margin: auto; margin-top: 0px;">
@@ -182,7 +189,7 @@
                                         <p:column colspan="7" style="text-align: left;">Medio de Contacto</p:column>
                                     </p:row>
                                 </f:facet>
-                                
+
                                 <p:row>
                                     <p:column colspan="1"> 
                                         Celular
@@ -202,7 +209,7 @@
                                     </p:column>
                                     <p:column colspan="5"> 
                                         <p:inputText id="email" value="#{instructorBean.selectedInstructor.email}" style="width: 95%" >
-                                         
+
                                             <p:watermark for="email" value="jesuscaceres@hotmail.com" />
                                         </p:inputText>
                                     </p:column>
@@ -211,7 +218,7 @@
 
 
                             </p:panelGrid>
-                            
+
                             <!-- ********************************Separador de panel Grid********************************-->
 
                             <p:panelGrid id="panelGrip4" style="width: 90%; margin: auto; margin-top: 0px;">
@@ -271,7 +278,10 @@
                                         <p:column colspan="7">Modificación de Instructor</p:column>
                                     </p:row>
                                     <p:row>
-                                        <p:column colspan="7" style="text-align: left;">Datos Personales</p:column>
+                                        <p:column colspan="7" style="text-align: left;">Datos Personales
+                                            <p:fileUpload  value="#{instructorBean.archivo}" mode="simple" sizeLimit="1000000" allowTypes="/(\.|\/)(gif|jpe?g)|png)$/" />
+                                            <h:inputHidden value="#{instructorBean.selectedInstructor.ruta}" />
+                                        </p:column>
                                     </p:row>
                                 </f:facet>
 
@@ -353,10 +363,11 @@
                                         Nivel Academico
                                     </p:column>
                                     <p:column colspan="2"> 
-                                        <p:selectOneMenu id="NivelAcademicoid" value="#{instructorBean.estadoAcademicoid}" effect="fold"  style="width:125px" required="true" requiredMessage="Se requiere que seleccione un Nivel Academico" >
-                                            <f:selectItem itemLabel="Elija una opcion" itemValue="" />
-                                            <f:selectItems value="#{estadoAcademicoBean.estadoAcademicos}" var="t" itemValue="#{t.nivelAcademico.id}" itemLabel="#{t.nivelAcademico.descripcion}"/>
-                                        </p:selectOneMenu>
+                                        <p:selectOneMenu id="NivelAcademicoid" value="#{instructorBean.nivelAcademicoid}" effect="fold"  style="width:125px" required="true" requiredMessage="Se requiere que seleccione un Nivel Academico" >
+                                                <f:selectItem itemLabel="Elija una opcion" itemValue="" />
+                                                <f:selectItems value="#{nivelAcademicoBean.nivelAcademicos}" var="t" itemValue="#{t.id}" itemLabel="#{t.descripcion}"/>
+                                                <p:ajax event="change" listener="#{instructorBean.filtroEstados()}" partialSubmit="true" process="@this" update=":formCreate:EstadoAcademicoid" />
+                                            </p:selectOneMenu>
 
                                     </p:column>
 
@@ -381,8 +392,6 @@
                                         <p:column colspan="7" style="text-align: left;">Medio de Contacto</p:column>
                                     </p:row>
                                 </f:facet>
-
-
 
                                 <p:row>
                                     <p:column colspan="1"> 

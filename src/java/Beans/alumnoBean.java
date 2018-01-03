@@ -344,6 +344,7 @@ public class alumnoBean implements Serializable {
             this.discapacidad.clear();
             this.discapacidad.add(d.getId().toString());
         }
+        this.checkedTrabaja=this.selectedAlumno.getEstado();
     }
 
     public void filtroEstados() {

@@ -24,7 +24,11 @@
                     </h:form>
 
                     <h:form id="formDateTable" >
-                        <p:dataTable id="basicDT" var="municipio" value="#{municipioBean.municipios}">
+                        <p:dataTable id="basicDT" var="municipio" value="#{municipioBean.municipios}"
+                                 paginator="true" rows="10" paginatorPosition="bottom"
+                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+                                 {NextPageLink} {LastPageLink} {PageLinks} {RowsPerPageDropdown}"
+                                 rowsPerPageTemplate="10,15,20,25,30" emptyMessage="No se encontro ningun resultado">
                             <f:facet name="header">
                                 Listado de Municipios
                             </f:facet>

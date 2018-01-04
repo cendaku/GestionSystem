@@ -24,17 +24,17 @@
                     <h:form id="formDataTable">
 
                         <p:dataTable id="basicDT" var="instructor" value="#{instructorBean.instructors}"
-                                     paginator="true" rows="10" paginatorPosition="bottom" 
-                                     paginatorTemplate="{CurrentPageReport} {FirstPageLink}
-                                     {PreviousPageLink} {NextPageLink} {LastPageLink} {PageLinks} {RowsPerPageDropdown}"
-                                     rowsPerPageTemplate="10,15,30" emptyMessage="No se encontro ningun resultado">
+                                 paginator="true" rows="10" paginatorPosition="bottom"
+                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+                                 {NextPageLink} {LastPageLink} {PageLinks} {RowsPerPageDropdown}"
+                                 rowsPerPageTemplate="10,15,20,25,30" emptyMessage="No se encontro ningun resultado">
                             <f:facet name="header">
                                 Listado de Instructor
                             </f:facet>
                             <p:column style="width:30px;text-align: center" headerText="Foto">
                                 <p:graphicImage value="/img/#{instructor.ruta}" width="30px" height="30px" />
                             </p:column>
-                            <p:column style="width:auto;text-align: center" headerText="CI">
+                            <p:column style="width:auto;text-align: center" headerText="N° Cédula" sortBy="#{instructor.ci}" filterBy="#{instructor.ci}" filterMatchMode="contains">
                                 <h:outputText value="#{instructor.ci}" />
                             </p:column>
                             <p:column style="width:auto;text-align: center" headerText="Instructor">

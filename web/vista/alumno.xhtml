@@ -31,17 +31,26 @@
                     <h:form id="formDateTable" >
 
                         <p:dataTable id="basicDT" var="alumno" value="#{alumnoBean.alumnos}"
-                                     paginator="true" rows="10" paginatorPosition="bottom" 
-                                     paginatorTemplate="{CurrentPageReport} {FirstPageLink}
-                                     {PreviousPageLink} {NextPageLink} {LastPageLink} {PageLinks} {RowsPerPageDropdown}"
-                                     rowsPerPageTemplate="10,15,30" emptyMessage="No se encontro ningun resultado">
+                                     paginator="true" rows="10" paginatorPosition="bottom"
+                                     paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+                                     {NextPageLink} {LastPageLink} {PageLinks} {RowsPerPageDropdown} {Exporters}"
+                                     rowsPerPageTemplate="10,15,20,25,30" emptyMessage="No se encontro ningun resultado">
                             <f:facet name="header">
                                 Listado de Alumno
                             </f:facet>
+                            <f:facet name="{Exporters}" >
+                                <h:commandButton style="margin-bottom: -6px;cursor: pointer;" actionListener="#{imprimirBean.exportPdf()}" image="../resources/images/icons/save.png" title="Guardar listado de Alumnos" >
+                                    <h:commandLink style="text-decoration: none;" actionListener="#{imprimirBean.exportPdf()}" title="Guardar listado de Alumnos" >
+                                        <h:outputLabel class="vmo" style="cursor: pointer;font-weight: bold;font-size: 90%" value=" Listado de Alumnos"/>
+                                    </h:commandLink>
+                                </h:commandButton>
+                            </f:facet>
                             <p:column style="width:30px;text-align: center" headerText="Foto">
-                                <p:graphicImage value="/img/#{alumno.ruta}" width="30px" height="30px" />
+                                <h:commandLink actionListener="#{imprimirBean.exporAlumnotPdf(alumno.ci)}" >
+                                    <p:graphicImage value="/img/#{alumno.ruta}" width="30px" height="30px" />
+                                </h:commandLink>
                             </p:column>
-                            <p:column style="width:auto;text-align: center" headerText="N° Cedular">
+                            <p:column style="width:auto;text-align: center" headerText="N° Cédula" sortBy="#{alumno.ci}" filterBy="#{alumno.ci}" filterMatchMode="contains">
                                 <h:outputText value="#{alumno.ci}" />
                             </p:column>
                             <p:column style="width:auto;text-align: center" headerText="Alumno">
@@ -56,16 +65,19 @@
 
                             <p:column style="width:68px;text-align: center" >
                                 <p:commandButton update=":formMostrar:alumnoDetalle" oncomplete="PF('dialogAlumnoMostrar').show()" icon="ui-icon-search" title="Ver" actionListener="#{alumnoBean.seleccionarAlumno(alumno.ci)}"/>
+                                <h:commandLink actionListener="#{imprimirBean.exporAlumnotPdf(alumno.ci)}" title="Descargar" >
+                                    <p:graphicImage style="width: 30px; height: 26px;margin-left: -0.2px;margin-bottom: -8px;cursor: pointer;" value="../resources/images/icons/dow.png"/>
+                                </h:commandLink>
                                 <div class="vmo">
-                                <p:commandButton rendered="#{loginBean.ulog.rol.id==1}" update=":formUpdate:alumnoDetalle" oncomplete="PF('dialogAlumnoUpdate').show()" icon="ui-icon-pencil" title="Actualizar" actionListener="#{alumnoBean.seleccionarAlumno(alumno.ci)}"/>
-                                <p:commandButton rendered="#{loginBean.ulog.rol.id==1}" update=":formDelete" oncomplete="PF('dialogAlumnoDelete').show()" icon="ui-icon-trash" title="Borrar">
-                                    <f:setPropertyActionListener value="#{alumno}" target="#{alumnoBean.selectedAlumno}" />
-                                </p:commandButton>
+                                    <p:commandButton rendered="#{loginBean.ulog.rol.id==1}" update=":formUpdate:alumnoDetalle" oncomplete="PF('dialogAlumnoUpdate').show()" icon="ui-icon-pencil" title="Actualizar" actionListener="#{alumnoBean.seleccionarAlumno(alumno.ci)}"/>
+                                    <p:commandButton rendered="#{loginBean.ulog.rol.id==1}" update=":formDelete" oncomplete="PF('dialogAlumnoDelete').show()" icon="ui-icon-trash" title="Borrar">
+                                        <f:setPropertyActionListener value="#{alumno}" target="#{alumnoBean.selectedAlumno}" />
+                                    </p:commandButton>
                                 </div>
                             </p:column>
                         </p:dataTable>
                     </h:form>
-                    
+
                     <!--############################################ Mostrar ############################################-->
 
                     <h:form id="formMostrar" enctype="multipart/form-data" >

@@ -26,7 +26,11 @@
                     </h:form>
 
                     <h:form id="formDateTable" >
-                        <p:dataTable id="basicDT" var="nacionalidad" value="#{nacionalidadBean.nacionalidads}">
+                        <p:dataTable id="basicDT" var="nacionalidad" value="#{nacionalidadBean.nacionalidads}"
+                                 paginator="true" rows="10" paginatorPosition="bottom"
+                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+                                 {NextPageLink} {LastPageLink} {PageLinks} {RowsPerPageDropdown}"
+                                 rowsPerPageTemplate="10,15,20,25,30" emptyMessage="No se encontro ningun resultado">
                             <f:facet name="header">
                                 Listado de Nacionalidades
                             </f:facet>

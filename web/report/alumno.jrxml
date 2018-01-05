@@ -14,7 +14,7 @@
 			<style mode="Opaque" backcolor="#F0EFEF"/>
 		</conditionalStyle>
 	</style>
-        <parameter name="ci" class="java.lang.String"/>
+	<parameter name="ci" class="java.lang.String"/>
 	<queryString language="SQL">
 		<![CDATA[SELECT * FROM GestionSystem.alumno where ci = $P{ci}]]>
 	</queryString>

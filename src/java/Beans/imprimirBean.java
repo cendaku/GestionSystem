@@ -27,7 +27,7 @@ public class imprimirBean {
     private Connection conexion;
     JasperPrint jasperPrint;
 
-    public void exportPdf() {
+    public void lisAlumPdf() {
         try {
             JRBeanCollectionDataSource beanCollectionDataSource;
             String reportPath;
@@ -59,7 +59,7 @@ public class imprimirBean {
         }
     }
 
-    public void exporAlumnotPdf(Integer idalumno) {
+    public void exporAlumnotPdf(Integer ci) {
         try {
             JRBeanCollectionDataSource beanCollectionDataSource;
             String reportPath;
@@ -68,7 +68,7 @@ public class imprimirBean {
             conexion = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/GestionSystem", "root", "123456");
 
             Map<String,Object> parameters=new HashMap<String, Object>();
-            parameters.put("ci", idalumno.toString());
+            parameters.put("ci", ci.toString());
             jasperPrint = JasperFillManager.fillReport(reportPath, parameters, conexion);
             bytes = JasperRunManager.runReportToPdf(reportPath, parameters, conexion);
 
@@ -92,15 +92,48 @@ public class imprimirBean {
         }
     }
 
-    public void autoPdf() {
+    public void lisInsPdf() {
         try {
             JRBeanCollectionDataSource beanCollectionDataSource;
             String reportPath;
-            reportPath = FacesContext.getCurrentInstance().getExternalContext().getRealPath("/report/listaauto.jasper");
+            reportPath = FacesContext.getCurrentInstance().getExternalContext().getRealPath("/report/listainstructor.jasper");
             conexion = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/GestionSystem", "root", "123456");
 
             jasperPrint = JasperFillManager.fillReport(reportPath, null, conexion);
             bytes = JasperRunManager.runReportToPdf(reportPath, null, conexion);
+
+            HttpServletResponse httpServletResponse = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+            ServletOutputStream servletOutputStream = httpServletResponse.getOutputStream();
+            httpServletResponse.setContentType("application/pdf");
+            httpServletResponse.setContentLength(bytes.length);
+            servletOutputStream.write(bytes, 0, bytes.length);
+            servletOutputStream.flush();
+            servletOutputStream.close();
+
+            FacesContext.getCurrentInstance().responseComplete();
+
+        } catch (JRException ex) {
+            java.util.logging.Logger.getLogger(imprimirBean.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(imprimirBean.class.getName()).log(Level.SEVERE, null, ex);
+
+        } catch (SQLException ex) {
+            Logger.getLogger(imprimirBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void exporInstructortPdf(Integer ci) {
+        try {
+            JRBeanCollectionDataSource beanCollectionDataSource;
+            String reportPath;
+            reportPath = FacesContext.getCurrentInstance().getExternalContext().getRealPath("/report/instructor.jasper");
+            // Class.forName("com.mysql.jdbc.Driver");
+            conexion = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/GestionSystem", "root", "123456");
+
+            Map<String,Object> parameters=new HashMap<String, Object>();
+            parameters.put("ci", ci.toString());
+            jasperPrint = JasperFillManager.fillReport(reportPath, parameters, conexion);
+            bytes = JasperRunManager.runReportToPdf(reportPath, parameters, conexion);
 
             HttpServletResponse httpServletResponse = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
             ServletOutputStream servletOutputStream = httpServletResponse.getOutputStream();

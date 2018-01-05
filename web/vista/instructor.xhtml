@@ -24,15 +24,24 @@
                     <h:form id="formDataTable">
 
                         <p:dataTable id="basicDT" var="instructor" value="#{instructorBean.instructors}"
-                                 paginator="true" rows="10" paginatorPosition="bottom"
-                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink}
-                                 {NextPageLink} {LastPageLink} {PageLinks} {RowsPerPageDropdown}"
-                                 rowsPerPageTemplate="10,15,20,25,30" emptyMessage="No se encontro ningun resultado">
+                                     paginator="true" rows="10" paginatorPosition="bottom"
+                                     paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+                                     {NextPageLink} {LastPageLink} {PageLinks} {RowsPerPageDropdown} {Exporters}"
+                                     rowsPerPageTemplate="10,15,20,25,30" emptyMessage="No se encontro ningun resultado">
                             <f:facet name="header">
                                 Listado de Instructor
                             </f:facet>
+                            <f:facet name="{Exporters}" >
+                                <h:commandButton style="margin-bottom: -6px;cursor: pointer;" actionListener="#{imprimirBean.lisInsPdf()}" image="../resources/images/icons/save.png" title="Guardar lista de Instructores" >
+                                    <h:commandLink style="text-decoration: none;" actionListener="#{imprimirBean.lisInsPdf()}" title="Guardar lista de Instructores" >
+                                        <h:outputLabel class="vmo" style="cursor: pointer;font-weight: bold;font-size: 90%" value=" Lista de Instructores"/>
+                                    </h:commandLink>
+                                </h:commandButton>
+                            </f:facet>
                             <p:column style="width:30px;text-align: center" headerText="Foto">
-                                <p:graphicImage value="/img/#{instructor.ruta}" width="30px" height="30px" />
+                                <h:commandLink actionListener="#{imprimirBean.exporInstructortPdf(instructor.ci)}" >
+                                    <p:graphicImage value="/img/#{instructor.ruta}" width="30px" height="30px" />
+                                </h:commandLink>
                             </p:column>
                             <p:column style="width:auto;text-align: center" headerText="N° Cédula" sortBy="#{instructor.ci}" filterBy="#{instructor.ci}" filterMatchMode="contains">
                                 <h:outputText value="#{instructor.ci}" />
@@ -57,6 +66,9 @@
                             </p:column>
                             <p:column style="width:68px;text-align: center">
                                 <p:commandButton update=":formMostrar:instructorDetalle" oncomplete="PF('dialogInstructorMostrar').show()" icon="ui-icon-search" title="Ver" actionListener="#{instructorBean.seleccionarInstructor(instructor.ci)}"/>
+                                <h:commandLink actionListener="#{imprimirBean.exporInstructortPdf(instructor.ci)}" title="Descargar" >
+                                    <p:graphicImage style="width: 30px; height: 26px;margin-left: -0.2px;margin-bottom: -8px;cursor: pointer;" value="../resources/images/icons/dow.png"/>
+                                </h:commandLink>
                                 <div class="vmo">
                                     <p:commandButton rendered="#{loginBean.ulog.rol.id==1}" update=":formUpdate:instructorDetalle" oncomplete="PF('dialogInstructorUpdate').show()" icon="ui-icon-pencil" title="Actualizar" actionListener="#{instructorBean.seleccionarInstructor(instructor.ci)}"/>
                                     <p:commandButton rendered="#{loginBean.ulog.rol.id==1}" update=":formDelete" oncomplete="PF('dialogInstructorDelete').show()" icon="ui-icon-trash" title="Borrar">

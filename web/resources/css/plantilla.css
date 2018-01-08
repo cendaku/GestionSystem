@@ -18,7 +18,7 @@ body{
 
 header{
     width: 100%;
-    background: green;
+    background: url(../images/fondo/bbg.gif) green;
     /*position: fixed;*/
     z-index: 100;
 }
@@ -33,7 +33,7 @@ header{
     /*Podemos hacer que el menu abarque el 100% al hacer scroll*/
     width:100%;
     box-shadow:0px 4px 3px rgba(0,0,0,.5);
-    background: green;
+    background: url(../images/fondo/bbg.gif) green;
 }
 
 #btn-menu{
@@ -64,7 +64,7 @@ header{
 
 header label.mp div.mip:hover {
     cursor: pointer;
-    background: rgba(0,0,0,0.3);
+    background: rgba(0, 139, 138,0.5);
     height: 60px;
 }
 
@@ -92,7 +92,7 @@ header label.mp div.mip:hover {
     top: 0px;
 }
 .menu li ul{
-    background: /*url(../images/fondo/bbg.gif)*/ green;
+    background: url(../images/fondo/bbg.gif) green;
     position: absolute;
     display: none;
     min-width: 140px;
@@ -102,7 +102,7 @@ header label.mp div.mip:hover {
 
 .m2:hover, .mb1:hover{
     /*text-shadow: none;*/
-    background: rgba(0,0,0,0.3);
+    background: rgba(0, 139, 138,0.5);
     /*color: green;*/
     border-top-right-radius: 30px;
     border-bottom-left-radius: 30px;
@@ -113,11 +113,11 @@ header label.mp div.mip:hover {
 }
 
 .m1:hover{
-    background: rgba(0,0,0,0.3);
+    background: rgba(0, 139, 138,0.5);
 }
 
 .m3:hover{
-    background: rgba(0,0,0,0.3);
+    background: rgba(0, 139, 138,0.5);
 }
 
 .menu li a, label.m1, label.m2, label.m3{ 
@@ -154,7 +154,7 @@ header label.mp div.mip:hover {
     .menu{
         z-index: 20 !important;
         position: absolute;
-        background: green;
+        background: url(../images/fondo/bbg.gif) green;
         width: 70%;
         right: 0;
         margin-top: -150%;
@@ -178,11 +178,11 @@ header label.mp div.mip:hover {
     }
 
     .m2{
-        background: #007e31;
+        background: url(../images/fondo/bbg.gif) #007e31;
     }
 
     .mb1{
-        background: #007552;
+        background: url(../images/fondo/bbg.gif) #007552;
     }
     .m2:hover, .mb1:hover{
         border-top-right-radius: 0px;

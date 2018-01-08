@@ -50,10 +50,10 @@
                                     <p:graphicImage value="/img/#{alumno.ruta}" width="30px" height="30px" />
                                 </h:commandLink>
                             </p:column>
-                            <p:column style="width:auto;text-align: center" headerText="N° Cédula" sortBy="#{alumno.ci}" filterBy="#{alumno.ci}" filterMatchMode="contains">
+                            <p:column style="width:auto;text-align: center" headerText="N° Cédula" sortBy="#{alumno.ci }" filterBy="#{alumno.ci}" filterMatchMode="contains">
                                 <h:outputText value="#{alumno.ci}" />
                             </p:column>
-                            <p:column style="width:auto;text-align: center" headerText="Alumno">
+                            <p:column style="width:auto;text-align: center" headerText="Alumno" sortBy="#{alumno.apellido} #{alumno.nombre}" filterBy="#{alumno.apellido} #{alumno.nombre}" filterMatchMode="contains">
                                 <h:outputText value="#{alumno.apellido} #{alumno.nombre}" />
                             </p:column>
                             <p:column style="width:auto;text-align: center" headerText="Celular">

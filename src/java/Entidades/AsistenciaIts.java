@@ -11,11 +11,12 @@ import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  *
@@ -25,15 +26,9 @@ import javax.persistence.Table;
 @Table(name = "asistencia_its")
 @NamedQueries({
     @NamedQuery(name = "AsistenciaIts.findAll", query = "SELECT a FROM AsistenciaIts a")
-    , @NamedQuery(name = "AsistenciaIts.findByFecha", query = "SELECT a FROM AsistenciaIts a WHERE a.asistenciaItsPK.fecha = :fecha")
-    , @NamedQuery(name = "AsistenciaIts.findByHora", query = "SELECT a FROM AsistenciaIts a WHERE a.asistenciaItsPK.hora = :hora")
-    , @NamedQuery(name = "AsistenciaIts.findBySemHabiNum", query = "SELECT a FROM AsistenciaIts a WHERE a.asistenciaItsPK.semHabiNum = :semHabiNum")
-    , @NamedQuery(name = "AsistenciaIts.findBySemHabiAnho", query = "SELECT a FROM AsistenciaIts a WHERE a.asistenciaItsPK.semHabiAnho = :semHabiAnho")
-    , @NamedQuery(name = "AsistenciaIts.findByGrupo", query = "SELECT a FROM AsistenciaIts a WHERE a.asistenciaItsPK.grupo = :grupo")
-    , @NamedQuery(name = "AsistenciaIts.findByCarrera", query = "SELECT a FROM AsistenciaIts a WHERE a.asistenciaItsPK.carrera = :carrera")
-    , @NamedQuery(name = "AsistenciaIts.findBySemestre", query = "SELECT a FROM AsistenciaIts a WHERE a.asistenciaItsPK.semestre = :semestre")
+    , @NamedQuery(name = "AsistenciaIts.findById", query = "SELECT a FROM AsistenciaIts a WHERE a.asistenciaItsPK.id = :id")
+    , @NamedQuery(name = "AsistenciaIts.findByFecha", query = "SELECT a FROM AsistenciaIts a WHERE a.fecha = :fecha")
     , @NamedQuery(name = "AsistenciaIts.findByPresencia", query = "SELECT a FROM AsistenciaIts a WHERE a.presencia = :presencia")
-    , @NamedQuery(name = "AsistenciaIts.findByAlumno", query = "SELECT a FROM AsistenciaIts a WHERE a.asistenciaItsPK.alumno = :alumno")
     , @NamedQuery(name = "AsistenciaIts.findByContratoInstructorits", query = "SELECT a FROM AsistenciaIts a WHERE a.asistenciaItsPK.contratoInstructorits = :contratoInstructorits")
     , @NamedQuery(name = "AsistenciaIts.findByMateriaIts", query = "SELECT a FROM AsistenciaIts a WHERE a.asistenciaItsPK.materiaIts = :materiaIts")})
 public class AsistenciaIts implements Serializable {
@@ -41,22 +36,14 @@ public class AsistenciaIts implements Serializable {
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected AsistenciaItsPK asistenciaItsPK;
+    @Column(name = "fecha")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fecha;
     @Column(name = "presencia")
     private Integer presencia;
-    @JoinColumns({
-        @JoinColumn(name = "contrato_instructorits", referencedColumnName = "instructor", insertable = false, updatable = false)
-        , @JoinColumn(name = "materia_its", referencedColumnName = "materia_its", insertable = false, updatable = false)})
+    @JoinColumn(name = "inscripcion_its_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    private ContratoInstructorits contratoInstructorits1;
-    @JoinColumns({
-        @JoinColumn(name = "alumno", referencedColumnName = "alumno", insertable = false, updatable = false)
-        , @JoinColumn(name = "sem_habi_num", referencedColumnName = "sem_habi_num", insertable = false, updatable = false)
-        , @JoinColumn(name = "sem_habi_anho", referencedColumnName = "sem_habi_anho", insertable = false, updatable = false)
-        , @JoinColumn(name = "grupo", referencedColumnName = "grupo", insertable = false, updatable = false)
-        , @JoinColumn(name = "carrera", referencedColumnName = "carrera", insertable = false, updatable = false)
-        , @JoinColumn(name = "semestre", referencedColumnName = "semestre", insertable = false, updatable = false)})
-    @ManyToOne(optional = false)
-    private InscripcionIts inscripcionIts;
+    private InscripcionIts inscripcionItsId;
 
     public AsistenciaIts() {
     }
@@ -65,8 +52,8 @@ public class AsistenciaIts implements Serializable {
         this.asistenciaItsPK = asistenciaItsPK;
     }
 
-    public AsistenciaIts(Date fecha, int hora, int semHabiNum, int semHabiAnho, int grupo, int carrera, int semestre, int alumno, int contratoInstructorits, int materiaIts) {
-        this.asistenciaItsPK = new AsistenciaItsPK(fecha, hora, semHabiNum, semHabiAnho, grupo, carrera, semestre, alumno, contratoInstructorits, materiaIts);
+    public AsistenciaIts(int id, int contratoInstructorits, int materiaIts) {
+        this.asistenciaItsPK = new AsistenciaItsPK(id, contratoInstructorits, materiaIts);
     }
 
     public AsistenciaItsPK getAsistenciaItsPK() {
@@ -77,6 +64,14 @@ public class AsistenciaIts implements Serializable {
         this.asistenciaItsPK = asistenciaItsPK;
     }
 
+    public Date getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
+    }
+
     public Integer getPresencia() {
         return presencia;
     }
@@ -85,20 +80,12 @@ public class AsistenciaIts implements Serializable {
         this.presencia = presencia;
     }
 
-    public ContratoInstructorits getContratoInstructorits1() {
-        return contratoInstructorits1;
+    public InscripcionIts getInscripcionItsId() {
+        return inscripcionItsId;
     }
 
-    public void setContratoInstructorits1(ContratoInstructorits contratoInstructorits1) {
-        this.contratoInstructorits1 = contratoInstructorits1;
-    }
-
-    public InscripcionIts getInscripcionIts() {
-        return inscripcionIts;
-    }
-
-    public void setInscripcionIts(InscripcionIts inscripcionIts) {
-        this.inscripcionIts = inscripcionIts;
+    public void setInscripcionItsId(InscripcionIts inscripcionItsId) {
+        this.inscripcionItsId = inscripcionItsId;
     }
 
     @Override

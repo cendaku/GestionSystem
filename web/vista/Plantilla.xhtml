@@ -90,7 +90,7 @@
 
                             <li jsf:rendered="#{loginBean.ulog.rol.id>0}" class="mmo"><label class="m3">#{loginBean.ulog.nombre} #{loginBean.ulog.apellido} &#x25BE;</label>
                                 <ul>
-                                    <h:form><p:commandLink class="m2" actionListener="#{loginBean.cerrarSesion()}" value="Salir" action="/vista/index?faces-redirect=true" title="Cerrar Sesión"/></h:form>
+                                    <h:form><p:commandLink style="font-family: impact;" class="m2" actionListener="#{loginBean.cerrarSesion()}" value="Salir" action="/vista/index?faces-redirect=true" title="Cerrar Sesión"/></h:form>
                                 </ul></li>
                         </ul>
                     </nav>

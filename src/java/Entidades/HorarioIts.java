@@ -23,12 +23,11 @@ import javax.persistence.Table;
  * @author administrador
  */
 @Entity
-@Table(name = "horario_instructorits")
+@Table(name = "horario_its")
 @NamedQueries({
-    @NamedQuery(name = "HorarioInstructorits.findAll", query = "SELECT h FROM HorarioInstructorits h")
-    , @NamedQuery(name = "HorarioInstructorits.findById", query = "SELECT h FROM HorarioInstructorits h WHERE h.id = :id")
-    , @NamedQuery(name = "HorarioInstructorits.findByNumeroHora", query = "SELECT h FROM HorarioInstructorits h WHERE h.numeroHora = :numeroHora")})
-public class HorarioInstructorits implements Serializable {
+    @NamedQuery(name = "HorarioIts.findAll", query = "SELECT h FROM HorarioIts h")
+    , @NamedQuery(name = "HorarioIts.findById", query = "SELECT h FROM HorarioIts h WHERE h.id = :id")})
+public class HorarioIts implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -36,22 +35,17 @@ public class HorarioInstructorits implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Column(name = "numero_hora")
-    private Integer numeroHora;
+    @JoinColumn(name = "semestre_habilitado", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private SemestreHabilitado semestreHabilitado;
     @JoinColumn(name = "horario", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Horario horario;
-    @JoinColumn(name = "instructor", referencedColumnName = "ci")
-    @ManyToOne(optional = false)
-    private Instructor instructor;
-    @JoinColumn(name = "materia_its", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private MateriaIts materiaIts;
 
-    public HorarioInstructorits() {
+    public HorarioIts() {
     }
 
-    public HorarioInstructorits(Integer id) {
+    public HorarioIts(Integer id) {
         this.id = id;
     }
 
@@ -63,12 +57,12 @@ public class HorarioInstructorits implements Serializable {
         this.id = id;
     }
 
-    public Integer getNumeroHora() {
-        return numeroHora;
+    public SemestreHabilitado getSemestreHabilitado() {
+        return semestreHabilitado;
     }
 
-    public void setNumeroHora(Integer numeroHora) {
-        this.numeroHora = numeroHora;
+    public void setSemestreHabilitado(SemestreHabilitado semestreHabilitado) {
+        this.semestreHabilitado = semestreHabilitado;
     }
 
     public Horario getHorario() {
@@ -77,22 +71,6 @@ public class HorarioInstructorits implements Serializable {
 
     public void setHorario(Horario horario) {
         this.horario = horario;
-    }
-
-    public Instructor getInstructor() {
-        return instructor;
-    }
-
-    public void setInstructor(Instructor instructor) {
-        this.instructor = instructor;
-    }
-
-    public MateriaIts getMateriaIts() {
-        return materiaIts;
-    }
-
-    public void setMateriaIts(MateriaIts materiaIts) {
-        this.materiaIts = materiaIts;
     }
 
     @Override
@@ -105,10 +83,10 @@ public class HorarioInstructorits implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof HorarioInstructorits)) {
+        if (!(object instanceof HorarioIts)) {
             return false;
         }
-        HorarioInstructorits other = (HorarioInstructorits) object;
+        HorarioIts other = (HorarioIts) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -117,7 +95,7 @@ public class HorarioInstructorits implements Serializable {
 
     @Override
     public String toString() {
-        return "Entidades.HorarioInstructorits[ id=" + id + " ]";
+        return "Entidades.HorarioIts[ id=" + id + " ]";
     }
     
 }

@@ -8,15 +8,15 @@ package Entidades;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 /**
@@ -27,25 +27,19 @@ import javax.validation.constraints.Size;
 @Table(name = "trabajo_practicoits")
 @NamedQueries({
     @NamedQuery(name = "TrabajoPracticoits.findAll", query = "SELECT t FROM TrabajoPracticoits t")
+    , @NamedQuery(name = "TrabajoPracticoits.findById", query = "SELECT t FROM TrabajoPracticoits t WHERE t.id = :id")
     , @NamedQuery(name = "TrabajoPracticoits.findByNombre", query = "SELECT t FROM TrabajoPracticoits t WHERE t.nombre = :nombre")
     , @NamedQuery(name = "TrabajoPracticoits.findByRuta", query = "SELECT t FROM TrabajoPracticoits t WHERE t.ruta = :ruta")
-    , @NamedQuery(name = "TrabajoPracticoits.findByPuntajetotal", query = "SELECT t FROM TrabajoPracticoits t WHERE t.puntajetotal = :puntajetotal")
-    , @NamedQuery(name = "TrabajoPracticoits.findByInstructor", query = "SELECT t FROM TrabajoPracticoits t WHERE t.trabajoPracticoitsPK.instructor = :instructor")
-    , @NamedQuery(name = "TrabajoPracticoits.findByMateriaIts", query = "SELECT t FROM TrabajoPracticoits t WHERE t.trabajoPracticoitsPK.materiaIts = :materiaIts")
-    , @NamedQuery(name = "TrabajoPracticoits.findByAlumno", query = "SELECT t FROM TrabajoPracticoits t WHERE t.trabajoPracticoitsPK.alumno = :alumno")
-    , @NamedQuery(name = "TrabajoPracticoits.findBySemHabiNum", query = "SELECT t FROM TrabajoPracticoits t WHERE t.trabajoPracticoitsPK.semHabiNum = :semHabiNum")
-    , @NamedQuery(name = "TrabajoPracticoits.findBySemHabiAnho", query = "SELECT t FROM TrabajoPracticoits t WHERE t.trabajoPracticoitsPK.semHabiAnho = :semHabiAnho")
-    , @NamedQuery(name = "TrabajoPracticoits.findByGrupo", query = "SELECT t FROM TrabajoPracticoits t WHERE t.trabajoPracticoitsPK.grupo = :grupo")
-    , @NamedQuery(name = "TrabajoPracticoits.findByCarrera", query = "SELECT t FROM TrabajoPracticoits t WHERE t.trabajoPracticoitsPK.carrera = :carrera")
-    , @NamedQuery(name = "TrabajoPracticoits.findBySemestre", query = "SELECT t FROM TrabajoPracticoits t WHERE t.trabajoPracticoitsPK.semestre = :semestre")})
+    , @NamedQuery(name = "TrabajoPracticoits.findByPuntajetotal", query = "SELECT t FROM TrabajoPracticoits t WHERE t.puntajetotal = :puntajetotal")})
 public class TrabajoPracticoits implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @EmbeddedId
-    protected TrabajoPracticoitsPK trabajoPracticoitsPK;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 45)
+    @Column(name = "id")
+    private Integer id;
+    @Size(max = 45)
     @Column(name = "nombre")
     private String nombre;
     @Size(max = 100)
@@ -53,43 +47,29 @@ public class TrabajoPracticoits implements Serializable {
     private String ruta;
     @Column(name = "puntajetotal")
     private Integer puntajetotal;
-    @JoinColumns({
-        @JoinColumn(name = "instructor", referencedColumnName = "instructor", insertable = false, updatable = false)
-        , @JoinColumn(name = "materia_its", referencedColumnName = "materia_its", insertable = false, updatable = false)})
+    @JoinColumn(name = "alumno", referencedColumnName = "ci")
     @ManyToOne(optional = false)
-    private ContratoInstructorits contratoInstructorits;
-    @JoinColumns({
-        @JoinColumn(name = "alumno", referencedColumnName = "alumno", insertable = false, updatable = false)
-        , @JoinColumn(name = "sem_habi_num", referencedColumnName = "sem_habi_num", insertable = false, updatable = false)
-        , @JoinColumn(name = "sem_habi_anho", referencedColumnName = "sem_habi_anho", insertable = false, updatable = false)
-        , @JoinColumn(name = "grupo", referencedColumnName = "grupo", insertable = false, updatable = false)
-        , @JoinColumn(name = "carrera", referencedColumnName = "carrera", insertable = false, updatable = false)
-        , @JoinColumn(name = "semestre", referencedColumnName = "semestre", insertable = false, updatable = false)})
+    private Alumno alumno;
+    @JoinColumn(name = "instructor", referencedColumnName = "ci")
     @ManyToOne(optional = false)
-    private InscripcionIts inscripcionIts;
+    private Instructor instructor;
+    @JoinColumn(name = "materia_its", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private MateriaIts materiaIts;
 
     public TrabajoPracticoits() {
     }
 
-    public TrabajoPracticoits(TrabajoPracticoitsPK trabajoPracticoitsPK) {
-        this.trabajoPracticoitsPK = trabajoPracticoitsPK;
+    public TrabajoPracticoits(Integer id) {
+        this.id = id;
     }
 
-    public TrabajoPracticoits(TrabajoPracticoitsPK trabajoPracticoitsPK, String nombre) {
-        this.trabajoPracticoitsPK = trabajoPracticoitsPK;
-        this.nombre = nombre;
+    public Integer getId() {
+        return id;
     }
 
-    public TrabajoPracticoits(int instructor, int materiaIts, int alumno, int semHabiNum, int semHabiAnho, int grupo, int carrera, int semestre) {
-        this.trabajoPracticoitsPK = new TrabajoPracticoitsPK(instructor, materiaIts, alumno, semHabiNum, semHabiAnho, grupo, carrera, semestre);
-    }
-
-    public TrabajoPracticoitsPK getTrabajoPracticoitsPK() {
-        return trabajoPracticoitsPK;
-    }
-
-    public void setTrabajoPracticoitsPK(TrabajoPracticoitsPK trabajoPracticoitsPK) {
-        this.trabajoPracticoitsPK = trabajoPracticoitsPK;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getNombre() {
@@ -116,26 +96,34 @@ public class TrabajoPracticoits implements Serializable {
         this.puntajetotal = puntajetotal;
     }
 
-    public ContratoInstructorits getContratoInstructorits() {
-        return contratoInstructorits;
+    public Alumno getAlumno() {
+        return alumno;
     }
 
-    public void setContratoInstructorits(ContratoInstructorits contratoInstructorits) {
-        this.contratoInstructorits = contratoInstructorits;
+    public void setAlumno(Alumno alumno) {
+        this.alumno = alumno;
     }
 
-    public InscripcionIts getInscripcionIts() {
-        return inscripcionIts;
+    public Instructor getInstructor() {
+        return instructor;
     }
 
-    public void setInscripcionIts(InscripcionIts inscripcionIts) {
-        this.inscripcionIts = inscripcionIts;
+    public void setInstructor(Instructor instructor) {
+        this.instructor = instructor;
+    }
+
+    public MateriaIts getMateriaIts() {
+        return materiaIts;
+    }
+
+    public void setMateriaIts(MateriaIts materiaIts) {
+        this.materiaIts = materiaIts;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (trabajoPracticoitsPK != null ? trabajoPracticoitsPK.hashCode() : 0);
+        hash += (id != null ? id.hashCode() : 0);
         return hash;
     }
 
@@ -146,7 +134,7 @@ public class TrabajoPracticoits implements Serializable {
             return false;
         }
         TrabajoPracticoits other = (TrabajoPracticoits) object;
-        if ((this.trabajoPracticoitsPK == null && other.trabajoPracticoitsPK != null) || (this.trabajoPracticoitsPK != null && !this.trabajoPracticoitsPK.equals(other.trabajoPracticoitsPK))) {
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
         return true;
@@ -154,7 +142,7 @@ public class TrabajoPracticoits implements Serializable {
 
     @Override
     public String toString() {
-        return "Entidades.TrabajoPracticoits[ trabajoPracticoitsPK=" + trabajoPracticoitsPK + " ]";
+        return "Entidades.TrabajoPracticoits[ id=" + id + " ]";
     }
     
 }

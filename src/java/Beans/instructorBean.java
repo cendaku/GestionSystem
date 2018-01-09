@@ -186,11 +186,14 @@ public class instructorBean implements Serializable {
 
     public void seleccionarInstructor(Integer ci) {
         this.selectedInstructor = this.InstructorFacade.find(ci);
+        this.nivelAcademicoid = this.selectedInstructor.getEstadoAcademico().getNivelAcademico().getId();
         this.sexoid = this.selectedInstructor.getSexo().getId();
         this.estadoCivilid = this.selectedInstructor.getEstadoCivil().getId();
         this.municipioid = this.selectedInstructor.getMunicipio().getId();
         this.usuarioid = this.selectedInstructor.getUsuario().getCi();
         this.nivelAcademicoid = this.selectedInstructor.getEstadoAcademico().getNivelAcademico().getId();
+        this.lstEstadosAcademicos.clear();
+        this.lstEstadosAcademicos.addAll(this.estadoAcademicoFacade.findByNivelAcademico(this.nivelAcademicoid));
         this.estadoAcademicoid = this.selectedInstructor.getEstadoAcademico().getId();
     }
 

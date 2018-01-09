@@ -30,7 +30,7 @@ public class EstadoAcademicoFacade extends AbstractFacade<EstadoAcademico> {
     public EstadoAcademicoFacade() {
         super(EstadoAcademico.class);
     }
-
+    
     public List<EstadoAcademico> findByNivelAcademico(Integer nivelAcademico) {
         TypedQuery<EstadoAcademico> q = em.createQuery("SELECT p FROM EstadoAcademico p WHERE p.nivelAcademico.id = :m", EstadoAcademico.class);
         q.setParameter("m", nivelAcademico);

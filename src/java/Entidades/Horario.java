@@ -14,8 +14,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -53,18 +51,11 @@ public class Horario implements Serializable {
     @Size(max = 45)
     @Column(name = "horario_final")
     private String horarioFinal;
-    @JoinTable(name = "horario_its", joinColumns = {
-        @JoinColumn(name = "horario", referencedColumnName = "id")}, inverseJoinColumns = {
-        @JoinColumn(name = "sem_habi_num", referencedColumnName = "numero_nacional")
-        , @JoinColumn(name = "sem_habi_anho", referencedColumnName = "anho")
-        , @JoinColumn(name = "grupo", referencedColumnName = "grupo")
-        , @JoinColumn(name = "carrera", referencedColumnName = "carrera")
-        , @JoinColumn(name = "semestre", referencedColumnName = "semestre")})
-    @ManyToMany
-    private List<SemestreHabilitado> semestreHabilitadoList;
     @ManyToMany(mappedBy = "horarioList")
     private List<ContratoInstructorcpi> contratoInstructorcpiList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "horario1")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "horario")
+    private List<HorarioIts> horarioItsList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "horario")
     private List<HorarioInstructorits> horarioInstructoritsList;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "horario1")
     private HorarioCpi horarioCpi;
@@ -108,20 +99,20 @@ public class Horario implements Serializable {
         this.horarioFinal = horarioFinal;
     }
 
-    public List<SemestreHabilitado> getSemestreHabilitadoList() {
-        return semestreHabilitadoList;
-    }
-
-    public void setSemestreHabilitadoList(List<SemestreHabilitado> semestreHabilitadoList) {
-        this.semestreHabilitadoList = semestreHabilitadoList;
-    }
-
     public List<ContratoInstructorcpi> getContratoInstructorcpiList() {
         return contratoInstructorcpiList;
     }
 
     public void setContratoInstructorcpiList(List<ContratoInstructorcpi> contratoInstructorcpiList) {
         this.contratoInstructorcpiList = contratoInstructorcpiList;
+    }
+
+    public List<HorarioIts> getHorarioItsList() {
+        return horarioItsList;
+    }
+
+    public void setHorarioItsList(List<HorarioIts> horarioItsList) {
+        this.horarioItsList = horarioItsList;
     }
 
     public List<HorarioInstructorits> getHorarioInstructoritsList() {

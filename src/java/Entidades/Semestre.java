@@ -45,7 +45,7 @@ public class Semestre implements Serializable {
     @Size(max = 45)
     @Column(name = "curso")
     private String curso;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "semestre1")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "semestre")
     private List<SemestreHabilitado> semestreHabilitadoList;
 
     public Semestre() {

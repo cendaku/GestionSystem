@@ -51,7 +51,7 @@ public class Carrera implements Serializable {
     private List<InscripcionCpi> inscripcionCpiList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "alternativa2")
     private List<InscripcionCpi> inscripcionCpiList1;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "carrera1")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "carrera")
     private List<CarreraHabilitada> carreraHabilitadaList;
 
     public Carrera() {

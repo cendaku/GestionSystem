@@ -7,11 +7,14 @@ package Entidades;
 
 import java.io.Serializable;
 import java.util.List;
+import javax.persistence.Basic;
 import javax.persistence.CascadeType;
-import javax.persistence.EmbeddedId;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -26,52 +29,37 @@ import javax.persistence.Table;
 @Table(name = "inscripcion_its")
 @NamedQueries({
     @NamedQuery(name = "InscripcionIts.findAll", query = "SELECT i FROM InscripcionIts i")
-    , @NamedQuery(name = "InscripcionIts.findByAlumno", query = "SELECT i FROM InscripcionIts i WHERE i.inscripcionItsPK.alumno = :alumno")
-    , @NamedQuery(name = "InscripcionIts.findBySemHabiNum", query = "SELECT i FROM InscripcionIts i WHERE i.inscripcionItsPK.semHabiNum = :semHabiNum")
-    , @NamedQuery(name = "InscripcionIts.findBySemHabiAnho", query = "SELECT i FROM InscripcionIts i WHERE i.inscripcionItsPK.semHabiAnho = :semHabiAnho")
-    , @NamedQuery(name = "InscripcionIts.findByGrupo", query = "SELECT i FROM InscripcionIts i WHERE i.inscripcionItsPK.grupo = :grupo")
-    , @NamedQuery(name = "InscripcionIts.findByCarrera", query = "SELECT i FROM InscripcionIts i WHERE i.inscripcionItsPK.carrera = :carrera")
-    , @NamedQuery(name = "InscripcionIts.findBySemestre", query = "SELECT i FROM InscripcionIts i WHERE i.inscripcionItsPK.semestre = :semestre")})
+    , @NamedQuery(name = "InscripcionIts.findById", query = "SELECT i FROM InscripcionIts i WHERE i.id = :id")})
 public class InscripcionIts implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @EmbeddedId
-    protected InscripcionItsPK inscripcionItsPK;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "inscripcionIts")
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "id")
+    private Integer id;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "inscripcionItsId")
     private List<AsistenciaIts> asistenciaItsList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "inscripcionIts")
-    private List<Notasits> notasitsList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "inscripcionIts")
-    private List<TrabajoPracticoits> trabajoPracticoitsList;
-    @JoinColumns({
-        @JoinColumn(name = "sem_habi_num", referencedColumnName = "numero_nacional", insertable = false, updatable = false)
-        , @JoinColumn(name = "sem_habi_anho", referencedColumnName = "anho", insertable = false, updatable = false)
-        , @JoinColumn(name = "grupo", referencedColumnName = "grupo", insertable = false, updatable = false)
-        , @JoinColumn(name = "carrera", referencedColumnName = "carrera", insertable = false, updatable = false)
-        , @JoinColumn(name = "semestre", referencedColumnName = "semestre", insertable = false, updatable = false)})
+    @JoinColumn(name = "alumno", referencedColumnName = "ci")
+    @ManyToOne(optional = false)
+    private Alumno alumno;
+    @JoinColumn(name = "semestre_habilitado", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private SemestreHabilitado semestreHabilitado;
-    @JoinColumn(name = "alumno", referencedColumnName = "ci", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
-    private Alumno alumno1;
 
     public InscripcionIts() {
     }
 
-    public InscripcionIts(InscripcionItsPK inscripcionItsPK) {
-        this.inscripcionItsPK = inscripcionItsPK;
+    public InscripcionIts(Integer id) {
+        this.id = id;
     }
 
-    public InscripcionIts(int alumno, int semHabiNum, int semHabiAnho, int grupo, int carrera, int semestre) {
-        this.inscripcionItsPK = new InscripcionItsPK(alumno, semHabiNum, semHabiAnho, grupo, carrera, semestre);
+    public Integer getId() {
+        return id;
     }
 
-    public InscripcionItsPK getInscripcionItsPK() {
-        return inscripcionItsPK;
-    }
-
-    public void setInscripcionItsPK(InscripcionItsPK inscripcionItsPK) {
-        this.inscripcionItsPK = inscripcionItsPK;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public List<AsistenciaIts> getAsistenciaItsList() {
@@ -82,20 +70,12 @@ public class InscripcionIts implements Serializable {
         this.asistenciaItsList = asistenciaItsList;
     }
 
-    public List<Notasits> getNotasitsList() {
-        return notasitsList;
+    public Alumno getAlumno() {
+        return alumno;
     }
 
-    public void setNotasitsList(List<Notasits> notasitsList) {
-        this.notasitsList = notasitsList;
-    }
-
-    public List<TrabajoPracticoits> getTrabajoPracticoitsList() {
-        return trabajoPracticoitsList;
-    }
-
-    public void setTrabajoPracticoitsList(List<TrabajoPracticoits> trabajoPracticoitsList) {
-        this.trabajoPracticoitsList = trabajoPracticoitsList;
+    public void setAlumno(Alumno alumno) {
+        this.alumno = alumno;
     }
 
     public SemestreHabilitado getSemestreHabilitado() {
@@ -106,18 +86,10 @@ public class InscripcionIts implements Serializable {
         this.semestreHabilitado = semestreHabilitado;
     }
 
-    public Alumno getAlumno1() {
-        return alumno1;
-    }
-
-    public void setAlumno1(Alumno alumno1) {
-        this.alumno1 = alumno1;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (inscripcionItsPK != null ? inscripcionItsPK.hashCode() : 0);
+        hash += (id != null ? id.hashCode() : 0);
         return hash;
     }
 
@@ -128,7 +100,7 @@ public class InscripcionIts implements Serializable {
             return false;
         }
         InscripcionIts other = (InscripcionIts) object;
-        if ((this.inscripcionItsPK == null && other.inscripcionItsPK != null) || (this.inscripcionItsPK != null && !this.inscripcionItsPK.equals(other.inscripcionItsPK))) {
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
         return true;
@@ -136,7 +108,7 @@ public class InscripcionIts implements Serializable {
 
     @Override
     public String toString() {
-        return "Entidades.InscripcionIts[ inscripcionItsPK=" + inscripcionItsPK + " ]";
+        return "Entidades.InscripcionIts[ id=" + id + " ]";
     }
     
 }

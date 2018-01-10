@@ -24,8 +24,8 @@
 
                     <p:growl id="msgs" showDetail="true" />
 
-                    <h:form class="vmo" rendered="#{loginBean.ulog.rol.id==1}">
-                        <p:commandButton update=":formCreate,:formDateTable" oncomplete="PF('dialogAlumnoCreate').show()" icon="ui-icon-disk" title="Crear cuenta de Alumno" value="Crear"/>
+                    <h:form class="vmo" rendered="#{loginBean.ulog.rol.id==1 or loginBean.ulog.rol.id==4}">
+                        <p:commandButton update=":formCreate,:formDateTable" oncomplete="PF('dialogAlumnoCreate').show()" icon="ui-icon-disk" title="Crear cuenta de Alumno" value="Registrar"/>
                     </h:form>
 
                     <h:form id="formDateTable" >
@@ -387,7 +387,7 @@
                                 <p:panelGrid  id="panelGrip" style="width: 80%;size:100px;  margin: auto; margin-top: 5%;">
                                     <f:facet name="header">
                                         <p:row>
-                                            <p:column colspan="5">Creación de Alumno</p:column>
+                                            <p:column colspan="5">Registrar de Alumno</p:column>
                                         </p:row>
                                         <p:row>
                                             <p:column colspan="5" style="text-align: left;">Datos Personales

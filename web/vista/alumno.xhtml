@@ -68,6 +68,7 @@
                                 <h:commandLink actionListener="#{imprimirBean.exporAlumnotPdf(alumno.ci)}" title="Descargar" >
                                     <p:graphicImage style="width: 30px; height: 26px;margin-left: -0.2px;margin-bottom: -8px;cursor: pointer;" value="../resources/images/icons/dow.png"/>
                                 </h:commandLink>
+                                <!--<p:commandButton icon="ui-icon-arrowthick-1-s" actionListener="{imprimirBean.exporAlumnotPdf(alumno.ci)}" />-->
                                 <div class="vmo">
                                     <p:commandButton rendered="#{loginBean.ulog.rol.id==1}" update=":formUpdate:alumnoDetalle" oncomplete="PF('dialogAlumnoUpdate').show()" icon="ui-icon-pencil" title="Actualizar" actionListener="#{alumnoBean.seleccionarAlumno(alumno.ci)}"/>
                                     <p:commandButton rendered="#{loginBean.ulog.rol.id==1}" update=":formDelete" oncomplete="PF('dialogAlumnoDelete').show()" icon="ui-icon-trash" title="Borrar">

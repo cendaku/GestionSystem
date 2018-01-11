@@ -18,8 +18,8 @@
 
                 <ui:define name="content">
                     <p:growl id="msgs" showDetail="true" />
-                    <h:form class="vmo" rendered="#{loginBean.ulog.rol.id==1}">
-                        <p:commandButton update=":formCreate,:formDataTable" oncomplete="PF('dialogInstructorCreate').show()" icon="ui-icon-disk" value="Crear" title="Registrar Instructores"/>
+                    <h:form class="vmo" rendered="#{loginBean.ulog.rol.id==1 or loginBean.ulog.rol.id==3}">
+                        <p:commandButton update=":formCreate,:formDataTable" oncomplete="PF('dialogInstructorCreate').show()" icon="ui-icon-disk" value="Registrar" title="Registrar Instructores"/>
                     </h:form>
                     <h:form id="formDataTable">
 
@@ -232,7 +232,7 @@
                     <!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++ Crear ++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
 
                     <h:form id="formCreate"  enctype="multipart/form-data">
-                        <p:dialog id = "dlgInstructorCreate" header="Crear Instructor" widgetVar="dialogInstructorCreate" closeOnEscape="true" showEffect="fade" hideEffect="fade" resizable="false">
+                        <p:dialog id = "dlgInstructorCreate" header="Registrar Instructor" widgetVar="dialogInstructorCreate" closeOnEscape="true" showEffect="fade" hideEffect="fade" resizable="false">
                             <p:outputPanel id="instructorDetalle"  style="text-align: left;">
 
                                 <!-- ********************************Separador de panel Grid********************************-->
@@ -240,7 +240,7 @@
                                 <p:panelGrid id="panelGrip" style="width: 90%; margin: auto; margin-top: 5%;">
                                     <f:facet name="header">
                                         <p:row>
-                                            <p:column colspan="7">Creación de Instructor</p:column>
+                                            <p:column colspan="7">Registrar Instructor</p:column>
                                         </p:row>
                                         <p:row>
                                             <p:column colspan="7" style="text-align: left;">Datos Personales
@@ -421,7 +421,7 @@
                                         <p:row>
                                             <p:column  colspan="6" style="text-align: center">
                                                 <p:commandButton update=":formDateTable,:msgs" oncomplete="PF('dialogInstructorCreate').hide()" actionListener="#{instructorBean.CrearInstructor(actionEvent)}" icon="ui-icon-disk" title="Guardar cuenta de Instructor" value="Guardar"  ajax="false" />
-                                                <p:commandButton oncomplete="PF('dialogInstructorCreate').hide()" icon="ui-icon-cancel" title="Cancelar crear Instructor" value="Cancelar"/>
+                                                <p:commandButton oncomplete="PF('dialogInstructorCreate').hide()" icon="ui-icon-cancel" title="Cancelar registro Instructor" value="Cancelar"/>
                                             </p:column>
                                         </p:row>
                                     </f:facet>

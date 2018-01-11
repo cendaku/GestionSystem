@@ -53,7 +53,7 @@
                                     <li jsf:rendered="#{loginBean.ulog.rol.id==1}"><h:link class="m2" outcome="usuario.xhtml" value="Usuario"/></li>
                                     <li jsf:rendered="#{loginBean.ulog.rol.id==1}"><h:link outcome="rol.xhtml" class="m2" value="Rol"/></li>
                                     
-                                    <li><h:link outcome="instructor.xhtml" class="m2" value="Instructor"/></li>
+                                    <li jsf:rendered="#{loginBean.ulog.rol.id==1 or loginBean.ulog.rol.id==3}"><h:link outcome="instructor.xhtml" class="m2" value="Instructor"/></li>
                                     <li><h:link outcome="semestre.xhtml" class="m2" value="Semestre"/></li>
                                     <li><h:link outcome="grupo.xhtml" class="m2" value="Grupos"/></li>
                                 </ul></li>

@@ -6,12 +6,9 @@
 package Entidades;
 
 import java.io.Serializable;
-import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -19,17 +16,20 @@ import javax.validation.constraints.NotNull;
  * @author administrador
  */
 @Embeddable
-public class AsistenciaItsPK implements Serializable {
+public class TrabajoPracticoitsPK implements Serializable {
 
     @Basic(optional = false)
     @NotNull
-    @Column(name = "fecha")
-    @Temporal(TemporalType.DATE)
-    private Date fecha;
+    @Column(name = "instructor")
+    private int instructor;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "hora")
-    private int hora;
+    @Column(name = "materia_its")
+    private int materiaIts;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "alumno")
+    private int alumno;
     @Basic(optional = false)
     @NotNull
     @Column(name = "sem_habi_num")
@@ -50,49 +50,43 @@ public class AsistenciaItsPK implements Serializable {
     @NotNull
     @Column(name = "semestre")
     private int semestre;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "alumno")
-    private int alumno;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "contrato_instructorits")
-    private int contratoInstructorits;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "materia_its")
-    private int materiaIts;
 
-    public AsistenciaItsPK() {
+    public TrabajoPracticoitsPK() {
     }
 
-    public AsistenciaItsPK(Date fecha, int hora, int semHabiNum, int semHabiAnho, int grupo, int carrera, int semestre, int alumno, int contratoInstructorits, int materiaIts) {
-        this.fecha = fecha;
-        this.hora = hora;
+    public TrabajoPracticoitsPK(int instructor, int materiaIts, int alumno, int semHabiNum, int semHabiAnho, int grupo, int carrera, int semestre) {
+        this.instructor = instructor;
+        this.materiaIts = materiaIts;
+        this.alumno = alumno;
         this.semHabiNum = semHabiNum;
         this.semHabiAnho = semHabiAnho;
         this.grupo = grupo;
         this.carrera = carrera;
         this.semestre = semestre;
-        this.alumno = alumno;
-        this.contratoInstructorits = contratoInstructorits;
+    }
+
+    public int getInstructor() {
+        return instructor;
+    }
+
+    public void setInstructor(int instructor) {
+        this.instructor = instructor;
+    }
+
+    public int getMateriaIts() {
+        return materiaIts;
+    }
+
+    public void setMateriaIts(int materiaIts) {
         this.materiaIts = materiaIts;
     }
 
-    public Date getFecha() {
-        return fecha;
+    public int getAlumno() {
+        return alumno;
     }
 
-    public void setFecha(Date fecha) {
-        this.fecha = fecha;
-    }
-
-    public int getHora() {
-        return hora;
-    }
-
-    public void setHora(int hora) {
-        this.hora = hora;
+    public void setAlumno(int alumno) {
+        this.alumno = alumno;
     }
 
     public int getSemHabiNum() {
@@ -135,57 +129,34 @@ public class AsistenciaItsPK implements Serializable {
         this.semestre = semestre;
     }
 
-    public int getAlumno() {
-        return alumno;
-    }
-
-    public void setAlumno(int alumno) {
-        this.alumno = alumno;
-    }
-
-    public int getContratoInstructorits() {
-        return contratoInstructorits;
-    }
-
-    public void setContratoInstructorits(int contratoInstructorits) {
-        this.contratoInstructorits = contratoInstructorits;
-    }
-
-    public int getMateriaIts() {
-        return materiaIts;
-    }
-
-    public void setMateriaIts(int materiaIts) {
-        this.materiaIts = materiaIts;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (fecha != null ? fecha.hashCode() : 0);
-        hash += (int) hora;
+        hash += (int) instructor;
+        hash += (int) materiaIts;
+        hash += (int) alumno;
         hash += (int) semHabiNum;
         hash += (int) semHabiAnho;
         hash += (int) grupo;
         hash += (int) carrera;
         hash += (int) semestre;
-        hash += (int) alumno;
-        hash += (int) contratoInstructorits;
-        hash += (int) materiaIts;
         return hash;
     }
 
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof AsistenciaItsPK)) {
+        if (!(object instanceof TrabajoPracticoitsPK)) {
             return false;
         }
-        AsistenciaItsPK other = (AsistenciaItsPK) object;
-        if ((this.fecha == null && other.fecha != null) || (this.fecha != null && !this.fecha.equals(other.fecha))) {
+        TrabajoPracticoitsPK other = (TrabajoPracticoitsPK) object;
+        if (this.instructor != other.instructor) {
             return false;
         }
-        if (this.hora != other.hora) {
+        if (this.materiaIts != other.materiaIts) {
+            return false;
+        }
+        if (this.alumno != other.alumno) {
             return false;
         }
         if (this.semHabiNum != other.semHabiNum) {
@@ -203,21 +174,12 @@ public class AsistenciaItsPK implements Serializable {
         if (this.semestre != other.semestre) {
             return false;
         }
-        if (this.alumno != other.alumno) {
-            return false;
-        }
-        if (this.contratoInstructorits != other.contratoInstructorits) {
-            return false;
-        }
-        if (this.materiaIts != other.materiaIts) {
-            return false;
-        }
         return true;
     }
 
     @Override
     public String toString() {
-        return "Entidades.AsistenciaItsPK[ fecha=" + fecha + ", hora=" + hora + ", semHabiNum=" + semHabiNum + ", semHabiAnho=" + semHabiAnho + ", grupo=" + grupo + ", carrera=" + carrera + ", semestre=" + semestre + ", alumno=" + alumno + ", contratoInstructorits=" + contratoInstructorits + ", materiaIts=" + materiaIts + " ]";
+        return "Entidades.TrabajoPracticoitsPK[ instructor=" + instructor + ", materiaIts=" + materiaIts + ", alumno=" + alumno + ", semHabiNum=" + semHabiNum + ", semHabiAnho=" + semHabiAnho + ", grupo=" + grupo + ", carrera=" + carrera + ", semestre=" + semestre + " ]";
     }
     
 }

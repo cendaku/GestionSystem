@@ -14,6 +14,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
@@ -98,11 +99,15 @@ public class Alumno implements Serializable {
     private Boolean experiencia;
     @Column(name = "tipo_trabajo")
     private Boolean tipoTrabajo;
+    @Size(max = 45)
     @Column(name = "horas_trabajo")
-    private Integer horasTrabajo;
+    private String horasTrabajo;
     @Column(name = "salario")
     private Integer salario;
-    @ManyToMany(mappedBy = "alumnoList")
+    @JoinTable(name = "detalle_discapacidad", joinColumns = {
+        @JoinColumn(name = "alumno", referencedColumnName = "ci")}, inverseJoinColumns = {
+        @JoinColumn(name = "discapacidad", referencedColumnName = "id")})
+    @ManyToMany
     private List<Discapacidad> discapacidadList;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "alumno1")
     private IngresantesCpi ingresantesCpi;
@@ -110,9 +115,7 @@ public class Alumno implements Serializable {
     private List<InscripcionFpa> inscripcionFpaList;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "alumno1")
     private InscripcionCpi inscripcionCpi;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "alumno")
-    private List<TrabajoPracticoits> trabajoPracticoitsList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "alumno")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "alumno1")
     private List<InscripcionIts> inscripcionItsList;
     @JoinColumn(name = "estado_academico", referencedColumnName = "id")
     @ManyToOne(optional = false)
@@ -263,11 +266,11 @@ public class Alumno implements Serializable {
         this.tipoTrabajo = tipoTrabajo;
     }
 
-    public Integer getHorasTrabajo() {
+    public String getHorasTrabajo() {
         return horasTrabajo;
     }
 
-    public void setHorasTrabajo(Integer horasTrabajo) {
+    public void setHorasTrabajo(String horasTrabajo) {
         this.horasTrabajo = horasTrabajo;
     }
 
@@ -309,14 +312,6 @@ public class Alumno implements Serializable {
 
     public void setInscripcionCpi(InscripcionCpi inscripcionCpi) {
         this.inscripcionCpi = inscripcionCpi;
-    }
-
-    public List<TrabajoPracticoits> getTrabajoPracticoitsList() {
-        return trabajoPracticoitsList;
-    }
-
-    public void setTrabajoPracticoitsList(List<TrabajoPracticoits> trabajoPracticoitsList) {
-        this.trabajoPracticoitsList = trabajoPracticoitsList;
     }
 
     public List<InscripcionIts> getInscripcionItsList() {

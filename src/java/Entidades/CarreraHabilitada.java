@@ -10,10 +10,8 @@ import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
@@ -30,17 +28,15 @@ import javax.validation.constraints.NotNull;
 @Table(name = "carrera_habilitada")
 @NamedQueries({
     @NamedQuery(name = "CarreraHabilitada.findAll", query = "SELECT c FROM CarreraHabilitada c")
-    , @NamedQuery(name = "CarreraHabilitada.findById", query = "SELECT c FROM CarreraHabilitada c WHERE c.id = :id")
+    , @NamedQuery(name = "CarreraHabilitada.findByGrupo", query = "SELECT c FROM CarreraHabilitada c WHERE c.carreraHabilitadaPK.grupo = :grupo")
+    , @NamedQuery(name = "CarreraHabilitada.findByCarrera", query = "SELECT c FROM CarreraHabilitada c WHERE c.carreraHabilitadaPK.carrera = :carrera")
     , @NamedQuery(name = "CarreraHabilitada.findByHoraPasantia", query = "SELECT c FROM CarreraHabilitada c WHERE c.horaPasantia = :horaPasantia")
     , @NamedQuery(name = "CarreraHabilitada.findByCupo", query = "SELECT c FROM CarreraHabilitada c WHERE c.cupo = :cupo")})
 public class CarreraHabilitada implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "id")
-    private Integer id;
+    @EmbeddedId
+    protected CarreraHabilitadaPK carreraHabilitadaPK;
     @Basic(optional = false)
     @NotNull
     @Column(name = "hora_pasantia")
@@ -51,32 +47,36 @@ public class CarreraHabilitada implements Serializable {
     private int cupo;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "carreraHabilitada")
     private List<SemestreHabilitado> semestreHabilitadoList;
-    @JoinColumn(name = "carrera", referencedColumnName = "id")
+    @JoinColumn(name = "carrera", referencedColumnName = "id", insertable = false, updatable = false)
     @ManyToOne(optional = false)
-    private Carrera carrera;
-    @JoinColumn(name = "grupo", referencedColumnName = "id")
+    private Carrera carrera1;
+    @JoinColumn(name = "grupo", referencedColumnName = "id", insertable = false, updatable = false)
     @ManyToOne(optional = false)
-    private Grupo grupo;
+    private Grupo grupo1;
 
     public CarreraHabilitada() {
     }
 
-    public CarreraHabilitada(Integer id) {
-        this.id = id;
+    public CarreraHabilitada(CarreraHabilitadaPK carreraHabilitadaPK) {
+        this.carreraHabilitadaPK = carreraHabilitadaPK;
     }
 
-    public CarreraHabilitada(Integer id, int horaPasantia, int cupo) {
-        this.id = id;
+    public CarreraHabilitada(CarreraHabilitadaPK carreraHabilitadaPK, int horaPasantia, int cupo) {
+        this.carreraHabilitadaPK = carreraHabilitadaPK;
         this.horaPasantia = horaPasantia;
         this.cupo = cupo;
     }
 
-    public Integer getId() {
-        return id;
+    public CarreraHabilitada(int grupo, int carrera) {
+        this.carreraHabilitadaPK = new CarreraHabilitadaPK(grupo, carrera);
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public CarreraHabilitadaPK getCarreraHabilitadaPK() {
+        return carreraHabilitadaPK;
+    }
+
+    public void setCarreraHabilitadaPK(CarreraHabilitadaPK carreraHabilitadaPK) {
+        this.carreraHabilitadaPK = carreraHabilitadaPK;
     }
 
     public int getHoraPasantia() {
@@ -103,26 +103,26 @@ public class CarreraHabilitada implements Serializable {
         this.semestreHabilitadoList = semestreHabilitadoList;
     }
 
-    public Carrera getCarrera() {
-        return carrera;
+    public Carrera getCarrera1() {
+        return carrera1;
     }
 
-    public void setCarrera(Carrera carrera) {
-        this.carrera = carrera;
+    public void setCarrera1(Carrera carrera1) {
+        this.carrera1 = carrera1;
     }
 
-    public Grupo getGrupo() {
-        return grupo;
+    public Grupo getGrupo1() {
+        return grupo1;
     }
 
-    public void setGrupo(Grupo grupo) {
-        this.grupo = grupo;
+    public void setGrupo1(Grupo grupo1) {
+        this.grupo1 = grupo1;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        hash += (carreraHabilitadaPK != null ? carreraHabilitadaPK.hashCode() : 0);
         return hash;
     }
 
@@ -133,7 +133,7 @@ public class CarreraHabilitada implements Serializable {
             return false;
         }
         CarreraHabilitada other = (CarreraHabilitada) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        if ((this.carreraHabilitadaPK == null && other.carreraHabilitadaPK != null) || (this.carreraHabilitadaPK != null && !this.carreraHabilitadaPK.equals(other.carreraHabilitadaPK))) {
             return false;
         }
         return true;
@@ -141,7 +141,7 @@ public class CarreraHabilitada implements Serializable {
 
     @Override
     public String toString() {
-        return "Entidades.CarreraHabilitada[ id=" + id + " ]";
+        return "Entidades.CarreraHabilitada[ carreraHabilitadaPK=" + carreraHabilitadaPK + " ]";
     }
     
 }

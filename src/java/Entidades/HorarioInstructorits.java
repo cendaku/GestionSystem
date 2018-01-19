@@ -6,13 +6,11 @@
 package Entidades;
 
 import java.io.Serializable;
-import javax.persistence.Basic;
 import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -26,41 +24,43 @@ import javax.persistence.Table;
 @Table(name = "horario_instructorits")
 @NamedQueries({
     @NamedQuery(name = "HorarioInstructorits.findAll", query = "SELECT h FROM HorarioInstructorits h")
-    , @NamedQuery(name = "HorarioInstructorits.findById", query = "SELECT h FROM HorarioInstructorits h WHERE h.id = :id")
-    , @NamedQuery(name = "HorarioInstructorits.findByNumeroHora", query = "SELECT h FROM HorarioInstructorits h WHERE h.numeroHora = :numeroHora")})
+    , @NamedQuery(name = "HorarioInstructorits.findByHorario", query = "SELECT h FROM HorarioInstructorits h WHERE h.horarioInstructoritsPK.horario = :horario")
+    , @NamedQuery(name = "HorarioInstructorits.findByNumeroHora", query = "SELECT h FROM HorarioInstructorits h WHERE h.numeroHora = :numeroHora")
+    , @NamedQuery(name = "HorarioInstructorits.findByInstructor", query = "SELECT h FROM HorarioInstructorits h WHERE h.horarioInstructoritsPK.instructor = :instructor")
+    , @NamedQuery(name = "HorarioInstructorits.findByMateriaIts", query = "SELECT h FROM HorarioInstructorits h WHERE h.horarioInstructoritsPK.materiaIts = :materiaIts")})
 public class HorarioInstructorits implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "id")
-    private Integer id;
+    @EmbeddedId
+    protected HorarioInstructoritsPK horarioInstructoritsPK;
     @Column(name = "numero_hora")
     private Integer numeroHora;
-    @JoinColumn(name = "horario", referencedColumnName = "id")
+    @JoinColumn(name = "horario", referencedColumnName = "id", insertable = false, updatable = false)
     @ManyToOne(optional = false)
-    private Horario horario;
-    @JoinColumn(name = "instructor", referencedColumnName = "ci")
+    private Horario horario1;
+    @JoinColumns({
+        @JoinColumn(name = "instructor", referencedColumnName = "instructor", insertable = false, updatable = false)
+        , @JoinColumn(name = "materia_its", referencedColumnName = "materia_its", insertable = false, updatable = false)})
     @ManyToOne(optional = false)
-    private Instructor instructor;
-    @JoinColumn(name = "materia_its", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private MateriaIts materiaIts;
+    private ContratoInstructorits contratoInstructorits;
 
     public HorarioInstructorits() {
     }
 
-    public HorarioInstructorits(Integer id) {
-        this.id = id;
+    public HorarioInstructorits(HorarioInstructoritsPK horarioInstructoritsPK) {
+        this.horarioInstructoritsPK = horarioInstructoritsPK;
     }
 
-    public Integer getId() {
-        return id;
+    public HorarioInstructorits(int horario, int instructor, int materiaIts) {
+        this.horarioInstructoritsPK = new HorarioInstructoritsPK(horario, instructor, materiaIts);
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public HorarioInstructoritsPK getHorarioInstructoritsPK() {
+        return horarioInstructoritsPK;
+    }
+
+    public void setHorarioInstructoritsPK(HorarioInstructoritsPK horarioInstructoritsPK) {
+        this.horarioInstructoritsPK = horarioInstructoritsPK;
     }
 
     public Integer getNumeroHora() {
@@ -71,34 +71,26 @@ public class HorarioInstructorits implements Serializable {
         this.numeroHora = numeroHora;
     }
 
-    public Horario getHorario() {
-        return horario;
+    public Horario getHorario1() {
+        return horario1;
     }
 
-    public void setHorario(Horario horario) {
-        this.horario = horario;
+    public void setHorario1(Horario horario1) {
+        this.horario1 = horario1;
     }
 
-    public Instructor getInstructor() {
-        return instructor;
+    public ContratoInstructorits getContratoInstructorits() {
+        return contratoInstructorits;
     }
 
-    public void setInstructor(Instructor instructor) {
-        this.instructor = instructor;
-    }
-
-    public MateriaIts getMateriaIts() {
-        return materiaIts;
-    }
-
-    public void setMateriaIts(MateriaIts materiaIts) {
-        this.materiaIts = materiaIts;
+    public void setContratoInstructorits(ContratoInstructorits contratoInstructorits) {
+        this.contratoInstructorits = contratoInstructorits;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        hash += (horarioInstructoritsPK != null ? horarioInstructoritsPK.hashCode() : 0);
         return hash;
     }
 
@@ -109,7 +101,7 @@ public class HorarioInstructorits implements Serializable {
             return false;
         }
         HorarioInstructorits other = (HorarioInstructorits) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        if ((this.horarioInstructoritsPK == null && other.horarioInstructoritsPK != null) || (this.horarioInstructoritsPK != null && !this.horarioInstructoritsPK.equals(other.horarioInstructoritsPK))) {
             return false;
         }
         return true;
@@ -117,7 +109,7 @@ public class HorarioInstructorits implements Serializable {
 
     @Override
     public String toString() {
-        return "Entidades.HorarioInstructorits[ id=" + id + " ]";
+        return "Entidades.HorarioInstructorits[ horarioInstructoritsPK=" + horarioInstructoritsPK + " ]";
     }
     
 }

@@ -15,6 +15,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -49,15 +50,16 @@ public class MateriaIts implements Serializable {
     @JoinColumn(name = "cargahoraria", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private CargaHorariaits cargahoraria;
-    @JoinColumn(name = "semestre_habilitado", referencedColumnName = "id")
+    @JoinColumns({
+        @JoinColumn(name = "sem_habi_num", referencedColumnName = "numero_nacional")
+        , @JoinColumn(name = "sem_ha_anho", referencedColumnName = "anho")
+        , @JoinColumn(name = "grupo", referencedColumnName = "grupo")
+        , @JoinColumn(name = "carrera", referencedColumnName = "carrera")
+        , @JoinColumn(name = "semestre", referencedColumnName = "semestre")})
     @ManyToOne(optional = false)
     private SemestreHabilitado semestreHabilitado;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "materiaIts")
-    private List<TrabajoPracticoits> trabajoPracticoitsList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "materiaIts")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "materiaIts1")
     private List<ContratoInstructorits> contratoInstructoritsList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "materiaIts")
-    private List<HorarioInstructorits> horarioInstructoritsList;
 
     public MateriaIts() {
     }
@@ -103,28 +105,12 @@ public class MateriaIts implements Serializable {
         this.semestreHabilitado = semestreHabilitado;
     }
 
-    public List<TrabajoPracticoits> getTrabajoPracticoitsList() {
-        return trabajoPracticoitsList;
-    }
-
-    public void setTrabajoPracticoitsList(List<TrabajoPracticoits> trabajoPracticoitsList) {
-        this.trabajoPracticoitsList = trabajoPracticoitsList;
-    }
-
     public List<ContratoInstructorits> getContratoInstructoritsList() {
         return contratoInstructoritsList;
     }
 
     public void setContratoInstructoritsList(List<ContratoInstructorits> contratoInstructoritsList) {
         this.contratoInstructoritsList = contratoInstructoritsList;
-    }
-
-    public List<HorarioInstructorits> getHorarioInstructoritsList() {
-        return horarioInstructoritsList;
-    }
-
-    public void setHorarioInstructoritsList(List<HorarioInstructorits> horarioInstructoritsList) {
-        this.horarioInstructoritsList = horarioInstructoritsList;
     }
 
     @Override

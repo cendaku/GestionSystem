@@ -7,14 +7,13 @@ package Entidades;
 
 import java.io.Serializable;
 import java.util.List;
-import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -29,66 +28,51 @@ import javax.persistence.Table;
 @Table(name = "semestre_habilitado")
 @NamedQueries({
     @NamedQuery(name = "SemestreHabilitado.findAll", query = "SELECT s FROM SemestreHabilitado s")
-    , @NamedQuery(name = "SemestreHabilitado.findById", query = "SELECT s FROM SemestreHabilitado s WHERE s.id = :id")
-    , @NamedQuery(name = "SemestreHabilitado.findByNumeroNacional", query = "SELECT s FROM SemestreHabilitado s WHERE s.numeroNacional = :numeroNacional")
-    , @NamedQuery(name = "SemestreHabilitado.findByAnho", query = "SELECT s FROM SemestreHabilitado s WHERE s.anho = :anho")
+    , @NamedQuery(name = "SemestreHabilitado.findByNumeroNacional", query = "SELECT s FROM SemestreHabilitado s WHERE s.semestreHabilitadoPK.numeroNacional = :numeroNacional")
+    , @NamedQuery(name = "SemestreHabilitado.findByAnho", query = "SELECT s FROM SemestreHabilitado s WHERE s.semestreHabilitadoPK.anho = :anho")
+    , @NamedQuery(name = "SemestreHabilitado.findByGrupo", query = "SELECT s FROM SemestreHabilitado s WHERE s.semestreHabilitadoPK.grupo = :grupo")
+    , @NamedQuery(name = "SemestreHabilitado.findByCarrera", query = "SELECT s FROM SemestreHabilitado s WHERE s.semestreHabilitadoPK.carrera = :carrera")
+    , @NamedQuery(name = "SemestreHabilitado.findBySemestre", query = "SELECT s FROM SemestreHabilitado s WHERE s.semestreHabilitadoPK.semestre = :semestre")
     , @NamedQuery(name = "SemestreHabilitado.findByMateriasTotalHoras", query = "SELECT s FROM SemestreHabilitado s WHERE s.materiasTotalHoras = :materiasTotalHoras")})
 public class SemestreHabilitado implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "id")
-    private Integer id;
-    @Column(name = "numero_nacional")
-    private Integer numeroNacional;
-    @Column(name = "anho")
-    private Integer anho;
+    @EmbeddedId
+    protected SemestreHabilitadoPK semestreHabilitadoPK;
     @Column(name = "materias_total_horas")
     private Integer materiasTotalHoras;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "semestreHabilitado")
-    private List<HorarioIts> horarioItsList;
+    @ManyToMany(mappedBy = "semestreHabilitadoList")
+    private List<Horario> horarioList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "semestreHabilitado")
     private List<MateriaIts> materiaItsList;
-    @JoinColumn(name = "carrera_habilitada", referencedColumnName = "id")
+    @JoinColumns({
+        @JoinColumn(name = "grupo", referencedColumnName = "grupo", insertable = false, updatable = false)
+        , @JoinColumn(name = "carrera", referencedColumnName = "carrera", insertable = false, updatable = false)})
     @ManyToOne(optional = false)
     private CarreraHabilitada carreraHabilitada;
-    @JoinColumn(name = "semestre", referencedColumnName = "id")
+    @JoinColumn(name = "semestre", referencedColumnName = "id", insertable = false, updatable = false)
     @ManyToOne(optional = false)
-    private Semestre semestre;
+    private Semestre semestre1;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "semestreHabilitado")
     private List<InscripcionIts> inscripcionItsList;
 
     public SemestreHabilitado() {
     }
 
-    public SemestreHabilitado(Integer id) {
-        this.id = id;
+    public SemestreHabilitado(SemestreHabilitadoPK semestreHabilitadoPK) {
+        this.semestreHabilitadoPK = semestreHabilitadoPK;
     }
 
-    public Integer getId() {
-        return id;
+    public SemestreHabilitado(int numeroNacional, int anho, int grupo, int carrera, int semestre) {
+        this.semestreHabilitadoPK = new SemestreHabilitadoPK(numeroNacional, anho, grupo, carrera, semestre);
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public SemestreHabilitadoPK getSemestreHabilitadoPK() {
+        return semestreHabilitadoPK;
     }
 
-    public Integer getNumeroNacional() {
-        return numeroNacional;
-    }
-
-    public void setNumeroNacional(Integer numeroNacional) {
-        this.numeroNacional = numeroNacional;
-    }
-
-    public Integer getAnho() {
-        return anho;
-    }
-
-    public void setAnho(Integer anho) {
-        this.anho = anho;
+    public void setSemestreHabilitadoPK(SemestreHabilitadoPK semestreHabilitadoPK) {
+        this.semestreHabilitadoPK = semestreHabilitadoPK;
     }
 
     public Integer getMateriasTotalHoras() {
@@ -99,12 +83,12 @@ public class SemestreHabilitado implements Serializable {
         this.materiasTotalHoras = materiasTotalHoras;
     }
 
-    public List<HorarioIts> getHorarioItsList() {
-        return horarioItsList;
+    public List<Horario> getHorarioList() {
+        return horarioList;
     }
 
-    public void setHorarioItsList(List<HorarioIts> horarioItsList) {
-        this.horarioItsList = horarioItsList;
+    public void setHorarioList(List<Horario> horarioList) {
+        this.horarioList = horarioList;
     }
 
     public List<MateriaIts> getMateriaItsList() {
@@ -123,12 +107,12 @@ public class SemestreHabilitado implements Serializable {
         this.carreraHabilitada = carreraHabilitada;
     }
 
-    public Semestre getSemestre() {
-        return semestre;
+    public Semestre getSemestre1() {
+        return semestre1;
     }
 
-    public void setSemestre(Semestre semestre) {
-        this.semestre = semestre;
+    public void setSemestre1(Semestre semestre1) {
+        this.semestre1 = semestre1;
     }
 
     public List<InscripcionIts> getInscripcionItsList() {
@@ -142,7 +126,7 @@ public class SemestreHabilitado implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        hash += (semestreHabilitadoPK != null ? semestreHabilitadoPK.hashCode() : 0);
         return hash;
     }
 
@@ -153,7 +137,7 @@ public class SemestreHabilitado implements Serializable {
             return false;
         }
         SemestreHabilitado other = (SemestreHabilitado) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        if ((this.semestreHabilitadoPK == null && other.semestreHabilitadoPK != null) || (this.semestreHabilitadoPK != null && !this.semestreHabilitadoPK.equals(other.semestreHabilitadoPK))) {
             return false;
         }
         return true;
@@ -161,7 +145,7 @@ public class SemestreHabilitado implements Serializable {
 
     @Override
     public String toString() {
-        return "Entidades.SemestreHabilitado[ id=" + id + " ]";
+        return "Entidades.SemestreHabilitado[ semestreHabilitadoPK=" + semestreHabilitadoPK + " ]";
     }
     
 }

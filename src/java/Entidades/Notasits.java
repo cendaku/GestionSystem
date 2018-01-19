@@ -6,13 +6,11 @@
 package Entidades;
 
 import java.io.Serializable;
-import javax.persistence.Basic;
 import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -27,21 +25,25 @@ import javax.validation.constraints.Size;
 @Table(name = "notasits")
 @NamedQueries({
     @NamedQuery(name = "Notasits.findAll", query = "SELECT n FROM Notasits n")
-    , @NamedQuery(name = "Notasits.findById", query = "SELECT n FROM Notasits n WHERE n.id = :id")
     , @NamedQuery(name = "Notasits.findByParcial1", query = "SELECT n FROM Notasits n WHERE n.parcial1 = :parcial1")
     , @NamedQuery(name = "Notasits.findByParcial2", query = "SELECT n FROM Notasits n WHERE n.parcial2 = :parcial2")
     , @NamedQuery(name = "Notasits.findByFinal1", query = "SELECT n FROM Notasits n WHERE n.final1 = :final1")
     , @NamedQuery(name = "Notasits.findByRecuperatorio", query = "SELECT n FROM Notasits n WHERE n.recuperatorio = :recuperatorio")
     , @NamedQuery(name = "Notasits.findByObservacion", query = "SELECT n FROM Notasits n WHERE n.observacion = :observacion")
-    , @NamedQuery(name = "Notasits.findByNota", query = "SELECT n FROM Notasits n WHERE n.nota = :nota")})
+    , @NamedQuery(name = "Notasits.findByNota", query = "SELECT n FROM Notasits n WHERE n.nota = :nota")
+    , @NamedQuery(name = "Notasits.findByInstructor", query = "SELECT n FROM Notasits n WHERE n.notasitsPK.instructor = :instructor")
+    , @NamedQuery(name = "Notasits.findByMateria", query = "SELECT n FROM Notasits n WHERE n.notasitsPK.materia = :materia")
+    , @NamedQuery(name = "Notasits.findByAlumno", query = "SELECT n FROM Notasits n WHERE n.notasitsPK.alumno = :alumno")
+    , @NamedQuery(name = "Notasits.findBySemHabiNum", query = "SELECT n FROM Notasits n WHERE n.notasitsPK.semHabiNum = :semHabiNum")
+    , @NamedQuery(name = "Notasits.findBySemHabiAnho", query = "SELECT n FROM Notasits n WHERE n.notasitsPK.semHabiAnho = :semHabiAnho")
+    , @NamedQuery(name = "Notasits.findByGrupo", query = "SELECT n FROM Notasits n WHERE n.notasitsPK.grupo = :grupo")
+    , @NamedQuery(name = "Notasits.findByCarrera", query = "SELECT n FROM Notasits n WHERE n.notasitsPK.carrera = :carrera")
+    , @NamedQuery(name = "Notasits.findBySemestre", query = "SELECT n FROM Notasits n WHERE n.notasitsPK.semestre = :semestre")})
 public class Notasits implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "id")
-    private Integer id;
+    @EmbeddedId
+    protected NotasitsPK notasitsPK;
     @Column(name = "parcial1")
     private Integer parcial1;
     @Column(name = "parcial2")
@@ -55,23 +57,38 @@ public class Notasits implements Serializable {
     private String observacion;
     @Column(name = "nota")
     private Integer nota;
-    @JoinColumn(name = "contrato_instructorits", referencedColumnName = "id")
+    @JoinColumns({
+        @JoinColumn(name = "instructor", referencedColumnName = "instructor", insertable = false, updatable = false)
+        , @JoinColumn(name = "materia", referencedColumnName = "materia_its", insertable = false, updatable = false)})
     @ManyToOne(optional = false)
     private ContratoInstructorits contratoInstructorits;
+    @JoinColumns({
+        @JoinColumn(name = "alumno", referencedColumnName = "alumno", insertable = false, updatable = false)
+        , @JoinColumn(name = "sem_habi_num", referencedColumnName = "sem_habi_num", insertable = false, updatable = false)
+        , @JoinColumn(name = "sem_habi_anho", referencedColumnName = "sem_habi_anho", insertable = false, updatable = false)
+        , @JoinColumn(name = "grupo", referencedColumnName = "grupo", insertable = false, updatable = false)
+        , @JoinColumn(name = "carrera", referencedColumnName = "carrera", insertable = false, updatable = false)
+        , @JoinColumn(name = "semestre", referencedColumnName = "semestre", insertable = false, updatable = false)})
+    @ManyToOne(optional = false)
+    private InscripcionIts inscripcionIts;
 
     public Notasits() {
     }
 
-    public Notasits(Integer id) {
-        this.id = id;
+    public Notasits(NotasitsPK notasitsPK) {
+        this.notasitsPK = notasitsPK;
     }
 
-    public Integer getId() {
-        return id;
+    public Notasits(int instructor, int materia, int alumno, int semHabiNum, int semHabiAnho, int grupo, int carrera, int semestre) {
+        this.notasitsPK = new NotasitsPK(instructor, materia, alumno, semHabiNum, semHabiAnho, grupo, carrera, semestre);
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public NotasitsPK getNotasitsPK() {
+        return notasitsPK;
+    }
+
+    public void setNotasitsPK(NotasitsPK notasitsPK) {
+        this.notasitsPK = notasitsPK;
     }
 
     public Integer getParcial1() {
@@ -130,10 +147,18 @@ public class Notasits implements Serializable {
         this.contratoInstructorits = contratoInstructorits;
     }
 
+    public InscripcionIts getInscripcionIts() {
+        return inscripcionIts;
+    }
+
+    public void setInscripcionIts(InscripcionIts inscripcionIts) {
+        this.inscripcionIts = inscripcionIts;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        hash += (notasitsPK != null ? notasitsPK.hashCode() : 0);
         return hash;
     }
 
@@ -144,7 +169,7 @@ public class Notasits implements Serializable {
             return false;
         }
         Notasits other = (Notasits) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        if ((this.notasitsPK == null && other.notasitsPK != null) || (this.notasitsPK != null && !this.notasitsPK.equals(other.notasitsPK))) {
             return false;
         }
         return true;
@@ -152,7 +177,7 @@ public class Notasits implements Serializable {
 
     @Override
     public String toString() {
-        return "Entidades.Notasits[ id=" + id + " ]";
+        return "Entidades.Notasits[ notasitsPK=" + notasitsPK + " ]";
     }
     
 }

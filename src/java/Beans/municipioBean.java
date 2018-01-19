@@ -3,7 +3,6 @@ package Beans;
 
 import Dao.MunicipioFacade;
 import Entidades.Municipio;
-import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -36,7 +35,7 @@ public class municipioBean {
     }
 
     public List<Municipio> getMunicipios() {
-        return municipios;
+        return municipioFacade.findAll();
     }
 
    

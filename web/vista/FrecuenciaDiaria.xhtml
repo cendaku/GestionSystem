@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <f:view contentType="text/html">
+        <h:head>
+            <title>Frecuencia Diaria</title>
+        </h:head>
+        <body>
+            <ui:composition template="./Plantilla.xhtml">
+
+                <ui:define name="content">
+
+                    <p:growl id="msgs" showDetail="true" />
+
+                    <h:form rendered="#{loginBean.ulog.rol.id==1}">
+                        <p:commandButton update=":formCreate,:formDataTable" oncomplete="PF('dialogFrecuenciaDiariaCreate').show()" icon="ui-icon-disk" title="Crear una nueva frecuenciaDiaria" value="Crear"/>
+                    </h:form>
+
+                    <h:form id="formDataTable">
+
+
+                        <p:dataTable id="basicDT" var="frecuenciaDiaria" value="#{FrecuenciaDiariaBean.frecuenciaDiarias}">
+                            <f:facet name="header">
+                                Lista de FrecuenciaDiarias
+                            </f:facet>
+
+                            <p:column style=";text-align:center" headerText="Id FrecuenciaDiaria">
+                                <h:outputText value="#{frecuenciaDiaria.id}" />
+                            </p:column>
+                            <p:column style=";text-align:center" headerText="Nombre de la FrecuenciaDiaria">
+                                <h:outputText value="#{frecuenciaDiaria.descripcion}" />
+                            </p:column>
+                            <p:column rendered="#{loginBean.ulog.rol.id==1}" style="text-align: center">
+                                <p:commandButton update=":formUpdate:FrecuenciaDiariaDetalle" oncomplete="PF('dialogFrecuenciaDiariaUpdate').show()" icon="ui-icon-pencil" title="Actualizar">
+                                    <f:setPropertyActionListener value="#{frecuenciaDiaria}" target="#{FrecuenciaDiariaBean.selectedFrecuenciaDiaria}" />
+                                </p:commandButton>
+                                <p:commandButton update=":formDelete" oncomplete="PF('dialogFrecuenciaDiariaDelete').show()" icon="ui-icon-trash" title="Borrar">
+                                    <f:setPropertyActionListener value="#{frecuenciaDiaria}" target="#{FrecuenciaDiariaBean.selectedFrecuenciaDiaria}" />
+                                </p:commandButton>
+                            </p:column>
+                        </p:dataTable>
+                    </h:form>
+
+                    <h:form id="formCreate">
+
+                        <p:dialog id="dlgFrecuenciaDiaria" header="Crear FrecuenciaDiaria" widgetVar="dialogFrecuenciaDiariaCreate" showEffect="fade" hideEffect="fade" resizable="false">
+                            <p:outputPanel id="FrecuenciaDiariaDetalle" style="text-align:center;">
+                                <h:panelGrid  columns="2" style="padding: 2px;">
+
+
+
+
+                                    <h:outputText value="Nombre del FrecuenciaDiaria:" />
+                                    <h:inputText value="#{FrecuenciaDiariaBean.selectedFrecuenciaDiaria.descripcion}" />
+
+                                    <f:facet name="footer">
+                                        <p:commandButton update=":formDataTable,:msgs" oncomplete="PF('dialogFrecuenciaDiariaCreate').hide()" actionListener="#{FrecuenciaDiariaBean.crearFrecuenciaDiaria(actionEvent)}" icon="ui-icon-disk" title="Guardar frecuenciaDiaria" value="Guardar"/>
+                                        <p:commandButton oncomplete="PF('dialogFrecuenciaDiariaCreate').hide()" icon="ui-icon-cancel" title="Cancelar creacion de frecuenciaDiaria" value="Cancelar"/>
+                                    </f:facet>
+                                </h:panelGrid>
+                            </p:outputPanel>
+                        </p:dialog>
+
+                    </h:form>
+
+                    <h:form id="formUpdate">
+
+                        <p:dialog id="dlgFrecuenciaDiariaUpdate" header="Modificar FrecuenciaDiaria" widgetVar="dialogFrecuenciaDiariaUpdate" showEffect="fade" hideEffect="fade" resizable="false">
+                            <p:outputPanel id="FrecuenciaDiariaDetalle" style="text-align:center;">
+                                <h:panelGrid  columns="2" style="padding: 2px;">
+
+
+
+
+                                    <h:outputText value="Nombre del FrecuenciaDiaria:" />
+                                    <h:inputText value="#{FrecuenciaDiariaBean.selectedFrecuenciaDiaria.descripcion}" />
+                                    <h:inputHidden value="#{FrecuenciaDiariaBean.selectedFrecuenciaDiaria.id}" />
+
+                                    <f:facet name="footer">
+                                        <p:commandButton update=":formDataTable,:msgs" oncomplete="PF('dialogFrecuenciaDiariaUpdate').hide()" actionListener="#{FrecuenciaDiariaBean.modificarFrecuenciaDiaria(actionEvent)}" icon="ui-icon-disk" title="Modificar frecuenciaDiaria" value="Modificar"/>
+                                        <p:commandButton oncomplete="PF('dialogFrecuenciaDiariaUpdate').hide()" icon="ui-icon-cancel" title="Cancelar modificacion de frecuenciaDiaria" value="Cancelar"/>
+                                    </f:facet>
+                                </h:panelGrid>
+                            </p:outputPanel>
+                        </p:dialog>
+
+                    </h:form>        
+
+                    <p:confirmDialog showEffect="explode" hideEffect="explode" appendTo="@(body)" closeOnEscape="true" message="Esta seguro de eliminar el registro?" header="Eliminar Registro" severity="alert" widgetVar="dialogFrecuenciaDiariaDelete">
+                        <h:form id="formDelete">
+
+                            <h:inputHidden value="#{FrecuenciaDiariaBean.selectedFrecuenciaDiaria.id}" />
+
+                            <p:commandButton value="Aceptar" update=":formDataTable,:msgs" actionListener="#{FrecuenciaDiariaBean.eliminarFrecuenciaDiaria(actionEvent)}" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" onclick="PF('dialogFrecuenciaDiariaDelete').hide()" />
+                            <p:commandButton value="Cancelar" styleClass="ui-confirmdialog-no" icon="ui-icon-close" onclick="PF('dialogFrecuenciaDiariaDelete').hide()" />
+                        </h:form>
+                    </p:confirmDialog>
+
+                </ui:define>
+
+            </ui:composition>  
+        </body>
+    </f:view>
+</html>

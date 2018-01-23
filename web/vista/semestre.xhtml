@@ -19,7 +19,7 @@
                 <ui:define name="content">
                     <p:growl id="msgs" showDetail="true" />
 
-                    <h:form class="vmo">
+                    <h:form rendered="#{loginBean.ulog.rol.id==1}" class="vmo">
                         <p:commandButton update=":formCreate,:formDateTable" oncomplete="PF('dialogSemestreCreate').show()" icon="ui-icon-disk" title="Crear cuenta de Semestre" value="Crear"/>
                     </h:form>
 
@@ -42,7 +42,7 @@
                             <p:column style="width:100%;text-align: center" headerText="Curso">
                                 <h:outputText value="#{semestre.curso}" />
                             </p:column>
-                            <p:column class="vmo" style="width:88px;text-align: center">
+                            <p:column rendered="#{loginBean.ulog.rol.id==1}" class="vmo" style="width:88px;text-align: center">
                                 <p:commandButton update=":formUpdate:semestreDetalle" oncomplete="PF('dialogSemestreUpdate').show()" icon="ui-icon-pencil" title="Actualizar">
                                     <f:setPropertyActionListener value="#{semestre}" target="#{semestreBean.selectedSemestre}" />
                                 </p:commandButton>

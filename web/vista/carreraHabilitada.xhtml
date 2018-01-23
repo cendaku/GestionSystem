@@ -1,0 +1,115 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <f:view contentType="text/html">
+        <h:head>
+            <f:facet name="first">
+                <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+                <title>CarreraHabilitada</title>
+            </f:facet>
+        </h:head>
+    
+    <h:body>
+
+        <ui:composition template="./Plantilla.xhtml">
+
+            <ui:define name="content">
+                <p:growl id="msgs" showDetail="true" />
+                <h:form>
+                    <p:commandButton update=":formCreate,:formDateTable" oncomplete="PF('dialogCarreraHabilitadaCreate').show()" icon="ui-icon-disk" title="Crear cuenta de CarreraHabilitada" value="Crear"/>
+                </h:form>
+                
+                <h:form id="formDateTable" >
+                    <p:dataTable id="basicDT" var="carreraHabilitada" value="#{carreraHabilitadaBean.carrera}">
+                        <f:facet name="header">
+                            Listado de Carrera Habilitada
+                        </f:facet>
+                        <p:column style="width:auto;text-align: center" headerText="ID">
+                            <h:outputText value="#{carreraHabilitada.id}" />
+                        </p:column>
+                        <p:column style="width:auto;text-align: center" headerText="Descripcion">
+                            <h:outputText value="#{carreraHabilitada.descripcion}" />
+                        </p:column>
+                 
+
+                        <p:column style="width:auto;text-align: center" headerText="Nivel Academico">
+                            <h:outputText value="#{carreraHabilitada.nivelAcademico.descripcion}" />
+                        </p:column>
+
+                        <p:column style="width:88px;text-align: center">
+                            <p:commandButton update=":formUpdate:carreraHabilitadaDetalle" oncomplete="PF('dialogCarreraHabilitadaUpdate').show()" icon="ui-icon-pencil" title="Actualizar" actionListener="#{carreraHabilitadaBean.seleccionarCarreraHabilitada(carreraHabilitada.id)}">
+                              
+                            </p:commandButton>
+                            <p:commandButton update=":formDelete" oncomplete="PF('dialogCarreraHabilitadaDelete').show()" icon="ui-icon-trash" title="Borrar" actionListener="#{carreraHabilitadaBean.seleccionarCarreraHabilitada(carreraHabilitada.id)}">
+                              
+                            </p:commandButton>
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+
+                <h:form id="formCreate" enctype="multipart/form-data" >
+                    <p:dialog id="dlgCarreraHabilitadaCreate" header="Crear CarreraHabilitada" widgetVar="dialogCarreraHabilitadaCreate" showEffect="fade" hideEffect="fade" resizable="false">
+                        <p:outputPanel id="carreraHabilitadaDetalle" style="text-align: left;">
+                            <h:panelGrid  columns="2" style="padding: 2px;" >
+                                <h:outputText value="Descripcion" />
+                                <p:inputText value="#{carreraHabilitadaBean.selectedCarreraHabilitada.descripcion}" /> 
+                                
+                                <h:outputText value="Nivel Academico:" />
+                                <p:selectOneMenu id="NivelAcademicoid" value="#{carreraHabilitadaBean.nivelAcademicoid}" effect="fold" >
+                                    <f:selectItem itemLabel="Elija una opcion" itemValue="" />
+                                    <f:selectItems value="#{nivelAcademicoBean.nivelAcademicos}" var="t" itemValue="#{t.id}" itemLabel="#{t.descripcion}"/>
+                                </p:selectOneMenu>
+                                
+                                <f:facet name="footer">
+                                    <p:commandButton update=":formDateTable,:msgs" oncomplete="PF('dialogCarreraHabilitadaCreate').hide()" actionListener="#{carreraHabilitadaBean.CrearCarreraHabilitada(actionEvent)}" icon="ui-icon-disk" title="Guardar cuenta de CarreraHabilitada" value="Guardar"  ajax="false" />
+                                    <p:commandButton oncomplete="PF('dialogCarreraHabilitadaCreate').hide()" icon="ui-icon-cancel" title="Cancelar crear cuenta de CarreraHabilitada" value="Cancelar"/>
+                                </f:facet>
+                            </h:panelGrid>
+                        </p:outputPanel>
+                    </p:dialog>
+                </h:form>
+
+                <h:form id="formUpdate" enctype="multipart/form-data">
+
+                    <p:dialog id="dlgCarreraHabilitadaUpdate" header="Modificar CarreraHabilitada" widgetVar="dialogCarreraHabilitadaUpdate" showEffect="fade" hideEffect="fade" resizable="false">
+                        <p:outputPanel id="carreraHabilitadaDetalle" style="text-align: left;">
+                            <h:panelGrid  columns="2" style="padding: 2px;" >
+                          
+                                
+                         
+                                
+                                 <h:outputText value="Nivel Academico:" />
+                                 <p:selectOneMenu id="NivelAcademicoid" value="#{carreraHabilitadaBean.grupo}" effect="fold" >
+                                    <f:selectItem itemLabel="Elija una opcion" itemValue="" />
+                                    <f:selectItems value="#{carreraBean.carreras}" var="t" itemValue="#{t.id}" itemLabel="#{t.descripcion}"/>
+                                </p:selectOneMenu>
+                                
+                                 <h:inputHidden value="#{carreraHabilitadaBean.carrera.id}" />
+                                
+                              
+                                <f:facet name="footer">
+                                    <p:commandButton update=":formDateTable,:msgs" oncomplete="PF('dialogCarreraHabilitadaUpdate').hide()" actionListener="#{carreraHabilitadaBean.modificarcarreraHabilitada(actionEvent)}" icon="ui-icon-disk" title="Guardar cuenta de CarreraHabilitada" value="Modificar" ajax="false"/>
+                                    <p:commandButton oncomplete="PF('dialogCarreraHabilitadaUpdate').hide()" icon="ui-icon-cancel" title="Cancelar modificación de cuenta de CarreraHabilitada" value="Cancelar"/>
+                                </f:facet>
+                            </h:panelGrid>
+                        </p:outputPanel>
+                    </p:dialog>
+                </h:form>
+
+                <p:confirmDialog showEffect="fade" hideEffect="explode" appendTo="@(body)" closeOnEscape="true" message="Esta seguro de eliminar el reigistro?" header="Eliminar Registro" severity="alert" widgetVar="dialogCarreraHabilitadaDelete">
+                    <h:form id="formDelete"> 
+                        <h:inputHidden value="#{carreraHabilitadaBean.carrera.id}" />
+                        <p:commandButton value="Aceptar" update=":formDateTable,:msgs" actionListener="#{carreraHabilitadaBean.eliminarcarreraHabilitada(actionEvent)}" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" oncomplete="PF('dialogCarreraHabilitadaDelete').hide()" />
+                        <p:commandButton value="Cancelar" styleClass="ui-confirmdialog-no" icon="ui-icon-close" onclick="PF('dialogCarreraHabilitadaDelete').hide()" />
+                    </h:form>
+                </p:confirmDialog>
+            </ui:define>
+
+        </ui:composition>
+
+    </h:body>
+    </f:view>
+</html>

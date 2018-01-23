@@ -1,0 +1,146 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+   <f:view contentType="text/html">
+        <h:head>
+            <f:facet name="first">
+                <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+                <title>CargaHorariaits</title>
+            </f:facet>
+        </h:head>
+
+        <body>
+
+            <ui:composition template="./Plantilla.xhtml">
+
+                <ui:define name="content">
+                    <p:growl id="msgs" showDetail="true" />
+
+                    <h:form rendered="#{loginBean.ulog.rol.id==1}">
+                        <p:commandButton update=":formCreate,:formDateTable" oncomplete="PF('dialogCargaHorariaitsCreate').show()" icon="ui-icon-disk" title="Crear cuenta de CargaHorariaits" value="Crear"/>
+                    </h:form>
+
+                    <h:form id="formDateTable" >
+                        <p:dataTable id="basicDT" var="cargaHorariaits" value="#{cargaHorariaitsBean.cargaHorariaitss}">
+                            <f:facet name="header">
+                                Listado de Carga Horaria ITS
+                            </f:facet>
+                             <p:column style="width:auto;text-align: center" headerText="ID">
+                                <h:outputText value="#{cargaHorariaits.id}" />
+                            </p:column>
+                            <p:column style="width:auto;text-align: center" headerText="Practica">
+                                <h:outputText value="#{cargaHorariaits.practica}hs" />
+                            </p:column>
+                            <p:column style="width:auto;text-align: center" headerText="Teoria">
+                                <h:outputText value="#{cargaHorariaits.teoria}hs" />
+                            </p:column>
+                            
+                            <p:column style="width:auto;text-align: center" headerText="Total">
+                                <h:outputText value="#{cargaHorariaits.practica+cargaHorariaits.teoria}hs" />
+                            </p:column>
+                            
+                        
+
+                            <p:column style="width:98px;text-align: center">
+                                <p:commandButton update=":formMostrar" oncomplete="PF('dialogCargaHorariaitsMostrar').show()" icon="ui-icon-search" title="Ver">
+                                    <f:setPropertyActionListener value="#{cargaHorariaits}" target="#{cargaHorariaitsBean.selectedCargaHorariaits}" />
+                                </p:commandButton>
+                                <p:commandButton rendered="#{loginBean.ulog.rol.id==1}" update=":formUpdate:cargaHorariaitsDetalle" oncomplete="PF('dialogCargaHorariaitsUpdate').show()" icon="ui-icon-pencil" title="Actualizar">
+                                    <f:setPropertyActionListener value="#{cargaHorariaits}" target="#{cargaHorariaitsBean.selectedCargaHorariaits}" />
+                                </p:commandButton>
+                                <p:commandButton rendered="#{loginBean.ulog.rol.id==1}" update=":formDelete" oncomplete="PF('dialogCargaHorariaitsDelete').show()" icon="ui-icon-trash" title="Borrar">
+                                    <f:setPropertyActionListener value="#{cargaHorariaits}" target="#{cargaHorariaitsBean.selectedCargaHorariaits}" />
+                                </p:commandButton>
+                            </p:column>
+                        </p:dataTable>
+                    </h:form>
+                    
+                     <h:form id="formMostrar">
+                        <p:dialog id="dlgCargaHorariaitsMostrar" header="Vista CargaHorariaits" widgetVar="dialogCargaHorariaitsMostrar" showEffect="fade" hideEffect="explode" resizable="false" closeOnEscape="true">
+                            <p:outputPanel id="cargaHorariaitsDetalle" style="text-align: left;">
+                                <h:panelGrid  columns="2" style="padding: 2px;" >
+
+                                    <h:outputText value="ID:" style="color: blue" />
+                                    <p:outputLabel value="#{cargaHorariaitsBean.selectedCargaHorariaits.id}" />
+
+                                    <h:outputText value="Practica:"  style="color: blue"/>
+                                    <p:outputLabel value="#{cargaHorariaitsBean.selectedCargaHorariaits.practica}" />
+
+                                    <h:outputText value="Teoria:"  style="color: blue"/>
+                                    <p:outputLabel value="#{cargaHorariaitsBean.selectedCargaHorariaits.teoria}" />
+
+                                    <h:outputText value="Total:"  style="color: blue"/>
+                                    <p:outputLabel value="#{cargaHorariaitsBean.selectedCargaHorariaits.teoria+cargaHorariaitsBean.selectedCargaHorariaits.practica}" />
+
+                             
+                                </h:panelGrid>
+                            </p:outputPanel>
+                        </p:dialog>
+                    </h:form>
+
+                    <h:form id="formCreate">
+                        <p:dialog id="dlgCargaHorariaitsCreate" header="Crear CargaHorariaits" widgetVar="dialogCargaHorariaitsCreate" showEffect="fade" hideEffect="fade" resizable="false">
+                            <p:outputPanel id="cargaHorariaitsDetalle" style="text-align: left;">
+                                <h:panelGrid  columns="2" style="padding: 2px;" >
+
+                                    <h:outputText value="Practica:" />
+                                    <p:inputText value="#{cargaHorariaitsBean.selectedCargaHorariaits.practica}" />
+
+                                    <h:outputText value="Teoria:" />
+                                    <p:inputText value="#{cargaHorariaitsBean.selectedCargaHorariaits.teoria}" />
+                                    
+                                    
+
+                                    <f:facet name="footer">
+                                        <p:commandButton update=":formDateTable,:msgs" oncomplete="PF('dialogCargaHorariaitsCreate').hide()" actionListener="#{cargaHorariaitsBean.crearCargaHorariaits(actionEvent)}" icon="ui-icon-disk" title="Guardar cuenta de CargaHorariaits" value="Guardar"/>
+                                        <p:commandButton oncomplete="PF('dialogCargaHorariaitsCreate').hide()" icon="ui-icon-cancel" title="Cancelar crear cuenta de CargaHorariaits" value="Cancelar"/>
+                                    </f:facet>
+                                </h:panelGrid>
+                            </p:outputPanel>
+                        </p:dialog>
+                    </h:form>
+
+                    <h:form id="formUpdate">
+                        <p:dialog id="dlgCargaHorariaitsUpdate" header="Modificar CargaHorariaits" widgetVar="dialogCargaHorariaitsUpdate" showEffect="fade" hideEffect="fade" resizable="false">
+
+                            <p:outputPanel id="cargaHorariaitsDetalle" style="text-align: left;">
+                                <h:panelGrid  columns="2" style="padding: 2px;" >
+                                    <h:outputText value="Practica:" />
+                                    <p:inputText value="#{cargaHorariaitsBean.selectedCargaHorariaits.practica}" />
+
+                                    <h:outputText value="Teoria:" />
+                                    <p:inputText value="#{cargaHorariaitsBean.selectedCargaHorariaits.teoria}" />
+                                    
+                          
+                                    
+                                    <h:inputHidden value="#{cargaHorariaitsBean.selectedCargaHorariaits.id}" />
+                                    <f:facet name="footer">
+                                        <p:commandButton update=":formDateTable,:msgs" oncomplete="PF('dialogCargaHorariaitsUpdate').hide()" actionListener="#{cargaHorariaitsBean.modificarCargaHorariaits(actionEvent)}" icon="ui-icon-disk" title="Guardar cuenta de CargaHorariaits" value="Modificar"/>
+                                        <p:commandButton oncomplete="PF('dialogCargaHorariaitsUpdate').hide()" icon="ui-icon-cancel" title="Cancelar modificación de cuenta de CargaHorariaits" value="Cancelar"/>
+                                    </f:facet>
+                                </h:panelGrid>
+                            </p:outputPanel>
+                        </p:dialog>
+                    </h:form>
+
+                    <p:confirmDialog showEffect="fade" hideEffect="explode" appendTo="@(body)" closeOnEscape="true" message="Esta seguro de eliminar el reigistro?" header="Eliminar Registro" severity="alert" widgetVar="dialogCargaHorariaitsDelete">
+                        <h:form id="formDelete"> 
+                            <h:inputHidden value="#{cargaHorariaitsBean.selectedCargaHorariaits.id}" />
+                            <p:commandButton value="Aceptar" update=":formDateTable,:msgs" actionListener="#{cargaHorariaitsBean.eliminarCargaHorariaits(actionEvent)}" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" oncomplete="PF('dialogCargaHorariaitsDelete').hide()" />
+                            <p:commandButton value="Cancelar" styleClass="ui-confirmdialog-no" icon="ui-icon-close" onclick="PF('dialogCargaHorariaitsDelete').hide()" />
+                        </h:form>
+                    </p:confirmDialog>
+
+
+                </ui:define>
+
+            </ui:composition>
+
+        </body>
+    </f:view>
+</html>

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"   
+      xmlns:p="http://primefaces.org/ui"   
+      xmlns:h="http://xmlns.jcp.org/jsf/html"     
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <f:view contentType="text/html">
+        <h:head>
+            <title>Especialidad</title>
+        </h:head>
+        <body>
+            <ui:composition template="./Plantilla.xhtml">
+
+                <ui:define name="content">
+
+                    <p:growl id="msgs" showDetail="true" />
+
+                    <h:form rendered="#{loginBean.ulog.rol.id==1}">
+                        <p:commandButton update=":formCreate,:formDataTable" oncomplete="PF('dialogEspecialidadCreate').show()" icon="ui-icon-disk" title="Crear una nueva especialidad" value="Crear"/>
+                    </h:form>
+
+                    <h:form id="formDataTable">
+
+
+                        <p:dataTable id="basicDT" var="especialidad" value="#{EspecialidadBean.especialidades}">
+                            <f:facet name="header">
+                                Lista de Especialidades
+                            </f:facet>
+
+                            <p:column style=";text-align:center" headerText="Id Especialidad">
+                                <h:outputText value="#{especialidad.id}" />
+                            </p:column>
+                            <p:column style=";text-align:center" headerText="Nombre de la Especialidad">
+                                <h:outputText value="#{especialidad.descripcion}" />
+                            </p:column>
+                            <p:column rendered="#{loginBean.ulog.rol.id==1}" style="text-align: center">
+                                <p:commandButton update=":formUpdate:EspecialidadDetalle" oncomplete="PF('dialogEspecialidadUpdate').show()" icon="ui-icon-pencil" title="Actualizar">
+                                    <f:setPropertyActionListener value="#{especialidad}" target="#{EspecialidadBean.selectedEspecialidad}" />
+                                </p:commandButton>
+                                <p:commandButton update=":formDelete" oncomplete="PF('dialogEspecialidadDelete').show()" icon="ui-icon-trash" title="Borrar">
+                                    <f:setPropertyActionListener value="#{especialidad}" target="#{EspecialidadBean.selectedEspecialidad}" />
+                                </p:commandButton>
+                            </p:column>
+                        </p:dataTable>
+                    </h:form>
+
+                    <h:form id="formCreate">
+
+                        <p:dialog id="dlgEspecialidad" header="Crear Especialidad" widgetVar="dialogEspecialidadCreate" showEffect="fade" hideEffect="fade" resizable="false">
+                            <p:outputPanel id="EspecialidadDetalle" style="text-align:center;">
+                                <h:panelGrid  columns="2" style="padding: 2px;">
+
+
+
+
+                                    <h:outputText value="Nombre del Especialidad:" />
+                                    <h:inputText value="#{EspecialidadBean.selectedEspecialidad.descripcion}" />
+
+                                    <f:facet name="footer">
+                                        <p:commandButton update=":formDataTable,:msgs" oncomplete="PF('dialogEspecialidadCreate').hide()" actionListener="#{EspecialidadBean.crearEspecialidad(actionEvent)}" icon="ui-icon-disk" title="Guardar especialidad" value="Guardar"/>
+                                        <p:commandButton oncomplete="PF('dialogEspecialidadCreate').hide()" icon="ui-icon-cancel" title="Cancelar creacion de especialidad" value="Cancelar"/>
+                                    </f:facet>
+                                </h:panelGrid>
+                            </p:outputPanel>
+                        </p:dialog>
+
+                    </h:form>
+
+                    <h:form id="formUpdate">
+
+                        <p:dialog id="dlgEspecialidadUpdate" header="Modificar Especialidad" widgetVar="dialogEspecialidadUpdate" showEffect="fade" hideEffect="fade" resizable="false">
+                            <p:outputPanel id="EspecialidadDetalle" style="text-align:center;">
+                                <h:panelGrid  columns="2" style="padding: 2px;">
+
+
+
+
+                                    <h:outputText value="Nombre del Especialidad:" />
+                                    <h:inputText value="#{EspecialidadBean.selectedEspecialidad.descripcion}" />
+                                    <h:inputHidden value="#{EspecialidadBean.selectedEspecialidad.id}" />
+
+                                    <f:facet name="footer">
+                                        <p:commandButton update=":formDataTable,:msgs" oncomplete="PF('dialogEspecialidadUpdate').hide()" actionListener="#{EspecialidadBean.modificarEspecialidad(actionEvent)}" icon="ui-icon-disk" title="Modificar especialidad" value="Modificar"/>
+                                        <p:commandButton oncomplete="PF('dialogEspecialidadUpdate').hide()" icon="ui-icon-cancel" title="Cancelar modificacion de especialidad" value="Cancelar"/>
+                                    </f:facet>
+                                </h:panelGrid>
+                            </p:outputPanel>
+                        </p:dialog>
+
+                    </h:form>        
+
+                    <p:confirmDialog showEffect="explode" hideEffect="explode" appendTo="@(body)" closeOnEscape="true" message="Esta seguro de eliminar el registro?" header="Eliminar Registro" severity="alert" widgetVar="dialogEspecialidadDelete">
+                        <h:form id="formDelete">
+
+                            <h:inputHidden value="#{EspecialidadBean.selectedEspecialidad.id}" />
+
+                            <p:commandButton value="Aceptar" update=":formDataTable,:msgs" actionListener="#{EspecialidadBean.eliminarEspecialidad(actionEvent)}" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" onclick="PF('dialogEspecialidadDelete').hide()" />
+                            <p:commandButton value="Cancelar" styleClass="ui-confirmdialog-no" icon="ui-icon-close" onclick="PF('dialogEspecialidadDelete').hide()" />
+                        </h:form>
+                    </p:confirmDialog>
+
+                </ui:define>
+
+            </ui:composition>  
+        </body>
+    </f:view>
+</html>

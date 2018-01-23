@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <f:view contentType="text/html">
+        <h:head>
+            <title>Curso</title>
+            <h:outputStylesheet name="css/plantilla.css"/>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+            <h:outputStylesheet name="css/plantilla.css"/>
+            <h:outputStylesheet name="css/vistaamplia.css"/>
+            <h:outputStylesheet name="css/vistamovil.css"/>
+        </h:head>
+
+        <body>
+            <ui:composition template="./Plantilla.xhtml">
+
+                <ui:define name="content">
+
+                    <p:growl id="msgs" showDetail="true" />
+
+                    <h:form rendered="#{loginBean.ulog.rol.id==1}">
+                        <p:commandButton update=":formCreate,:formDataTable" oncomplete="PF('dialogCursoCreate').show()" icon="ui-icon-disk" title="Crear un nuevo Curso" value="Crear"/>
+                    </h:form>
+
+                    <h:form id="formDataTable"  class="vAm">
+
+
+                        <p:dataTable id="basicDT" var="Curso" value="#{CursoBean.cursos}">
+                            <f:facet name="header">
+                                Listado de Cursos
+                            </f:facet>
+                                <p:column class="vmo" style=";text-align:center" headerText="Nro Nacional">
+                                    <p:outputLabel value="#{Curso.numeroNacional}" />
+                                </p:column>
+                                <p:column class="vmo" style=";text-align:center" headerText="Nro Regional">
+                                    <p:outputLabel value="#{Curso.numeroRegional}" />
+                                </p:column>
+                                <p:column class="vmo" style=";text-align:center" headerText="Hora de Entrada">
+                                    <p:outputLabel value="#{Curso.horaEntrada}" />
+                                </p:column>
+                                <p:column class="vmo" style=";text-align:center" headerText="Hora de Salida">
+                                    <p:outputLabel value="#{Curso.horaSalida}" />
+                                </p:column>
+                                <p:column class="vmo" style=";text-align:center" headerText="Fecha Inicio">
+                                    <h:outputText value="#{Curso.fechaInicio}">
+                                        <f:convertDateTime type="date" pattern="dd-MM-yyyy"/>
+                                    </h:outputText>
+                                </p:column>
+                                <p:column class="vmo" style=";text-align:center" headerText="Fecha Clausura">
+                                    <h:outputText value="#{Curso.fechaClausura}">
+                                        <f:convertDateTime type="date" pattern="dd-MM-yyyy"/>
+                                    </h:outputText>
+                                </p:column>
+                                <p:column class="vmo" style=";text-align:center" headerText="Tipo Frecuencia">
+                                    <p:outputLabel value="#{Curso.tipoFrecuencia.descripcion}" />
+                                </p:column>
+                                <p:column class="vmo" style=";text-align:center" headerText="Frecuencia Diaria">
+                                    <p:outputLabel value="#{Curso.frecuenciaDiaria.descripcion}" />
+                                </p:column>
+                            <p:column style=";text-align:center" headerText="Especialidad">
+                                <p:outputLabel value="#{Curso.especialidad.descripcion}" />
+                            </p:column>
+                            <p:column style=";text-align:center" headerText="Localidad">
+                                <p:outputLabel value="#{Curso.localidad.descripcion}" />
+                            </p:column>
+                            <p:column style=";text-align:center" headerText="Instructor">
+                                <p:outputLabel value="#{Curso.instructor.nombre} #{Curso.instructor.apellido}" />
+                            </p:column>
+                            <p:column style=";text-align:center" headerText="Activo">
+                                <p:outputLabel value="#{Curso.activo==true?'En Proceso':'Culminado'}" />
+                            </p:column>
+
+                            <p:column class="vmo" rendered="#{loginBean.ulog.rol.id==1}" style="width:88px;text-align:center">
+                                <p:commandButton update=":formUpdate:Curso" oncomplete="PF('dialogCursoUpdate').show()" icon="ui-icon-pencil" title="Actualizar" actionListener="#{CursoBean.seleccionarCurso(Curso.numeroNacional)}"/>
+                                <p:commandButton update=":formDelete" oncomplete="PF('dialogCursoDelete').show()" icon="ui-icon-trash" title="Borrar">
+                                    <f:setPropertyActionListener value="#{Curso}" target="#{CursoBean.selectedCurso}" />
+                                </p:commandButton>
+                            </p:column>
+                        </p:dataTable>
+                    </h:form>
+
+                    <h:form id="formCreate">
+
+                        <p:dialog id="dlgCurso" header="Crear Curso" widgetVar="dialogCursoCreate" showEffect="fade" hideEffect="fade" resizable="false">
+                            <p:outputPanel id="Curso">
+                                <h:panelGrid  columns="2" style="padding: 2px;">
+
+                                    <h:outputText value="Tipo Frecuencia:" />
+                                    <p:selectOneMenu value="#{CursoBean.tipoFrecuencia.id}" style="width:125px">
+                                        <f:selectItem itemLabel="- Seleccione -" itemValue="" />
+                                        <f:selectItems value="#{TipoFrecuenciaBean.tipofrecuencias}" itemValue="#{tipoFrecuencia.id}" itemLabel="#{tipoFrecuencia.descripcion}" var="tipoFrecuencia" />
+                                    </p:selectOneMenu>
+                                    <h:outputText value="Frecuencia Diaria:" />
+                                    <p:selectOneMenu value="#{CursoBean.frecuenciaDiaria.id}" style="width:125px">
+                                        <f:selectItem itemLabel="- Seleccione -" itemValue="" />
+                                        <f:selectItems value="#{FrecuenciaDiariaBean.frecuenciaDiarias}" itemValue="#{frecuenciaDiaria.id}" itemLabel="#{frecuenciaDiaria.descripcion}" var="frecuenciaDiaria" />
+                                    </p:selectOneMenu>
+                                    <h:outputText value="Especialidad:" />
+                                    <p:selectOneMenu value="#{CursoBean.especialidad.id}" style="width:125px">
+                                        <f:selectItem itemLabel="- Seleccione -" itemValue="" />
+                                        <f:selectItems value="#{EspecialidadBean.especialidades}" itemValue="#{especialidad.id}" itemLabel="#{especialidad.descripcion}" var="especialidad" />
+                                    </p:selectOneMenu> 
+                                    <h:outputText value="Localidad:" />
+                                    <p:selectOneMenu value="#{CursoBean.localidad.id}" style="width:125px">
+                                        <f:selectItem itemLabel="- Seleccione -" itemValue="" />
+                                        <f:selectItems value="#{localidadBean.localidads}" itemValue="#{localidad.id}" itemLabel="#{localidad.descripcion}" var="localidad" />
+                                    </p:selectOneMenu>
+
+                                    <h:outputText value="Instructor:" />
+                                    <p:selectOneMenu value="#{CursoBean.instructor.ci}" style="width:125px">
+                                        <f:selectItem itemLabel="- Seleccione -" itemValue="" />
+                                        <f:selectItems value="#{instructorBean.instructors}" itemValue="#{instructor.ci}" itemLabel="#{instructor.nombre}" var="instructor" />
+                                    </p:selectOneMenu>
+
+                                    <h:outputText value="Nro. Nacional:" />
+                                    <p:inputText value="#{CursoBean.selectedCurso.numeroNacional}">
+
+                                    </p:inputText>
+                                    <h:outputText value="Nro. Regional:" />
+                                    <p:inputText value="#{CursoBean.selectedCurso.numeroRegional}">
+
+                                    </p:inputText>
+                                    <h:outputText value="Hora de Entrada:" />
+                                    <p:inputText value="#{CursoBean.selectedCurso.horaEntrada}" />
+                                    <h:outputText value="Hora de Salida:" />
+                                    <p:inputText value="#{CursoBean.selectedCurso.horaSalida}" />
+                                    <h:outputText value="Fecha de Inicio:" />
+                                    <p:calendar value="#{CursoBean.selectedCurso.fechaInicio}" />
+                                    <h:outputText value="Fecha Clausura:" />
+                                    <p:calendar value="#{CursoBean.selectedCurso.fechaClausura}" />
+                                    <p:outputLabel for="activo" value="Activo:" />
+                                    <p:selectOneRadio id="activo" value="#{CursoBean.selectedCurso.activo}">
+                                        <f:selectItem itemLabel="Activo" itemValue="true" />
+                                        <f:selectItem itemLabel="Inactivo" itemValue="false" />
+                                    </p:selectOneRadio>
+
+
+
+                                    <f:facet name="footer">
+                                        <p:commandButton update=":formDataTable,:msgs" oncomplete="PF('dialogCursoCreate').hide()" actionListener="#{CursoBean.crearCurso(actionEvent)}" icon="ui-icon-disk" title="Guardar Curso" value="Guardar"/>
+                                        <p:commandButton oncomplete="PF('dialogCursoCreate').hide()" icon="ui-icon-cancel" title="Cancelar creacion de Curso" value="Cancelar"/>
+                                    </f:facet>
+                                </h:panelGrid>
+                            </p:outputPanel>
+                        </p:dialog>
+
+                    </h:form>  
+
+                    <h:form id="formUpdate">
+
+                        <p:dialog id="dlgCursoUpdate" header="Modificar Curso" widgetVar="dialogCursoUpdate" showEffect="fade" hideEffect="fade" resizable="false">
+                            <p:outputPanel id="Curso">
+                                <h:panelGrid  columns="2" style="padding: 2px;">
+
+                                    <h:outputText value="Tipo Frecuencia:" />
+                                    <p:selectOneMenu value="#{CursoBean.tipoFrecuencia.id}" style="width:125px">
+                                        <f:selectItem itemLabel="- Seleccione -" itemValue="" />
+                                        <f:selectItems value="#{TipoFrecuenciaBean.tipofrecuencias}" itemValue="#{tipoFrecuencia.id}" itemLabel="#{tipoFrecuencia.descripcion}" var="tipoFrecuencia" />
+                                    </p:selectOneMenu>
+                                    <h:outputText value="Frecuencia Diaria:" />
+                                    <p:selectOneMenu value="#{CursoBean.frecuenciaDiaria.id}" style="width:125px">
+                                        <f:selectItem itemLabel="- Seleccione -" itemValue="" />
+                                        <f:selectItems value="#{FrecuenciaDiariaBean.frecuenciaDiarias}" itemValue="#{frecuenciaDiaria.id}" itemLabel="#{frecuenciaDiaria.descripcion}" var="frecuenciaDiaria" />
+                                    </p:selectOneMenu>
+                                    <h:outputText value="Especialidad:" />
+                                    <p:selectOneMenu value="#{CursoBean.especialidad.id}" style="width:125px">
+                                        <f:selectItem itemLabel="- Seleccione -" itemValue="" />
+                                        <f:selectItems value="#{EspecialidadBean.especialidades}" itemValue="#{especialidad.id}" itemLabel="#{especialidad.descripcion}" var="especialidad" />
+                                    </p:selectOneMenu> 
+                                    <h:outputText value="Localidad:" />
+                                    <p:selectOneMenu value="#{CursoBean.localidad.id}" style="width:125px">
+                                        <f:selectItem itemLabel="- Seleccione -" itemValue="" />
+                                        <f:selectItems value="#{localidadBean.localidads}" itemValue="#{localidad.id}" itemLabel="#{localidad.descripcion}" var="localidad" />
+                                    </p:selectOneMenu>
+
+                                    <h:outputText value="Instructor:" />
+                                    <p:selectOneMenu value="#{CursoBean.instructor.ci}" style="width:125px">
+                                        <f:selectItem itemLabel="- Seleccione -" itemValue="" />
+                                        <f:selectItems value="#{instructorBean.instructors}" itemValue="#{instructor.ci}" itemLabel="#{instructor.nombre}" var="instructor" />
+                                    </p:selectOneMenu>
+
+
+                                    <h:outputText value="Nro. Nacional:" />
+                                    <p:inputText value="#{CursoBean.selectedCurso.numeroNacional}">
+
+                                    </p:inputText>
+                                    <h:outputText value="Nro. Regional:" />
+                                    <p:inputText value="#{CursoBean.selectedCurso.numeroRegional}">
+
+                                    </p:inputText>
+                                    <h:outputText value="Hora de Entrada:" />
+                                    <p:inputText value="#{CursoBean.selectedCurso.horaEntrada}" />
+                                    <h:outputText value="Hora de Salida:" />
+                                    <p:inputText value="#{CursoBean.selectedCurso.horaSalida}" />
+                                    <h:outputText value="Fecha de Inicio:" />
+                                    <p:calendar value="#{CursoBean.selectedCurso.fechaInicio}" />
+                                    <h:outputText value="Fecha Clausura:" />
+                                    <p:calendar value="#{CursoBean.selectedCurso.fechaClausura}" />
+                                    <p:outputLabel for="activo" value="Activo:" />
+                                    <p:selectOneRadio id="activo" value="#{CursoBean.selectedCurso.activo}">
+                                        <f:selectItem itemLabel="Activo" itemValue="true" />
+                                        <f:selectItem itemLabel="Inactivo" itemValue="false" />
+                                    </p:selectOneRadio>
+
+                                    <f:facet name="footer">
+                                        <p:commandButton update=":formDataTable,:msgs" oncomplete="PF('dialogCursoUpdate').hide()" actionListener="#{CursoBean.modificarCurso(actionEvent)}" icon="ui-icon-disk" title="Modificar Documento" value="Modificar"/>
+                                        <p:commandButton oncomplete="PF('dialogCursoUpdate').hide()" icon="ui-icon-cancel" title="Cancelar modificacion de Curso" value="Cancelar"/>
+                                    </f:facet>
+
+                                </h:panelGrid>
+                            </p:outputPanel>
+                        </p:dialog>
+
+                    </h:form>
+
+                    <p:confirmDialog showEffect="explode" hideEffect="explode"  appendTo="@(body)" closeOnEscape="true" message="Esta seguro de eliminar el registro?" header="Eliminar Registro" severity="alert" widgetVar="dialogCursoDelete">
+                        <h:form id="formDelete">
+
+                            <h:inputText value="#{CursoBean.selectedCurso}" />
+
+
+
+                            <p:commandButton value="Aceptar" update=":formDataTable,:msgs" actionListener="#{CursoBean.eliminarCurso(actionEvent)}" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" onclick="PF('dialogCursoDelete').hide()" />
+                            <p:commandButton value="Cancelar" styleClass="ui-confirmdialog-no" icon="ui-icon-close" onclick="PF('dialogCursoDelete').hide()" />
+                        </h:form>
+                    </p:confirmDialog>
+
+                </ui:define>
+
+            </ui:composition> 
+        </body>
+    </f:view>
+</html>

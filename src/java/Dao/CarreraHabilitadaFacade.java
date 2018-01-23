@@ -6,9 +6,12 @@
 package Dao;
 
 import Entidades.CarreraHabilitada;
+import Entidades.Grupo;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -27,6 +30,13 @@ public class CarreraHabilitadaFacade extends AbstractFacade<CarreraHabilitada> {
 
     public CarreraHabilitadaFacade() {
         super(CarreraHabilitada.class);
+    }
+    
+    public List<CarreraHabilitada> findByGrupo(Grupo grupo) {
+        TypedQuery<CarreraHabilitada> query = em.createQuery("SELECT c FROM CarreraHabilitada c WHERE c.carreraHabilitadaPK.grupo = :grupo", CarreraHabilitada.class);
+        query.setParameter("grupo", grupo.getId());
+        return query.getResultList();
+
     }
     
 }

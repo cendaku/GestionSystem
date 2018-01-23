@@ -4,6 +4,8 @@ body{
     font-family: sans-serif;
     background: url(../images/fondo/bg.png) 50% 50% repeat;
     margin-bottom: -120px;
+    background-attachment: fixed;
+    background-position:0 0px;
 }
 
 .img{
@@ -17,6 +19,7 @@ body{
 /*Menu-----------------------------------------------------------------INICIO*/
 
 header{
+    position: relative;
     width: 100%;
     background: url(../images/fondo/bbg.gif) green;
     /*position: fixed;*/
@@ -235,12 +238,14 @@ header label.mp div.mip:hover {
 
 
 #top{
+    position: relative;
     width: 1075px;
     margin-right: auto;
     margin-left: auto;
 }
 
 #content{
+    position: relative;
     padding-top: 20px;
     padding-bottom: 0;
     background: url(../images/fondo/bgctgri.jpg);
@@ -251,6 +256,7 @@ header label.mp div.mip:hover {
 }
 
 #bottom{
+    position: relative;
     background: url(../images/Republica-del-Paraguay.png) no-repeat;
     width: 1065px;
     color: white;
@@ -328,4 +334,10 @@ main {
     background-size: cover;
     border-radius: 50px;
     box-shadow: 5px 5px 10px #000;
+}
+#particles-js {
+    width: 100%;
+    height:100%;
+    position: fixed;
+    background:rgba(0,0,0,0.3);
 }

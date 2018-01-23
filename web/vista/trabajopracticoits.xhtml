@@ -1,0 +1,105 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <f:view contentType="text/html">
+        <h:head>
+            <f:facet name="first">
+                <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+                <title>Trabajo Practico ITS</title>
+            </f:facet>
+        </h:head>
+    <body>
+
+        <ui:composition template="./Plantilla.xhtml">
+
+            <ui:define name="content">
+               <p:growl id="msgs" showDetail="true" />
+
+                    <h:form rendered="#{loginBean.ulog.rol.id==1}" class="vmo">
+                        <p:commandButton update="formCargar,:formDateTable" oncomplete="PF('dialogTrabajoPracticoITSCarga').show()" icon="ui-icon-disk" title="Cargar TrabajoPracticoITS" value="Cargar"/>
+                    </h:form>
+
+                    <h:form id="formDateTable" >
+                        <p:dataTable id="basicDT" var="trabajopracticoits" value="#{trabajopracticoitsBean.trabajoPracticoitss}"
+                                 paginator="true" rows="10" paginatorPosition="bottom"
+                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink}
+                                 {NextPageLink} {LastPageLink} {PageLinks} {RowsPerPageDropdown}"
+                                 rowsPerPageTemplate="10,15,20,25,30" emptyMessage="No se encontro ningun resultado">
+                            <f:facet name="header">
+                                Listado de Trabajo Practico ITS
+                            </f:facet>
+
+                            <p:column style="width:100%;text-align: center" headerText="Nombre">
+                                <h:outputText value="#{trabajopracticoits.nombre}" />
+                            </p:column>
+                            <p:column style="width:100%;text-align: center" headerText="Puntaje">
+                                <h:outputText value="#{trabajopracticoits.puntajetotal}" />
+                            </p:column>
+                            <p:column rendered="#{loginBean.ulog.rol.id==1}" class="vmo" style="width:88px;text-align: center">
+                                <p:commandButton update=":formUpdate:trabajopracticoitsDetalle" oncomplete="PF('dialogTrabajoPracticoITSUpdate').show()" icon="ui-icon-pencil" title="Actualizar">
+                                    <f:setPropertyActionListener value="#{trabajopracticoits}" target="#{trabajopracticoitsBean.selectedTrabajoPracticoits}" />
+                                </p:commandButton>
+                                <p:commandButton update=":formDelete" oncomplete="PF('dialogTrabajoPracticoITSDelete').show()" icon="ui-icon-trash" title="Borrar">
+                                    T     <f:setPropertyActionListener value="#{trabajopracticoits}" target="#{trabajopracticoitsBean.selectedTrabajoPracticoits}" />
+                                </p:commandButton>
+                            </p:column>
+                        </p:dataTable>
+                    </h:form>
+
+                    <h:form id="formCargar">
+                        <p:dialog id="dlgTrabajoPracticoITSCargar" closeOnEscape="true" header="Cargar Trabajo Practico ITS" widgetVar="dialogTrabajoPracticoITSCarga" showEffect="fade" hideEffect="fade" resizable="false">
+                            <p:outputPanel id="trabajopracticoitsDetalle" style="text-align: left;">
+                                <h:panelGrid  columns="2" style="padding: 2px;" >
+
+                                    <h:outputText value="Nombre:" />
+                                    <p:inputText value="#{trabajopracticoitsBean.selectedTrabajoPracticoits.nombre}" />
+                                    <h:outputText value="Puntaje Total:" />
+                                    <p:inputText value="#{trabajopracticoitsBean.selectedTrabajoPracticoits.puntajetotal}" />
+                               
+                                    <f:facet name="footer">
+                                        <p:commandButton update=":formDateTable,:msgs" oncomplete="PF('dialogTrabajoPracticoITSCarga').hide()" actionListener="#{trabajopracticoitsBean.CrearTrabajoPrac(actionEvent)}" icon="ui-icon-disk" title="Guardar TrabajoPracticoITS" value="Guardar"/>
+                                        <p:commandButton oncomplete="PF('dialogTrabajoPracticoITSCarga').hide()" icon="ui-icon-cancel" title="Cancelar TrabajoPracticoITS" value="Cancelar"/>
+                                    </f:facet>
+                                </h:panelGrid>
+                            </p:outputPanel>
+                        </p:dialog>
+                    </h:form>
+
+                    <h:form id="formUpdate">
+                        <p:dialog id="dlgTrabajoPracticoITSUpdate" closeOnEscape="true" header="Modificar TrabajoPracticoITS" widgetVar="dialogTrabajoPracticoITSUpdate" showEffect="fade" hideEffect="fade" resizable="false">
+
+                            <p:outputPanel id="trabajopracticoitsDetalle" style="text-align: left;">
+                                <h:panelGrid  columns="2" style="padding: 2px;" >
+                                    <h:outputText value="Nombre:" />
+                                    <p:inputText value="#{trabajopracticoitsBean.selectedTrabajoPracticoits.nombre}" />
+                                    <h:outputText value="Puntaje Total:" />
+                                    <p:inputText value="#{trabajopracticoitsBean.selectedTrabajoPracticoits.puntajetotal}" />
+                                    
+                                    <f:facet name="footer">
+                                        <p:commandButton update=":formDateTable,:msgs" oncomplete="PF('dialogTrabajoPracticoITSUpdate').hide()" actionListener="#{trabajopracticoitsBean.ModificarTrabajoPrac(actionEvent)}" icon="ui-icon-disk" title="Guardar TrabajoPracticoITS" value="Modificar"/>
+                                        <p:commandButton oncomplete="PF('dialogTrabajoPracticoITSUpdate').hide()" icon="ui-icon-cancel" title="Cancelar modificación de TrabajoPracticoITS" value="Cancelar"/>
+                                    </f:facet>
+                                </h:panelGrid>
+                            </p:outputPanel>
+                        </p:dialog>
+                    </h:form>
+
+                    <p:confirmDialog showEffect="fade" hideEffect="explode" appendTo="@(body)" closeOnEscape="true" message="Esta seguro de eliminar el reigistro?" header="Eliminar Registro" severity="alert" widgetVar="dialogTrabajoPracticoITSDelete">
+                        <h:form id="formDelete"> 
+                            <h:inputHidden value="#{trabajopracticoitsBean.selectedTrabajoPracticoits.puntajetotal}" />
+                            <p:commandButton value="Aceptar" update=":formDateTable,:msgs" actionListener="#{trabajopracticoitsBean.EliminarTrabajoPrac(actionEvent)}" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" oncomplete="PF('dialogTrabajoPracticoITSDelete').hide()" />
+                            <p:commandButton value="Cancelar" styleClass="ui-confirmdialog-no" icon="ui-icon-close" onclick="PF('dialogTrabajoPracticoITSDelete').hide()" />
+                        </h:form>
+                    </p:confirmDialog>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+    </f:view>
+</html>

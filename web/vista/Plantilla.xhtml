@@ -16,195 +16,196 @@
         <script src="../resources/js/jquery.scrollUp.js"></script>
     </h:head>
     <h:body>
-        <div id="particles-js">
-            <div id="top" style="box-shadow: 5px 5px 10px #000;">
-                <ui:insert name="top">
-                    <div class="vmo">
-                        <h:link outcome="index.xhtml" >
-                            <p:graphicImage name="/images/titulos/portada.png" class='img'/>
-                        </h:link>
-                    </div>
-                    <div class="mm">
-                        <h:form>
-                            <p:commandButton class="bm" rendered="#{loginBean.ulog.rol.id>0}" update=":formVer" oncomplete="PF('dialogUsuarioMostrar').show()" icon="ui-icon-person" value="#{loginBean.ulog.nombre} #{loginBean.ulog.apellido}" title="Usuario">
-                                <f:setPropertyActionListener value="#{loginBean}" target="#{loginBean.ulog}" />
-                            </p:commandButton>
-                            <p:commandButton class="bm" icon="ui-icon-person" rendered="#{loginBean.ulog.rol.id==x}" style="cursor: pointer" onclick="PF('dlg').show();" title="Inicia Sesión" value="Inicia Sesión"/>&nbsp;
-                            <p:commandButton class="bm" icon="ui-icon-power" rendered="#{loginBean.ulog.rol.id>0}" actionListener="#{loginBean.cerrarSesion()}" value="Cerrar Sesión" action="/vista/index?faces-redirect=true" title="Cerrar Sesión"/>
-                        </h:form>
-                    </div>
-                    <!-- MENÚ PRINCIPAL  -->
-                    <header>
-                        <input type="checkbox" id="btn-menu"/>
-                        <label class="mp" for="btn-menu">
-                            <div style="float: left">
-                                <h:link outcome="index.xhtml">
-                                    <p:graphicImage class="maxin" name="/images/titulos/portada.png"/>
-                                </h:link>
-                            </div>
-                            <div class="mip" style="float: right">
-                                <p:graphicImage style="width: 60px;border-left: 1px solid #fff;" name="/images/icons/menuw.png" alt=""/>
-                            </div>
-                        </label>
-                        <nav class="menu">
-                            <ul>
-                                <li><label for="submenu-toggle" class="m1">Administrar &#x25BE;</label>
-                                    <input type="checkbox" id="submenu-toggle"/>
-                                    <ul id="subm">
-                                        <li jsf:rendered="#{loginBean.ulog.rol.id==1}"><h:link class="m2" outcome="usuario.xhtml" value="Usuario"/></li>
-                                        <li jsf:rendered="#{loginBean.ulog.rol.id==1}"><h:link outcome="rol.xhtml" class="m2" value="Rol"/></li>
-
-                                        <li jsf:rendered="#{loginBean.ulog.rol.id==1 or loginBean.ulog.rol.id==3}"><h:link outcome="instructor.xhtml" class="m2" value="Instructor"/></li>
-                                        <li><h:link outcome="semestre.xhtml" class="m2" value="Semestre"/></li>
-                                        <li><h:link outcome="cargaHorariaits.xhtml" class="m2" value="Carga Horaria ITS"/></li>
-                                        <li><h:link outcome="carrera.xhtml" class="m2" value="Carreras"/></li>
-                                        <li><h:link outcome="grupo.xhtml" class="m2" value="Grupos"/></li>
-                                    </ul></li>
-
-                                <li jsf:rendered="#{loginBean.ulog.rol.id==1}"><label for="submenu1-toggle" class="m1">Detalle &#x25BE;</label>
-                                    <input type="checkbox" id="submenu1-toggle"/>
-                                    <ul id="subm">
-                                        <li><h:link outcome="discapacidad.xhtml" class="m2" value="Discapacidad"/></li>
-                                        <li><h:link outcome="estadoCivil.xhtml" class="m2" value="Estado Civil"/></li>
-                                        <li><label for="submenu-toggle1" class="m2">Academia &#x25BE;</label>
-                                            <input type="checkbox" id="submenu-toggle1"/>
-                                            <ul id="subm">
-                                                <li><h:link outcome="estadoAcademico.xhtml" class="mb1" value="Estado"/></li>
-                                                <li><h:link outcome="nivelAcademico.xhtml" class="mb1" value="Nivel"/></li>
-                                            </ul></li>
-                                        <li><h:link outcome="localidad.xhtml" class="m2" value="Localidad"/></li>
-                                        <li><h:link outcome="municipio.xhtml" class="m2" value="Municipio"/></li>
-                                        <li><h:link outcome="nacionalidad.xhtml" class="m2" value="Nacionalidad"/></li>
-                                        <li><h:link outcome="zona.xhtml" class="m2" value="Zona"/></li>
-                                        <!--<li><h:link outcome="" class="m2" value=""/></li>-->
-                                    </ul></li>
-
-                                <!--<li><h:link outcome="Texto.xhtml" class="m1" value="Texto"/></li>-->
-                                <li><h:link outcome="alumno.xhtml" class="m1" value="Alumno"/></li>
-
-                                <li><label style="margin: 0px; padding: 0px" for="submenu2-toggle"><h:link class="m1" outcome="Curso.xhtml" value="Cursos &#x25BE;"/></label>
-                                    <input type="checkbox" id="submenu2-toggle"/>
-                                    <ul jsf:rendered="#{loginBean.ulog.rol.id==1}" id="subm">
-                                        <li><h:link outcome="Especialidad.xhtml" class="m2" value="Especialidad"/></li>
-                                        <li><h:link outcome="TipoFrecuencia.xhtml" class="m2" value="Tipo Frecuencia"/></li>
-                                        <li><h:link outcome="FrecuenciaDiaria.xhtml" class="m2" value="Frecuencia Diaria"/></li>
-                                    </ul></li>
-
-                                <li jsf:rendered="#{loginBean.ulog.rol.id==x}" class="mmo"><label class="m3" value="javascript:void(0)" onclick="PF('dlg').show();" title="Inicia Sesión">Inicia Sesión</label></li>
-
-                                <li jsf:rendered="#{loginBean.ulog.rol.id>0}" class="mmo"><label class="m3">#{loginBean.ulog.nombre} #{loginBean.ulog.apellido} &#x25BE;</label>
-                                    <ul>
-                                        <li><h:form><p:commandLink style="font-family: impact;" class="m2" rendered="#{loginBean.ulog.rol.id>0}" update=":formVer" oncomplete="PF('dialogUsuarioMostrar').show()" value="Perfil" title="Usuario">
-                                                    <f:setPropertyActionListener value="#{loginBean}" target="#{loginBean.ulog}" />
-                                                </p:commandLink></h:form></li>
-                                        <li><h:form><p:commandLink style="font-family: impact;" class="m2" actionListener="#{loginBean.cerrarSesion()}" value="Salir" action="/vista/index?faces-redirect=true" title="Cerrar Sesión"/></h:form></li>
-                                    </ul></li>
-                            </ul>
-                        </nav>
-                    </header>
-                    <!-- CIERRE MENÚ PRINCIPAL  -->
-                </ui:insert>
-            </div>
-
-            <div id="content" >
-                <ui:insert name="content">Content</ui:insert>
-            </div>
-
-
-            <div id="bottom" >
-                <ui:insert name="bottom"><br></br>
-                    <main>
-                        <p>
-                            <br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br>
-                            <h3>Proyecto © 2017 Programación</h3>
-                            <br></br><br></br><br></br><br></br>
-                        </p>
-
-                        <div class="Ed" align="justify" style="font-family: sans-serif;content: inherit">
-
-                            <center><h:form class="uc">            
-                                    <p:outputLabel class="staff" onclick="document.getElementById('oculto').style.visibility = 'visible'" title="Conjunto de personas que forman un cuerpo o equipo de estudio, información o asesoramiento en una empresa u organización.">
-                                        <p:graphicImage name="/images/STAFF.png"/>
-                                    </p:outputLabel>
-                                </h:form></center>
-                            <div id="oculto" style="visibility:hidden">
-                                <li>Carolina Beatriz Batte Garcete</li>
-                                <!--<strike><li>Jesus Ariel Caceres Coronil</li></strike>-->
-                                <li>Daniel David Centurión Medina</li>
-                                <li>Diego Rafael Coronel Otazu</li>
-                                <!--<strike><li>Magdalena Morales Duarte</li></strike>-->
-                                <li>Alvaro Salvador Torres Hidalgo</li>
-                                <br></br>
-                            </div>
+        <div id="particles-js"></div>
+        <div id="top" style="box-shadow: 5px 5px 10px #000;">
+            <ui:insert name="top">
+                <div class="vmo">
+                    <h:link outcome="index.xhtml" >
+                        <p:graphicImage name="/images/titulos/portada.png" class='img'/>
+                    </h:link>
+                </div>
+                <div class="mm">
+                    <h:form>
+                        <p:commandButton class="bm" rendered="#{loginBean.ulog.rol.id>0}" update=":formVer" oncomplete="PF('dialogUsuarioMostrar').show()" icon="ui-icon-person" value="#{loginBean.ulog.nombre} #{loginBean.ulog.apellido}" title="Usuario">
+                            <f:setPropertyActionListener value="#{loginBean}" target="#{loginBean.ulog}" />
+                        </p:commandButton>
+                        <p:commandButton class="bm" icon="ui-icon-person" rendered="#{loginBean.ulog.rol.id==x}" style="cursor: pointer" onclick="PF('dlg').show();" title="Inicia Sesión" value="Inicia Sesión"/>&nbsp;
+                        <p:commandButton class="bm" icon="ui-icon-power" rendered="#{loginBean.ulog.rol.id>0}" actionListener="#{loginBean.cerrarSesion()}" value="Cerrar Sesión" action="/vista/index?faces-redirect=true" title="Cerrar Sesión"/>
+                    </h:form>
+                </div>
+                <!-- MENÚ PRINCIPAL  -->
+                <header>
+                    <input type="checkbox" id="btn-menu"/>
+                    <label class="mp" for="btn-menu">
+                        <div style="float: left">
+                            <h:link outcome="index.xhtml">
+                                <p:graphicImage class="maxin" name="/images/titulos/portada.png"/>
+                            </h:link>
                         </div>
-                    </main>
-                </ui:insert>
-            </div>
+                        <div class="mip" style="float: right">
+                            <p:graphicImage style="width: 60px;border-left: 1px solid #fff;" name="/images/icons/menuw.png" alt=""/>
+                        </div>
+                    </label>
+                    <nav class="menu">
+                        <ul>
+                            <li><label for="submenu-toggle" class="m1">Administrar &#x25BE;</label>
+                                <input type="checkbox" id="submenu-toggle"/>
+                                <ul id="subm">
+                                    <li jsf:rendered="#{loginBean.ulog.rol.id==1}"><h:link class="m2" outcome="usuario.xhtml" value="Usuario"/></li>
+                                    <li jsf:rendered="#{loginBean.ulog.rol.id==1}"><h:link outcome="rol.xhtml" class="m2" value="Rol"/></li>
 
-            <center><h:form class="uc">
-                    <p:growl id="growl" sticky="true" showDetail="true" life="3000" />
-                    <p:dialog showEffect="fade" hideEffect="explode" header="Iniciar Sesión" widgetVar="dlg" resizable="false">
-                        <h:panelGrid columns="3" cellpadding="5">
-                            <p:watermark for="username" value="Ingrese su N° de Cedula"/>
-                            <h:outputLabel for="username" value="C.I.:" />
-                            <p:inputText id="username" value="#{loginBean.usuario.ci}"  required="true" label="Usuario" />
+                                    <li jsf:rendered="#{loginBean.ulog.rol.id==1 or loginBean.ulog.rol.id==3}"><h:link outcome="instructor.xhtml" class="m2" value="Instructor"/></li>
+                                    <li><h:link outcome="semestre.xhtml" class="m2" value="Semestre"/></li>
+                                    <li><h:link outcome="cargaHorariaits.xhtml" class="m2" value="Carga Horaria ITS"/></li>
+                                    <li><h:link outcome="carrera.xhtml" class="m2" value="Carreras"/></li>
+                                    <li><h:link outcome="grupo.xhtml" class="m2" value="Grupos"/></li>
+                                    <li><h:link outcome="trabajopracticoits.xhtml" class="m2" value="Trabajo Practico"/></li>
+                                </ul></li>
 
-                            <p:watermark for="password" value="Ingrese su contraseña" />
-                            <h:outputLabel for="password" value="Contraseña:" />
-                            <p:password id="password" value="#{loginBean.usuario.password}" required="true" label="Contraseña" />
+                            <li jsf:rendered="#{loginBean.ulog.rol.id==1}"><label for="submenu1-toggle" class="m1">Detalle &#x25BE;</label>
+                                <input type="checkbox" id="submenu1-toggle"/>
+                                <ul id="subm">
+                                    <li><h:link outcome="discapacidad.xhtml" class="m2" value="Discapacidad"/></li>
+                                    <li><h:link outcome="estadoCivil.xhtml" class="m2" value="Estado Civil"/></li>
+                                    <li><label for="submenu-toggle1" class="m2">Academia &#x25BE;</label>
+                                        <input type="checkbox" id="submenu-toggle1"/>
+                                        <ul id="subm">
+                                            <li><h:link outcome="estadoAcademico.xhtml" class="mb1" value="Estado"/></li>
+                                            <li><h:link outcome="nivelAcademico.xhtml" class="mb1" value="Nivel"/></li>
+                                        </ul></li>
+                                    <li><h:link outcome="localidad.xhtml" class="m2" value="Localidad"/></li>
+                                    <li><h:link outcome="municipio.xhtml" class="m2" value="Municipio"/></li>
+                                    <li><h:link outcome="nacionalidad.xhtml" class="m2" value="Nacionalidad"/></li>
+                                    <li><h:link outcome="zona.xhtml" class="m2" value="Zona"/></li>
+                                    <!--<li><h:link outcome="" class="m2" value=""/></li>-->
+                                </ul></li>
 
-                            <f:facet name="footer">
-                                <p:commandButton icon="ui-icon-key" value="Entrar" update="growl" action="#{loginBean.iniciarSesion()}"
-                                                 oncomplete="handleLoginRequest(xhr, status, args)"/>
-                            </f:facet>
-                        </h:panelGrid>
-                    </p:dialog> 
-                </h:form></center>
+                            <!--<li><h:link outcome="Texto.xhtml" class="m1" value="Texto"/></li>-->
+                            <li><h:link outcome="alumno.xhtml" class="m1" value="Alumno"/></li>
 
-            <h:form id="formVer">
-                <p:dialog id="dlgUsuarioMostrar" header="Usuario" widgetVar="dialogUsuarioMostrar" showEffect="fade" hideEffect="explode" resizable="false" closeOnEscape="true">
-                    <p:outputPanel id="usuarioDetalle" style="text-align: left;">
-                        <h:panelGrid  columns="2" style="padding: 2px;" >
+                            <li><label style="margin: 0px; padding: 0px" for="submenu2-toggle"><h:link class="m1" outcome="Curso.xhtml" value="Cursos &#x25BE;"/></label>
+                                <input type="checkbox" id="submenu2-toggle"/>
+                                <ul jsf:rendered="#{loginBean.ulog.rol.id==1}" id="subm">
+                                    <li><h:link outcome="Especialidad.xhtml" class="m2" value="Especialidad"/></li>
+                                    <li><h:link outcome="TipoFrecuencia.xhtml" class="m2" value="Tipo Frecuencia"/></li>
+                                    <li><h:link outcome="FrecuenciaDiaria.xhtml" class="m2" value="Frecuencia Diaria"/></li>
+                                </ul></li>
 
-                            <h:outputText value="N° Cedula:" style="color: blue" />
-                            <p:outputLabel value="#{loginBean.ulog.ci}" />
+                            <li jsf:rendered="#{loginBean.ulog.rol.id==x}" class="mmo"><label class="m3" value="javascript:void(0)" onclick="PF('dlg').show();" title="Inicia Sesión">Inicia Sesión</label></li>
 
-                            <h:outputText value="Nombre:"  style="color: blue"/>
-                            <p:outputLabel value="#{loginBean.ulog.nombre}" />
-
-                            <h:outputText value="Apellido:"  style="color: blue"/>
-                            <p:outputLabel value="#{loginBean.ulog.apellido}" />
-
-                            <h:outputText value="Rol:"  style="color: blue"/>
-                            <p:outputLabel value="#{loginBean.ulog.rol.descripcion}" />
-
-                        </h:panelGrid>
-                    </p:outputPanel>
-                </p:dialog>
-            </h:form>
-
-            <script type="text/javascript">
-                function handleLoginRequest(xhr, status, args) {
-                    if (args.validationFailed || !args.loggedIn) {
-                        PF('dlg').jq.effect("shake", {times: 5}, 100);
-                    } else {
-                        PF('dlg').hide();
-                        $('#loginLink').fadeOut();
-                    }
-                }
-            </script>
-
-            <script>
-                $(function () {
-                    $.scrollUp({
-                        scrollImg: true
-                    });
-                });
-            </script>
-            <!--        <script src="../resources/js/particles.min.js"></script>
-                    <script src="../resources/js/particulas.js"></script>-->
+                            <li jsf:rendered="#{loginBean.ulog.rol.id>0}" class="mmo"><label class="m3">#{loginBean.ulog.nombre} #{loginBean.ulog.apellido} &#x25BE;</label>
+                                <ul>
+                                    <li><h:form><p:commandLink style="font-family: impact;" class="m2" rendered="#{loginBean.ulog.rol.id>0}" update=":formVer" oncomplete="PF('dialogUsuarioMostrar').show()" value="Perfil" title="Usuario">
+                                                <f:setPropertyActionListener value="#{loginBean}" target="#{loginBean.ulog}" />
+                                            </p:commandLink></h:form></li>
+                                    <li><h:form><p:commandLink style="font-family: impact;" class="m2" actionListener="#{loginBean.cerrarSesion()}" value="Salir" action="/vista/index?faces-redirect=true" title="Cerrar Sesión"/></h:form></li>
+                                </ul></li>
+                        </ul>
+                    </nav>
+                </header>
+                <!-- CIERRE MENÚ PRINCIPAL  -->
+            </ui:insert>
         </div>
-    </h:body>
 
+        <div id="content" >
+            <ui:insert name="content">Content</ui:insert>
+        </div>
+
+
+        <div id="bottom" >
+            <ui:insert name="bottom"><br></br>
+                <main>
+                    <p>
+                        <br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br>
+                        <h3>Proyecto © 2017 Programación</h3>
+                        <br></br><br></br><br></br><br></br>
+                    </p>
+
+                    <div class="Ed" align="justify" style="font-family: sans-serif;content: inherit">
+
+                        <center><h:form class="uc">            
+                                <p:outputLabel class="staff" onclick="document.getElementById('oculto').style.visibility = 'visible'" title="Conjunto de personas que forman un cuerpo o equipo de estudio, información o asesoramiento en una empresa u organización.">
+                                    <p:graphicImage name="/images/STAFF.png"/>
+                                </p:outputLabel>
+                            </h:form></center>
+                        <div id="oculto" style="visibility:hidden">
+                            <li>Carolina Beatriz Batte Garcete</li>
+                            <!--<strike><li>Jesus Ariel Caceres Coronil</li></strike>-->
+                            <li>Daniel David Centurión Medina</li>
+                            <li>Diego Rafael Coronel Otazu</li>
+                            <!--<strike><li>Magdalena Morales Duarte</li></strike>-->
+                            <li>Alvaro Salvador Torres Hidalgo</li>
+                            <br></br>
+                        </div>
+                    </div>
+                </main>
+            </ui:insert>
+        </div>
+
+        <center><h:form class="uc">
+                <p:growl id="growl" sticky="true" showDetail="true" life="3000" />
+                <p:dialog showEffect="fade" hideEffect="explode" header="Iniciar Sesión" widgetVar="dlg" resizable="false">
+                    <h:panelGrid columns="3" cellpadding="5">
+                        <p:watermark for="username" value="Ingrese su N° de Cedula"/>
+                        <h:outputLabel for="username" value="C.I.:" />
+                        <p:inputText id="username" value="#{loginBean.usuario.ci}"  required="true" label="Usuario" />
+
+                        <p:watermark for="password" value="Ingrese su contraseña" />
+                        <h:outputLabel for="password" value="Contraseña:" />
+                        <p:password id="password" value="#{loginBean.usuario.password}" required="true" label="Contraseña" />
+
+                        <f:facet name="footer">
+                            <p:commandButton icon="ui-icon-key" value="Entrar" update="growl" action="#{loginBean.iniciarSesion()}"
+                                             oncomplete="handleLoginRequest(xhr, status, args)"/>
+                        </f:facet>
+                    </h:panelGrid>
+                </p:dialog> 
+            </h:form></center>
+
+        <h:form id="formVer">
+            <p:dialog id="dlgUsuarioMostrar" header="Usuario" widgetVar="dialogUsuarioMostrar" showEffect="fade" hideEffect="explode" resizable="false" closeOnEscape="true">
+                <p:outputPanel id="usuarioDetalle" style="text-align: left;">
+                    <h:panelGrid  columns="2" style="padding: 2px;" >
+
+                        <h:outputText value="N° Cedula:" style="color: blue" />
+                        <p:outputLabel value="#{loginBean.ulog.ci}" />
+
+                        <h:outputText value="Nombre:"  style="color: blue"/>
+                        <p:outputLabel value="#{loginBean.ulog.nombre}" />
+
+                        <h:outputText value="Apellido:"  style="color: blue"/>
+                        <p:outputLabel value="#{loginBean.ulog.apellido}" />
+
+                        <h:outputText value="Rol:"  style="color: blue"/>
+                        <p:outputLabel value="#{loginBean.ulog.rol.descripcion}" />
+
+                    </h:panelGrid>
+                </p:outputPanel>
+            </p:dialog>
+        </h:form>
+
+        <script type="text/javascript">
+            function handleLoginRequest(xhr, status, args) {
+                if (args.validationFailed || !args.loggedIn) {
+                    PF('dlg').jq.effect("shake", {times: 5}, 100);
+                } else {
+                    PF('dlg').hide();
+                    $('#loginLink').fadeOut();
+                }
+            }
+        </script>
+
+        <script>
+            $(function () {
+                $.scrollUp({
+                    scrollImg: true
+                });
+            });
+        </script>
+        <!--            <script src="../resources/js/particles.min.js"></script>
+                    <script src="../resources/js/particulas.js"></script>-->
+    </h:body>
+    <script src="../resources/js/particles.min.js"></script>
+    <script src="../resources/js/particulas.js"></script>
 </html>
 
